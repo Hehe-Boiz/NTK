@@ -1,5 +1,7 @@
 import { Injectable, Param } from '@nestjs/common';
 import * as bcrypt from 'bcrypt'
+import { CreateUserDto } from './dto/create-user.dto';
+import { UpdateUserDto } from './dto/update-user.dto';
 
 @Injectable()
 export class UsersService {
@@ -22,30 +24,30 @@ export class UsersService {
         return user
     }
     
-    async createOne(user: { name: string, password: string, role: 'USER' | 'ADMIN'}) {
-        const hashedPassword = await bcrypt.hash(user.password, 10);
+    async createOne(createUserDto: CreateUserDto) {
+        const hashedPassword = await bcrypt.hash(createUserDto.password, 10);
 
         const userByHighestId = [...this.users].sort((a, b) => b.id - a.id)
         const newUser = {
             id: userByHighestId[0].id + 1,
-            ...user,
+            ...createUserDto,
             password: hashedPassword
         }
         this.users.push(newUser)
         return newUser
     }
 
-    async patchOne(id:number, updatedUser: { name?: string, password?: string, role?: 'USER' | 'ADMIN'}) {
+    async patchOne(id:number, updatedUserDto: UpdateUserDto) {
         let newHashedPassword: string
-        if (updatedUser.password) {
-            newHashedPassword = await bcrypt.hash(updatedUser.password, 10)
+        if (updatedUserDto.password) {
+            newHashedPassword = await bcrypt.hash(updatedUserDto.password, 10)
         }
 
         this.users = this.users.map(user => {
             if (user.id === id) {
                 return { 
                     ...user,
-                    ...updatedUser,
+                    ...updatedUserDto,
                     ...(newHashedPassword && {password: newHashedPassword})
                 }
             }
