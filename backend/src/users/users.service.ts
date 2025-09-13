@@ -1,4 +1,4 @@
-import { Injectable, Param } from '@nestjs/common';
+import { Injectable, NotFoundException, Param } from '@nestjs/common';
 import * as bcrypt from 'bcrypt'
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -8,19 +8,22 @@ export class UsersService {
     private users = [{
         id: 1,
         name: 'Le Minh Nhut',
-        password: '123',
+        password: 'Nhut@123',
         role: 'ADMIN'
     }];
 
     findAll(role?: 'ADMIN' | 'USER') {
         if (role) {
-            return this.users.filter(u => u.role === role)
+            const rolesArray =  this.users.filter(u => u.role === role)
+            if (rolesArray.length === 0) throw new NotFoundException('User Role Not Found')
+            return rolesArray
         }
         return this.users
     }
 
-    findOne(@Param('id') id: number) {
+    findOne(id: number) {
         const user = this.users.find(u => u.id === id)
+        if (!user) throw new NotFoundException('User Not Found')
         return user
     }
     
