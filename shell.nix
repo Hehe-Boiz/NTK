@@ -2,6 +2,9 @@
 let
     backend = with pkgs; [ 
         nest-cli
+
+        prisma
+        prisma-engines
     ];
 
     frontend = with pkgs; [
@@ -13,12 +16,4 @@ pkgs.mkShell {
     packages = with pkgs; [
         nodejs_20
     ] ++ backend ++ frontend;
-
-
-    shellHook = ''
-        if [ ! -d "node_modules" ]; then
-            echo "Installing npm dependencies..."
-            npm install
-        fi
-    '';
 }

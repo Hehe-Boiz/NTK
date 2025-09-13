@@ -20,11 +20,15 @@ import {
   Briefcase,
   BookOpen,
   User,
-  Globe
+  Globe,
+  UserCheck
 } from 'lucide-react';
 import { toast } from 'sonner@2.0.3';
+import { useAuth } from './AuthContext';
 
 export function ContactPage() {
+  const { user, isLoggedIn, isStudent } = useAuth();
+  
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -36,10 +40,20 @@ export function ContactPage() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    toast.success('Tin nhắn đã được gửi thành công! Chúng tôi sẽ liên hệ lại trong vòng 24 giờ.');
+    
+    // Different success messages based on user type
+    if (isStudent) {
+      toast.success('Tin nhắn đã được gửi thành công! Chúng tôi sẽ phản hồi qua email sinh viên của bạn trong vòng 24 giờ.');
+    } else if (isLoggedIn) {
+      toast.success('Tin nhắn đã được gửi thành công! Chúng tôi sẽ liên hệ lại qua email của bạn trong vòng 24 giờ.');
+    } else {
+      toast.success('Tin nhắn đã được gửi thành công! Chúng tôi sẽ liên hệ lại trong vòng 24 giờ.');
+    }
+    
+    // Reset only relevant fields
     setFormData({
-      name: '',
-      email: '',
+      name: isLoggedIn ? user?.fullName || '' : '',
+      email: isLoggedIn ? user?.email || '' : '',
       phone: '',
       subject: '',
       category: '',
@@ -231,58 +245,90 @@ export function ContactPage() {
                 </CardDescription>
               </CardHeader>
               <CardContent>
+                {/* User Status Display */}
+                {isLoggedIn && (
+                  <div className="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                    <div className="flex items-center space-x-2">
+                      <UserCheck className="h-5 w-5 text-blue-600" />
+                      <span className="font-medium text-blue-900">
+                        Đã đăng nhập với tài khoản: {user?.fullName}
+                      </span>
+                      {isStudent && (
+                        <span className="text-xs px-2 py-1 bg-blue-100 text-blue-700 rounded-full">
+                          Sinh viên
+                        </span>
+                      )}
+                    </div>
+                    <p className="text-sm text-blue-700 mt-1">
+                      {isStudent 
+                        ? "Bạn chỉ cần điền tiêu đề và nội dung tin nhắn." 
+                        : "Thông tin cá nhân sẽ được tự động điền."}
+                    </p>
+                  </div>
+                )}
+
                 <form onSubmit={handleSubmit} className="space-y-6">
-                  <div className="grid md:grid-cols-2 gap-4">
-                    <div>
-                      <Label htmlFor="name">Họ và tên *</Label>
-                      <Input
-                        id="name"
-                        value={formData.name}
-                        onChange={(e) => handleInputChange('name', e.target.value)}
-                        placeholder="Nguyễn Văn A"
-                        required
-                      />
-                    </div>
-                    <div>
-                      <Label htmlFor="email">Email *</Label>
-                      <Input
-                        id="email"
-                        type="email"
-                        value={formData.email}
-                        onChange={(e) => handleInputChange('email', e.target.value)}
-                        placeholder="example@email.com"
-                        required
-                      />
-                    </div>
-                  </div>
+                  {/* Personal Information - Only show for guest users or when logged in as non-student */}
+                  {(!isLoggedIn || !isStudent) && (
+                    <>
+                      <div className="grid md:grid-cols-2 gap-4">
+                        <div>
+                          <Label htmlFor="name">Họ và tên *</Label>
+                          <Input
+                            id="name"
+                            value={isLoggedIn ? user?.fullName || '' : formData.name}
+                            onChange={(e) => handleInputChange('name', e.target.value)}
+                            placeholder="Nguyễn Văn A"
+                            required
+                            disabled={isLoggedIn}
+                            className={isLoggedIn ? 'bg-gray-50' : ''}
+                          />
+                        </div>
+                        <div>
+                          <Label htmlFor="email">Email *</Label>
+                          <Input
+                            id="email"
+                            type="email"
+                            value={isLoggedIn ? user?.email || '' : formData.email}
+                            onChange={(e) => handleInputChange('email', e.target.value)}
+                            placeholder="example@email.com"
+                            required
+                            disabled={isLoggedIn}
+                            className={isLoggedIn ? 'bg-gray-50' : ''}
+                          />
+                        </div>
+                      </div>
 
-                  <div className="grid md:grid-cols-2 gap-4">
-                    <div>
-                      <Label htmlFor="phone">Số điện thoại</Label>
-                      <Input
-                        id="phone"
-                        value={formData.phone}
-                        onChange={(e) => handleInputChange('phone', e.target.value)}
-                        placeholder="0901 234 567"
-                      />
-                    </div>
-                    <div>
-                      <Label htmlFor="category">Danh mục</Label>
-                      <Select value={formData.category} onValueChange={(value) => handleInputChange('category', value)}>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Chọn danh mục" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="admission">Tuyển sinh</SelectItem>
-                          <SelectItem value="education">Đào tạo</SelectItem>
-                          <SelectItem value="research">Nghiên cứu</SelectItem>
-                          <SelectItem value="cooperation">Hợp tác</SelectItem>
-                          <SelectItem value="other">Khác</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-                  </div>
+                      <div className="grid md:grid-cols-2 gap-4">
+                        <div>
+                          <Label htmlFor="phone">Số điện thoại</Label>
+                          <Input
+                            id="phone"
+                            value={formData.phone}
+                            onChange={(e) => handleInputChange('phone', e.target.value)}
+                            placeholder="0901 234 567"
+                          />
+                        </div>
+                        <div>
+                          <Label htmlFor="category">Danh mục</Label>
+                          <Select value={formData.category} onValueChange={(value) => handleInputChange('category', value)}>
+                            <SelectTrigger>
+                              <SelectValue placeholder="Chọn danh mục" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="admission">Tuyển sinh</SelectItem>
+                              <SelectItem value="education">Đào tạo</SelectItem>
+                              <SelectItem value="research">Nghiên cứu</SelectItem>
+                              <SelectItem value="cooperation">Hợp tác</SelectItem>
+                              <SelectItem value="other">Khác</SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </div>
+                      </div>
+                    </>
+                  )}
 
+                  {/* Message Information - Always show */}
                   <div>
                     <Label htmlFor="subject">Tiêu đề *</Label>
                     <Input
@@ -305,6 +351,39 @@ export function ContactPage() {
                       required
                     />
                   </div>
+
+                  {/* Quick Category Selection for Students */}
+                  {isLoggedIn && isStudent && (
+                    <div>
+                      <Label>Danh mục tin nhắn (tùy chọn)</Label>
+                      <div className="flex flex-wrap gap-2 mt-2">
+                        {[
+                          { value: 'academic', label: 'Học tập', icon: BookOpen },
+                          { value: 'schedule', label: 'Lịch học', icon: Calendar },
+                          { value: 'grade', label: 'Điểm số', icon: GraduationCap },
+                          { value: 'support', label: 'Hỗ trợ', icon: Users },
+                          { value: 'other', label: 'Khác', icon: MessageSquare }
+                        ].map((cat) => {
+                          const Icon = cat.icon;
+                          return (
+                            <button
+                              key={cat.value}
+                              type="button"
+                              onClick={() => handleInputChange('category', cat.value)}
+                              className={`flex items-center space-x-1 px-3 py-2 rounded-lg border text-sm transition-all ${
+                                formData.category === cat.value
+                                  ? 'bg-blue-100 border-blue-300 text-blue-700'
+                                  : 'bg-white border-gray-200 text-gray-600 hover:bg-gray-50'
+                              }`}
+                            >
+                              <Icon className="h-4 w-4" />
+                              <span>{cat.label}</span>
+                            </button>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  )}
 
                   <Button type="submit" size="lg" className="w-full md:w-auto">
                     <Send className="h-4 w-4 mr-2" />

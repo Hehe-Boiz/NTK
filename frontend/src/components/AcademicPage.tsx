@@ -32,9 +32,10 @@ import {
   Building,
   Globe,
   GraduationCap,
-  Briefcase
+  Briefcase,
+  Phone
 } from 'lucide-react';
-import { ImageWithFallback } from './figma/ImageWithFallback';
+import { ImageWithFallback } from './fallback/ImageWithFallback';
 
 export function AcademicPage() {
   const [activeSection, setActiveSection] = useState('programs');
@@ -62,11 +63,70 @@ export function AcademicPage() {
         'Quản lý dự án phần mềm theo phương pháp Agile/DevOps',
         'Đảm bảo chất lượng và bảo mật trong phát triển phần mềm'
       ],
-      curriculum: {
-        foundation: ['Toán rời rạc', 'Cấu trúc Dữ liệu & Giải thuật', 'Lập trình C/C++', 'OOP với Java'],
-        core: ['Kỹ thuật Phần mềm', 'Cơ sở Dữ liệu', 'Mạng Máy tính', 'Hệ điều hành'],
-        advanced: ['Kiến trúc Phần mềm', 'DevOps & CI/CD', 'Mobile Development', 'Cloud Computing'],
-        capstone: ['Dự án Tốt nghiệp', 'Thực tập Doanh nghiệp', 'Seminar']
+      yearlyProgram: {
+        year1: {
+          semester1: [
+            { code: 'IT1001', name: 'Nhập môn Lập trình', credits: 3, type: 'core' },
+            { code: 'MA1101', name: 'Toán cao cấp A1', credits: 4, type: 'foundation' },
+            { code: 'PH1101', name: 'Vật lý đại cương A1', credits: 3, type: 'foundation' },
+            { code: 'FL1101', name: 'Tiếng Anh 1', credits: 3, type: 'general' },
+            { code: 'ML1101', name: 'Triết học Mác-Lênin', credits: 3, type: 'general' }
+          ],
+          semester2: [
+            { code: 'IT1002', name: 'Lập trình C/C++', credits: 3, type: 'core' },
+            { code: 'MA1102', name: 'Toán cao cấp A2', credits: 4, type: 'foundation' },
+            { code: 'PH1102', name: 'Vật lý đại cương A2', credits: 3, type: 'foundation' },
+            { code: 'FL1102', name: 'Tiếng Anh 2', credits: 3, type: 'general' },
+            { code: 'ML1102', name: 'Kinh tế chính trị Mác-Lênin', credits: 2, type: 'general' }
+          ]
+        },
+        year2: {
+          semester1: [
+            { code: 'IT2001', name: 'Cấu trúc Dữ liệu & Giải thuật', credits: 4, type: 'core' },
+            { code: 'IT2002', name: 'Lập trình Hướng đối tượng', credits: 3, type: 'core' },
+            { code: 'MA2001', name: 'Toán rời rạc', credits: 3, type: 'foundation' },
+            { code: 'MA2002', name: 'Xác suất Thống kê', credits: 3, type: 'foundation' },
+            { code: 'ML2001', name: 'Chủ nghĩa xã hội khoa học', credits: 2, type: 'general' }
+          ],
+          semester2: [
+            { code: 'IT2003', name: 'Cơ sở Dữ liệu', credits: 3, type: 'core' },
+            { code: 'IT2004', name: 'Kiến trúc Máy tính', credits: 3, type: 'core' },
+            { code: 'IT2005', name: 'Mạng Máy tính', credits: 3, type: 'core' },
+            { code: 'IT2006', name: 'Hệ điều hành', credits: 3, type: 'core' },
+            { code: 'ML2002', name: 'Lịch sử Đảng Cộng sản Việt Nam', credits: 2, type: 'general' }
+          ]
+        },
+        year3: {
+          semester1: [
+            { code: 'SE3001', name: 'Kỹ thuật Phần mềm', credits: 4, type: 'major' },
+            { code: 'SE3002', name: 'Kiến trúc Phần mềm', credits: 3, type: 'major' },
+            { code: 'SE3003', name: 'Phát triển Web', credits: 3, type: 'major' },
+            { code: 'SE3004', name: 'Testing & QA', credits: 3, type: 'major' },
+            { code: 'EL3001', name: 'Môn học tự chọn 1', credits: 3, type: 'elective' }
+          ],
+          semester2: [
+            { code: 'SE3005', name: 'Mobile App Development', credits: 3, type: 'major' },
+            { code: 'SE3006', name: 'DevOps & CI/CD', credits: 3, type: 'major' },
+            { code: 'SE3007', name: 'Cloud Computing', credits: 3, type: 'major' },
+            { code: 'SE3008', name: 'Agile Project Management', credits: 3, type: 'major' },
+            { code: 'EL3002', name: 'Môn học tự chọn 2', credits: 3, type: 'elective' }
+          ]
+        },
+        year4: {
+          semester1: [
+            { code: 'SE4001', name: 'Microservices Architecture', credits: 3, type: 'advanced' },
+            { code: 'SE4002', name: 'Software Security', credits: 3, type: 'advanced' },
+            { code: 'SE4003', name: 'AI in Software Development', credits: 3, type: 'advanced' },
+            { code: 'IN4001', name: 'Thực tập Doanh nghiệp', credits: 4, type: 'internship' },
+            { code: 'EL4001', name: 'Môn học tự chọn 3', credits: 3, type: 'elective' }
+          ],
+          semester2: [
+            { code: 'SE4004', name: 'Dự án Tốt nghiệp', credits: 6, type: 'capstone' },
+            { code: 'SE4005', name: 'Seminar', credits: 2, type: 'capstone' },
+            { code: 'SE4006', name: 'Entrepreneurship', credits: 2, type: 'advanced' },
+            { code: 'EL4002', name: 'Môn học tự chọn 4', credits: 3, type: 'elective' }
+          ]
+        }
       },
       technologies: ['Java', 'Python', 'JavaScript', 'React', 'Node.js', 'Docker', 'AWS', 'MongoDB'],
       careerPaths: [
@@ -99,11 +159,70 @@ export function AcademicPage() {
         'Phát triển hệ thống Business Intelligence và Dashboard',
         'Ứng dụng AI trong các lĩnh vực thực tế'
       ],
-      curriculum: {
-        foundation: ['Thống kê & Xác suất', 'Toán cao cấp', 'Python Programming', 'R Programming'],
-        core: ['Machine Learning', 'Data Mining', 'Big Data Technologies', 'Database Systems'],
-        advanced: ['Deep Learning', 'Natural Language Processing', 'Computer Vision', 'MLOps'],
-        capstone: ['Data Science Project', 'Industry Partnership', 'Research Thesis']
+      yearlyProgram: {
+        year1: {
+          semester1: [
+            { code: 'DS1001', name: 'Nhập môn Khoa học Dữ liệu', credits: 3, type: 'core' },
+            { code: 'MA1101', name: 'Toán cao cấp A1', credits: 4, type: 'foundation' },
+            { code: 'ST1101', name: 'Xác suất Thống kê', credits: 3, type: 'foundation' },
+            { code: 'FL1101', name: 'Tiếng Anh 1', credits: 3, type: 'general' },
+            { code: 'ML1101', name: 'Triết học Mác-Lênin', credits: 3, type: 'general' }
+          ],
+          semester2: [
+            { code: 'DS1002', name: 'Python Programming', credits: 3, type: 'core' },
+            { code: 'MA1102', name: 'Toán cao cấp A2', credits: 4, type: 'foundation' },
+            { code: 'ST1102', name: 'Thống kê ứng dụng', credits: 3, type: 'foundation' },
+            { code: 'FL1102', name: 'Tiếng Anh 2', credits: 3, type: 'general' },
+            { code: 'ML1102', name: 'Kinh tế chính trị Mác-Lênin', credits: 2, type: 'general' }
+          ]
+        },
+        year2: {
+          semester1: [
+            { code: 'DS2001', name: 'R Programming', credits: 3, type: 'core' },
+            { code: 'DS2002', name: 'Data Structures & Algorithms', credits: 4, type: 'core' },
+            { code: 'MA2001', name: 'Đại số tuyến tính', credits: 3, type: 'foundation' },
+            { code: 'DS2003', name: 'Database Systems', credits: 3, type: 'core' },
+            { code: 'ML2001', name: 'Chủ nghĩa xã hội khoa học', credits: 2, type: 'general' }
+          ],
+          semester2: [
+            { code: 'DS2004', name: 'Data Mining', credits: 3, type: 'core' },
+            { code: 'DS2005', name: 'Machine Learning Basics', credits: 4, type: 'core' },
+            { code: 'DS2006', name: 'Data Visualization', credits: 3, type: 'core' },
+            { code: 'DS2007', name: 'Big Data Fundamentals', credits: 3, type: 'core' },
+            { code: 'ML2002', name: 'Lịch sử Đảng Cộng sản Việt Nam', credits: 2, type: 'general' }
+          ]
+        },
+        year3: {
+          semester1: [
+            { code: 'DS3001', name: 'Advanced Machine Learning', credits: 4, type: 'major' },
+            { code: 'DS3002', name: 'Deep Learning', credits: 4, type: 'major' },
+            { code: 'DS3003', name: 'Natural Language Processing', credits: 3, type: 'major' },
+            { code: 'DS3004', name: 'Business Intelligence', credits: 3, type: 'major' },
+            { code: 'EL3001', name: 'Môn học tự chọn 1', credits: 3, type: 'elective' }
+          ],
+          semester2: [
+            { code: 'DS3005', name: 'Computer Vision', credits: 3, type: 'major' },
+            { code: 'DS3006', name: 'Big Data Technologies', credits: 3, type: 'major' },
+            { code: 'DS3007', name: 'Time Series Analysis', credits: 3, type: 'major' },
+            { code: 'DS3008', name: 'MLOps', credits: 3, type: 'major' },
+            { code: 'EL3002', name: 'Môn học tự chọn 2', credits: 3, type: 'elective' }
+          ]
+        },
+        year4: {
+          semester1: [
+            { code: 'DS4001', name: 'Advanced Analytics', credits: 3, type: 'advanced' },
+            { code: 'DS4002', name: 'AI Ethics & Governance', credits: 3, type: 'advanced' },
+            { code: 'DS4003', name: 'Industry Applications', credits: 3, type: 'advanced' },
+            { code: 'IN4001', name: 'Thực tập Doanh nghiệp', credits: 4, type: 'internship' },
+            { code: 'EL4001', name: 'Môn học tự chọn 3', credits: 3, type: 'elective' }
+          ],
+          semester2: [
+            { code: 'DS4004', name: 'Dự án Tốt nghiệp', credits: 6, type: 'capstone' },
+            { code: 'DS4005', name: 'Research Methodology', credits: 2, type: 'capstone' },
+            { code: 'DS4006', name: 'Data Science Career', credits: 2, type: 'advanced' },
+            { code: 'EL4002', name: 'Môn học tự chọn 4', credits: 3, type: 'elective' }
+          ]
+        }
       },
       technologies: ['Python', 'R', 'SQL', 'TensorFlow', 'PyTorch', 'Spark', 'Hadoop', 'Tableau'],
       careerPaths: [
@@ -136,11 +255,70 @@ export function AcademicPage() {
         'Ứng phó với các cuộc tấn công mạng',
         'Quản lý chính sách bảo mật doanh nghiệp'
       ],
-      curriculum: {
-        foundation: ['Network Fundamentals', 'Operating Systems', 'Cryptography', 'Security Principles'],
-        core: ['Network Security', 'Ethical Hacking', 'Digital Forensics', 'Security Management'],
-        advanced: ['Malware Analysis', 'IoT Security', 'Cloud Security', 'Blockchain Security'],
-        capstone: ['Security Assessment Project', 'Incident Response', 'Security Audit']
+      yearlyProgram: {
+        year1: {
+          semester1: [
+            { code: 'CS1001', name: 'Nhập môn An toàn Thông tin', credits: 3, type: 'core' },
+            { code: 'MA1101', name: 'Toán cao cấp A1', credits: 4, type: 'foundation' },
+            { code: 'IT1001', name: 'Nhập môn Lập trình', credits: 3, type: 'foundation' },
+            { code: 'FL1101', name: 'Tiếng Anh 1', credits: 3, type: 'general' },
+            { code: 'ML1101', name: 'Triết học Mác-Lênin', credits: 3, type: 'general' }
+          ],
+          semester2: [
+            { code: 'CS1002', name: 'Network Fundamentals', credits: 3, type: 'core' },
+            { code: 'MA1102', name: 'Toán cao cấp A2', credits: 4, type: 'foundation' },
+            { code: 'IT1002', name: 'Lập trình C/C++', credits: 3, type: 'foundation' },
+            { code: 'FL1102', name: 'Tiếng Anh 2', credits: 3, type: 'general' },
+            { code: 'ML1102', name: 'Kinh tế chính trị Mác-Lênin', credits: 2, type: 'general' }
+          ]
+        },
+        year2: {
+          semester1: [
+            { code: 'CS2001', name: 'Cryptography', credits: 4, type: 'core' },
+            { code: 'CS2002', name: 'Operating Systems Security', credits: 3, type: 'core' },
+            { code: 'MA2001', name: 'Toán rời rạc', credits: 3, type: 'foundation' },
+            { code: 'CS2003', name: 'Security Principles', credits: 3, type: 'core' },
+            { code: 'ML2001', name: 'Chủ nghĩa xã hội khoa học', credits: 2, type: 'general' }
+          ],
+          semester2: [
+            { code: 'CS2004', name: 'Network Security', credits: 4, type: 'core' },
+            { code: 'CS2005', name: 'Web Security', credits: 3, type: 'core' },
+            { code: 'CS2006', name: 'Database Security', credits: 3, type: 'core' },
+            { code: 'CS2007', name: 'Risk Assessment', credits: 3, type: 'core' },
+            { code: 'ML2002', name: 'Lịch sử Đảng Cộng sản Việt Nam', credits: 2, type: 'general' }
+          ]
+        },
+        year3: {
+          semester1: [
+            { code: 'CS3001', name: 'Ethical Hacking', credits: 4, type: 'major' },
+            { code: 'CS3002', name: 'Digital Forensics', credits: 4, type: 'major' },
+            { code: 'CS3003', name: 'Malware Analysis', credits: 3, type: 'major' },
+            { code: 'CS3004', name: 'Security Management', credits: 3, type: 'major' },
+            { code: 'EL3001', name: 'Môn học tự chọn 1', credits: 3, type: 'elective' }
+          ],
+          semester2: [
+            { code: 'CS3005', name: 'IoT Security', credits: 3, type: 'major' },
+            { code: 'CS3006', name: 'Cloud Security', credits: 3, type: 'major' },
+            { code: 'CS3007', name: 'Blockchain Security', credits: 3, type: 'major' },
+            { code: 'CS3008', name: 'Incident Response', credits: 3, type: 'major' },
+            { code: 'EL3002', name: 'Môn học tự chọn 2', credits: 3, type: 'elective' }
+          ]
+        },
+        year4: {
+          semester1: [
+            { code: 'CS4001', name: 'Advanced Penetration Testing', credits: 3, type: 'advanced' },
+            { code: 'CS4002', name: 'Security Architecture', credits: 3, type: 'advanced' },
+            { code: 'CS4003', name: 'Compliance & Governance', credits: 3, type: 'advanced' },
+            { code: 'IN4001', name: 'Thực tập Doanh nghiệp', credits: 4, type: 'internship' },
+            { code: 'EL4001', name: 'Môn học tự chọn 3', credits: 3, type: 'elective' }
+          ],
+          semester2: [
+            { code: 'CS4004', name: 'Dự án Tốt nghiệp', credits: 6, type: 'capstone' },
+            { code: 'CS4005', name: 'Security Audit', credits: 2, type: 'capstone' },
+            { code: 'CS4006', name: 'Cybersecurity Career', credits: 2, type: 'advanced' },
+            { code: 'EL4002', name: 'Môn học tự chọn 4', credits: 3, type: 'elective' }
+          ]
+        }
       },
       technologies: ['Kali Linux', 'Wireshark', 'Metasploit', 'Burp Suite', 'SIEM', 'Firewall', 'IDS/IPS'],
       careerPaths: [
@@ -173,11 +351,70 @@ export function AcademicPage() {
         'Xây dựng chatbot và virtual assistant',
         'Ứng dụng AI trong healthcare, fintech, autonomous systems'
       ],
-      curriculum: {
-        foundation: ['Logic Toán học', 'Linear Algebra', 'Probability Theory', 'Programming Fundamentals'],
-        core: ['Artificial Intelligence', 'Machine Learning', 'Neural Networks', 'Computer Vision'],
-        advanced: ['Deep Learning', 'NLP', 'Robotics', 'Reinforcement Learning'],
-        capstone: ['AI Research Project', 'Industry Application', 'Startup Incubation']
+      yearlyProgram: {
+        year1: {
+          semester1: [
+            { code: 'AI1001', name: 'Nhập môn Trí tuệ Nhân tạo', credits: 3, type: 'core' },
+            { code: 'MA1101', name: 'Toán cao cấp A1', credits: 4, type: 'foundation' },
+            { code: 'IT1001', name: 'Logic Toán học', credits: 3, type: 'foundation' },
+            { code: 'FL1101', name: 'Tiếng Anh 1', credits: 3, type: 'general' },
+            { code: 'ML1101', name: 'Triết học Mác-Lênin', credits: 3, type: 'general' }
+          ],
+          semester2: [
+            { code: 'AI1002', name: 'Programming Fundamentals', credits: 3, type: 'core' },
+            { code: 'MA1102', name: 'Đại số tuyến tính', credits: 4, type: 'foundation' },
+            { code: 'ST1101', name: 'Probability Theory', credits: 3, type: 'foundation' },
+            { code: 'FL1102', name: 'Tiếng Anh 2', credits: 3, type: 'general' },
+            { code: 'ML1102', name: 'Kinh tế chính trị Mác-Lênin', credits: 2, type: 'general' }
+          ]
+        },
+        year2: {
+          semester1: [
+            { code: 'AI2001', name: 'Artificial Intelligence', credits: 4, type: 'core' },
+            { code: 'AI2002', name: 'Machine Learning', credits: 4, type: 'core' },
+            { code: 'CS2001', name: 'Data Structures & Algorithms', credits: 3, type: 'foundation' },
+            { code: 'ST2001', name: 'Statistics for AI', credits: 3, type: 'foundation' },
+            { code: 'ML2001', name: 'Chủ nghĩa xã hội khoa học', credits: 2, type: 'general' }
+          ],
+          semester2: [
+            { code: 'AI2003', name: 'Neural Networks', credits: 4, type: 'core' },
+            { code: 'AI2004', name: 'Computer Vision Basics', credits: 3, type: 'core' },
+            { code: 'AI2005', name: 'Pattern Recognition', credits: 3, type: 'core' },
+            { code: 'CS2002', name: 'Database Systems', credits: 3, type: 'foundation' },
+            { code: 'ML2002', name: 'Lịch sử Đảng Cộng sản Việt Nam', credits: 2, type: 'general' }
+          ]
+        },
+        year3: {
+          semester1: [
+            { code: 'AI3001', name: 'Deep Learning', credits: 4, type: 'major' },
+            { code: 'AI3002', name: 'Natural Language Processing', credits: 4, type: 'major' },
+            { code: 'AI3003', name: 'Computer Vision Advanced', credits: 3, type: 'major' },
+            { code: 'AI3004', name: 'Robotics', credits: 3, type: 'major' },
+            { code: 'EL3001', name: 'Môn học tự chọn 1', credits: 3, type: 'elective' }
+          ],
+          semester2: [
+            { code: 'AI3005', name: 'Reinforcement Learning', credits: 3, type: 'major' },
+            { code: 'AI3006', name: 'AI Applications', credits: 3, type: 'major' },
+            { code: 'AI3007', name: 'Knowledge Systems', credits: 3, type: 'major' },
+            { code: 'AI3008', name: 'AI Ethics', credits: 3, type: 'major' },
+            { code: 'EL3002', name: 'Môn học tự chọn 2', credits: 3, type: 'elective' }
+          ]
+        },
+        year4: {
+          semester1: [
+            { code: 'AI4001', name: 'Advanced AI Research', credits: 3, type: 'advanced' },
+            { code: 'AI4002', name: 'Autonomous Systems', credits: 3, type: 'advanced' },
+            { code: 'AI4003', name: 'AI in Industry', credits: 3, type: 'advanced' },
+            { code: 'IN4001', name: 'Thực tập Doanh nghiệp', credits: 4, type: 'internship' },
+            { code: 'EL4001', name: 'Môn học tự chọn 3', credits: 3, type: 'elective' }
+          ],
+          semester2: [
+            { code: 'AI4004', name: 'Dự án Tốt nghiệp', credits: 6, type: 'capstone' },
+            { code: 'AI4005', name: 'Research Methodology', credits: 2, type: 'capstone' },
+            { code: 'AI4006', name: 'Startup Incubation', credits: 2, type: 'advanced' },
+            { code: 'EL4002', name: 'Môn học tự chọn 4', credits: 3, type: 'elective' }
+          ]
+        }
       },
       technologies: ['Python', 'TensorFlow', 'PyTorch', 'OpenCV', 'NLTK', 'ROS', 'CUDA', 'Keras'],
       careerPaths: [
@@ -253,7 +490,7 @@ export function AcademicPage() {
       ],
       partnerships: [
         'Viettel Cyber Security',
-        'BKAV Corporation',
+        'BKAV Corporation', 
         'National Cyber Security Center',
         'International Security Institutes'
       ],
@@ -343,6 +580,33 @@ export function AcademicPage() {
     program.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
     program.description.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+  const getSubjectTypeColor = (type: string) => {
+    switch (type) {
+      case 'foundation': return 'bg-blue-100 text-blue-800';
+      case 'core': return 'bg-green-100 text-green-800';
+      case 'major': return 'bg-purple-100 text-purple-800';
+      case 'advanced': return 'bg-red-100 text-red-800';
+      case 'elective': return 'bg-gray-100 text-gray-800';
+      case 'internship': return 'bg-orange-100 text-orange-800';
+      case 'capstone': return 'bg-yellow-100 text-yellow-800';
+      default: return 'bg-gray-100 text-gray-800';
+    }
+  };
+
+  const getSubjectTypeName = (type: string) => {
+    switch (type) {
+      case 'foundation': return 'Nền tảng';
+      case 'core': return 'Cốt lõi';
+      case 'major': return 'Chuyên ngành';
+      case 'advanced': return 'Nâng cao';
+      case 'elective': return 'Tự chọn';
+      case 'internship': return 'Thực tập';
+      case 'capstone': return 'Tốt nghiệp';
+      case 'general': return 'Đại cương';
+      default: return 'Khác';
+    }
+  };
 
   return (
     <div className="min-h-screen bg-white">
@@ -515,14 +779,96 @@ export function AcademicPage() {
                       </div>
                     </CardHeader>
                     <CardContent>
-                      <Tabs defaultValue="overview" className="w-full">
-                        <TabsList className="grid w-full grid-cols-5">
+                      <Tabs defaultValue="curriculum" className="w-full">
+                        <TabsList className="grid w-full grid-cols-4">
+                          <TabsTrigger value="curriculum">Chương trình học</TabsTrigger>
                           <TabsTrigger value="overview">Tổng quan</TabsTrigger>
-                          <TabsTrigger value="curriculum">Chương trình</TabsTrigger>
-                          <TabsTrigger value="technology">Công nghệ</TabsTrigger>
                           <TabsTrigger value="career">Nghề nghiệp</TabsTrigger>
                           <TabsTrigger value="facilities">Cơ sở vật chất</TabsTrigger>
                         </TabsList>
+
+                        <TabsContent value="curriculum" className="space-y-6">
+                          <div className="mb-6">
+                            <h3 className="text-lg font-semibold mb-4">Chương trình học theo năm</h3>
+                            <p className="text-gray-600 mb-6">
+                              Chương trình được thiết kế theo tiến trình 4 năm, từ nền tảng đến chuyên sâu
+                            </p>
+                          </div>
+
+                          {Object.entries(currentProgram.yearlyProgram).map(([year, yearData]) => (
+                            <div key={year} className="mb-8">
+                              <div className="flex items-center mb-4">
+                                <Calendar className="h-5 w-5 text-blue-600 mr-2" />
+                                <h4 className="text-xl font-semibold">
+                                  {year === 'year1' ? 'Năm thứ 1' :
+                                   year === 'year2' ? 'Năm thứ 2' :
+                                   year === 'year3' ? 'Năm thứ 3' : 'Năm thứ 4'}
+                                </h4>
+                              </div>
+                              
+                              <div className="grid md:grid-cols-2 gap-6">
+                                {Object.entries(yearData).map(([semester, subjects]) => (
+                                  <Card key={semester} className="border-l-4 border-blue-500">
+                                    <CardHeader className="pb-3">
+                                      <CardTitle className="text-lg">
+                                        {semester === 'semester1' ? 'Học kỳ 1' : 'Học kỳ 2'}
+                                      </CardTitle>
+                                    </CardHeader>
+                                    <CardContent className="space-y-3">
+                                      {subjects.map((subject, index) => (
+                                        <div key={index} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                                          <div className="flex-1">
+                                            <div className="font-medium text-sm">{subject.name}</div>
+                                            <div className="text-xs text-gray-500">{subject.code}</div>
+                                          </div>
+                                          <div className="flex items-center space-x-2">
+                                            <Badge 
+                                              variant="secondary" 
+                                              className={`text-xs ${getSubjectTypeColor(subject.type)}`}
+                                            >
+                                              {getSubjectTypeName(subject.type)}
+                                            </Badge>
+                                            <span className="text-sm font-medium">{subject.credits} TC</span>
+                                          </div>
+                                        </div>
+                                      ))}
+                                      <div className="mt-3 pt-3 border-t">
+                                        <div className="text-sm font-medium text-gray-600">
+                                          Tổng: {subjects.reduce((sum, subject) => sum + subject.credits, 0)} tín chỉ
+                                        </div>
+                                      </div>
+                                    </CardContent>
+                                  </Card>
+                                ))}
+                              </div>
+                            </div>
+                          ))}
+
+                          {/* Summary */}
+                          <Card className="bg-blue-50 border-blue-200">
+                            <CardContent className="pt-6">
+                              <h4 className="font-semibold mb-4">Tổng kết chương trình</h4>
+                              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+                                <div>
+                                  <div className="text-2xl font-bold text-blue-600">{currentProgram.credits}</div>
+                                  <div className="text-sm text-gray-600">Tổng tín chỉ</div>
+                                </div>
+                                <div>
+                                  <div className="text-2xl font-bold text-green-600">8</div>
+                                  <div className="text-sm text-gray-600">Học kỳ</div>
+                                </div>
+                                <div>
+                                  <div className="text-2xl font-bold text-purple-600">{currentProgram.duration}</div>
+                                  <div className="text-sm text-gray-600">Thời gian</div>
+                                </div>
+                                <div>
+                                  <div className="text-2xl font-bold text-orange-600">1</div>
+                                  <div className="text-sm text-gray-600">Thực tập + Đồ án</div>
+                                </div>
+                              </div>
+                            </CardContent>
+                          </Card>
+                        </TabsContent>
 
                         <TabsContent value="overview" className="space-y-6">
                           <div>
@@ -569,36 +915,7 @@ export function AcademicPage() {
                               </CardContent>
                             </Card>
                           </div>
-                        </TabsContent>
 
-                        <TabsContent value="curriculum" className="space-y-6">
-                          <div className="space-y-6">
-                            {Object.entries(currentProgram.curriculum).map(([category, subjects]) => (
-                              <div key={category}>
-                                <h4 className="font-semibold text-lg mb-3 capitalize">
-                                  {category === 'foundation' ? 'Kiến thức nền tảng' :
-                                   category === 'core' ? 'Chuyên ngành cốt lõi' :
-                                   category === 'advanced' ? 'Chuyên ngành nâng cao' :
-                                   'Dự án & Thực tập'}
-                                </h4>
-                                <div className="grid md:grid-cols-2 gap-3">
-                                  {subjects.map((subject, index) => (
-                                    <Card key={index} className="hover:shadow-md transition-shadow">
-                                      <CardContent className="pt-4">
-                                        <div className="flex items-center space-x-3">
-                                          <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
-                                          <span className="font-medium text-sm">{subject}</span>
-                                        </div>
-                                      </CardContent>
-                                    </Card>
-                                  ))}
-                                </div>
-                              </div>
-                            ))}
-                          </div>
-                        </TabsContent>
-
-                        <TabsContent value="technology" className="space-y-6">
                           <div>
                             <h3 className="text-lg font-semibold mb-4">Công nghệ & Công cụ</h3>
                             <div className="grid grid-cols-3 gap-3 mb-6">
@@ -609,22 +926,6 @@ export function AcademicPage() {
                               ))}
                             </div>
                           </div>
-
-                          <div>
-                            <h3 className="text-lg font-semibold mb-4">Phòng thí nghiệm</h3>
-                            <div className="grid gap-3">
-                              {currentProgram.labs.map((lab, index) => (
-                                <Card key={index}>
-                                  <CardContent className="pt-4">
-                                    <div className="flex items-center space-x-3">
-                                      <Building className="h-5 w-5 text-gray-500" />
-                                      <span>{lab}</span>
-                                    </div>
-                                  </CardContent>
-                                </Card>
-                              ))}
-                            </div>
-                          </div>
                         </TabsContent>
 
                         <TabsContent value="career" className="space-y-6">
@@ -632,10 +933,10 @@ export function AcademicPage() {
                             <h3 className="text-lg font-semibold mb-4">Cơ hội nghề nghiệp</h3>
                             <div className="grid md:grid-cols-2 gap-4 mb-6">
                               {currentProgram.careerPaths.map((career, index) => (
-                                <Card key={index} className="hover:shadow-md transition-shadow">
+                                <Card key={index}>
                                   <CardContent className="pt-4">
                                     <div className="flex items-center space-x-3">
-                                      <Briefcase className="h-4 w-4 text-blue-500" />
+                                      <Briefcase className="h-5 w-5 text-blue-600" />
                                       <span className="font-medium">{career}</span>
                                     </div>
                                   </CardContent>
@@ -646,25 +947,29 @@ export function AcademicPage() {
 
                           <div>
                             <h3 className="text-lg font-semibold mb-4">Đối tác tuyển dụng</h3>
-                            <div className="flex flex-wrap gap-2">
+                            <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
                               {currentProgram.companies.map((company, index) => (
-                                <Badge key={index} variant="outline" className="px-3 py-1">
+                                <Badge key={index} variant="outline" className="justify-center py-2 text-sm">
                                   {company}
                                 </Badge>
                               ))}
                             </div>
                           </div>
 
-                          <Card>
+                          <Card className="bg-green-50 border-green-200">
                             <CardContent className="pt-6">
-                              <div className="text-center">
-                                <div className="text-2xl font-bold text-green-600 mb-2">
-                                  {currentProgram.averageSalary}
+                              <div className="flex items-center mb-4">
+                                <TrendingUp className="h-6 w-6 text-green-600 mr-2" />
+                                <h4 className="font-semibold">Thông tin việc làm</h4>
+                              </div>
+                              <div className="grid md:grid-cols-2 gap-4">
+                                <div>
+                                  <div className="text-2xl font-bold text-green-600">{currentProgram.employmentRate}%</div>
+                                  <div className="text-sm text-gray-600">Tỷ lệ có việc làm</div>
                                 </div>
-                                <div className="text-sm text-gray-600 mb-4">Mức lương khởi điểm</div>
-                                <Progress value={currentProgram.employmentRate} className="mb-2" />
-                                <div className="text-sm text-gray-600">
-                                  {currentProgram.employmentRate}% sinh viên có việc làm trong 6 tháng
+                                <div>
+                                  <div className="text-2xl font-bold text-blue-600">{currentProgram.averageSalary}</div>
+                                  <div className="text-sm text-gray-600">Mức lương khởi điểm</div>
                                 </div>
                               </div>
                             </CardContent>
@@ -672,34 +977,46 @@ export function AcademicPage() {
                         </TabsContent>
 
                         <TabsContent value="facilities" className="space-y-6">
+                          <div>
+                            <h3 className="text-lg font-semibold mb-4">Phòng thí nghiệm</h3>
+                            <div className="grid gap-4">
+                              {currentProgram.labs.map((lab, index) => (
+                                <Card key={index}>
+                                  <CardContent className="pt-4">
+                                    <div className="flex items-center space-x-3">
+                                      <Building className="h-6 w-6 text-gray-500" />
+                                      <div>
+                                        <div className="font-medium">{lab}</div>
+                                        <div className="text-sm text-gray-600">Trang thiết bị hiện đại, đầy đủ</div>
+                                      </div>
+                                    </div>
+                                  </CardContent>
+                                </Card>
+                              ))}
+                            </div>
+                          </div>
+
                           <div className="grid md:grid-cols-2 gap-6">
                             <Card>
-                              <CardHeader>
-                                <CardTitle className="text-lg">Phòng thí nghiệm chuyên dụng</CardTitle>
-                              </CardHeader>
-                              <CardContent>
-                                <div className="space-y-3">
-                                  {currentProgram.labs.map((lab, index) => (
-                                    <div key={index} className="flex items-center space-x-2">
-                                      <Microscope className="h-4 w-4 text-blue-500" />
-                                      <span className="text-sm">{lab}</span>
-                                    </div>
-                                  ))}
-                                </div>
+                              <CardContent className="pt-6">
+                                <ImageWithFallback
+                                  src="https://images.unsplash.com/photo-1731834453355-df041245e7d7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx1bml2ZXJzaXR5JTIwbGFib3JhdG9yeSUyMGNvbXB1dGVyJTIwc2NpZW5jZXxlbnwxfHx8fDE3NTgxOTI0NDZ8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
+                                  alt="Computer Lab"
+                                  className="w-full h-48 object-cover rounded-lg mb-4"
+                                />
+                                <h4 className="font-semibold">Phòng Lab Máy tính</h4>
+                                <p className="text-sm text-gray-600">100+ máy tính hiệu năng cao</p>
                               </CardContent>
                             </Card>
-
                             <Card>
-                              <CardHeader>
-                                <CardTitle className="text-lg">Trang thiết bị hiện đại</CardTitle>
-                              </CardHeader>
-                              <CardContent>
-                                <div className="space-y-2 text-sm">
-                                  <div>• Máy tính cấu hình cao</div>
-                                  <div>• Hệ thống mạng tốc độ cao</div>
-                                  <div>• Cloud computing platform</div>
-                                  <div>• Development tools mới nhất</div>
-                                </div>
+                              <CardContent className="pt-6">
+                                <ImageWithFallback
+                                  src="https://images.unsplash.com/photo-1606761568499-6d2451b23c66?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx1bml2ZXJzaXR5JTIwY2FtcHVzJTIwc3R1ZGVudHMlMjBsZWFybmluZ3xlbnwxfHx8fDE3NTgxOTI0NDJ8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
+                                  alt="Study Area"
+                                  className="w-full h-48 object-cover rounded-lg mb-4"
+                                />
+                                <h4 className="font-semibold">Khu vực Học tập</h4>
+                                <p className="text-sm text-gray-600">Không gian hiện đại, thoải mái</p>
                               </CardContent>
                             </Card>
                           </div>
@@ -713,54 +1030,40 @@ export function AcademicPage() {
                 <div className="space-y-6">
                   <Card>
                     <CardHeader>
-                      <CardTitle>Thông tin nhanh</CardTitle>
+                      <CardTitle className="text-lg">Thông tin tuyển sinh</CardTitle>
                     </CardHeader>
-                    <CardContent className="space-y-3">
-                      <div className="flex justify-between text-sm">
-                        <span className="text-gray-600">Bằng cấp:</span>
-                        <span>{currentProgram.level}</span>
+                    <CardContent className="space-y-4">
+                      <div className="flex justify-between">
+                        <span className="text-gray-600">Điểm chuẩn 2024:</span>
+                        <span className="font-semibold">{currentProgram.admissionScore}</span>
                       </div>
-                      <div className="flex justify-between text-sm">
-                        <span className="text-gray-600">Thời gian:</span>
-                        <span>{currentProgram.duration}</span>
+                      <div className="flex justify-between">
+                        <span className="text-gray-600">Số lượng tuyển sinh:</span>
+                        <span className="font-semibold">120 chỉ tiêu</span>
                       </div>
-                      <div className="flex justify-between text-sm">
-                        <span className="text-gray-600">Tín chỉ:</span>
-                        <span>{currentProgram.credits}</span>
+                      <div className="flex justify-between">
+                        <span className="text-gray-600">Phương thức xét tuyển:</span>
+                        <span className="font-semibold">THPT + Đánh giá năng lực</span>
                       </div>
-                      <div className="flex justify-between text-sm">
-                        <span className="text-gray-600">Điểm chuẩn:</span>
-                        <span className="font-medium">{currentProgram.admissionScore}</span>
-                      </div>
-                      <div className="flex justify-between text-sm">
-                        <span className="text-gray-600">Mức lương:</span>
-                        <span className="text-green-600">{currentProgram.averageSalary}</span>
-                      </div>
+                      <Button className="w-full">
+                        <Download className="h-4 w-4 mr-2" />
+                        Tải brochure
+                      </Button>
                     </CardContent>
                   </Card>
 
                   <Card>
                     <CardHeader>
-                      <CardTitle>Tư vấn tuyển sinh</CardTitle>
+                      <CardTitle className="text-lg">Tư vấn trực tuyến</CardTitle>
                     </CardHeader>
                     <CardContent className="space-y-4">
-                      <div className="space-y-3 text-sm">
-                        <div className="flex items-center space-x-2">
-                          <Calendar className="h-4 w-4 text-gray-400" />
-                          <span>Tư vấn: Thứ 2-6, 8h-17h</span>
-                        </div>
-                        <div className="flex items-center space-x-2">
-                          <MapPin className="h-4 w-4 text-gray-400" />
-                          <span>Phòng Đào tạo, Tầng 3</span>
-                        </div>
-                      </div>
-                      <div className="space-y-2">
-                        <Button className="w-full">Đăng ký tư vấn</Button>
-                        <Button variant="outline" className="w-full">
-                          <Download className="h-4 w-4 mr-2" />
-                          Tải brochure
-                        </Button>
-                      </div>
+                      <p className="text-sm text-gray-600">
+                        Nhận tư vấn chi tiết về chương trình học, cơ hội nghề nghiệp và quy trình tuyển sinh
+                      </p>
+                      <Button className="w-full" variant="outline">
+                        <Phone className="h-4 w-4 mr-2" />
+                        Đăng ký tư vấn
+                      </Button>
                     </CardContent>
                   </Card>
                 </div>
@@ -772,243 +1075,191 @@ export function AcademicPage() {
 
       {/* Research Section */}
       {activeSection === 'research' && (
-        <>
-          {/* Research Overview */}
-          <section className="py-16">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-              <div className="text-center mb-12">
-                <h2 className="text-3xl font-bold text-gray-900 mb-4">
-                  Lĩnh vực Nghiên cứu Trọng điểm
-                </h2>
-                <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-                  4 lĩnh vực nghiên cứu chính với đội ngũ chuyên gia hàng đầu và cơ sở vật chất hiện đại
-                </p>
-              </div>
-
-              <div className="grid lg:grid-cols-4 gap-6 mb-12">
-                {researchAreas.map((area) => {
-                  const Icon = area.icon;
-                  const isSelected = area.id === selectedResearchArea;
-                  return (
-                    <Card 
-                      key={area.id}
-                      className={`cursor-pointer transition-all duration-300 hover:shadow-xl ${
-                        isSelected ? 'ring-2 ring-purple-500 shadow-lg transform scale-105' : ''
-                      } ${area.featured ? 'border-yellow-300' : ''}`}
-                      onClick={() => setSelectedResearchArea(area.id)}
-                    >
-                      <CardHeader>
-                        {area.featured && (
-                          <Badge className="mb-2 bg-yellow-500 text-black w-fit">
-                            <Star className="h-3 w-3 mr-1" />
-                            Trọng điểm
-                          </Badge>
-                        )}
-                        <div className={`w-12 h-12 bg-${area.color}-100 rounded-lg flex items-center justify-center mb-4`}>
-                          <Icon className={`h-6 w-6 text-${area.color}-600`} />
-                        </div>
-                        <CardTitle className="text-lg">{area.name}</CardTitle>
-                        <CardDescription className="line-clamp-3">{area.description}</CardDescription>
-                      </CardHeader>
-                      <CardContent>
-                        <div className="space-y-2 text-sm">
-                          <div className="flex justify-between">
-                            <span className="text-gray-600">Dự án:</span>
-                            <span className="font-medium">{area.projects}</span>
-                          </div>
-                          <div className="flex justify-between">
-                            <span className="text-gray-600">Công bố:</span>
-                            <span className="font-medium">{area.publications}</span>
-                          </div>
-                          <div className="flex justify-between">
-                            <span className="text-gray-600">Kinh phí:</span>
-                            <span className="text-green-600 font-medium">{area.funding}</span>
-                          </div>
-                        </div>
-                        <Button 
-                          variant={isSelected ? 'default' : 'outline'} 
-                          className="w-full mt-4"
-                        >
-                          {isSelected ? 'Đang xem' : 'Chi tiết'}
-                          <ChevronRight className="ml-2 h-4 w-4" />
-                        </Button>
-                      </CardContent>
-                    </Card>
-                  );
-                })}
-              </div>
+        <section className="py-16">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl font-bold text-gray-900 mb-4">
+                Nghiên cứu Khoa học
+              </h2>
+              <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+                4 lĩnh vực nghiên cứu trọng điểm với 54 dự án đang triển khai và hơn 200 công bố khoa học
+              </p>
             </div>
-          </section>
 
-          {/* Research Details */}
-          <section className="py-16 bg-gray-50">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-              <div className="grid lg:grid-cols-3 gap-8">
-                {/* Main Content */}
-                <div className="lg:col-span-2">
-                  <Card>
+            <div className="grid lg:grid-cols-4 gap-6 mb-12">
+              {researchAreas.map((area) => {
+                const Icon = area.icon;
+                const isSelected = area.id === selectedResearchArea;
+                return (
+                  <Card 
+                    key={area.id}
+                    className={`cursor-pointer transition-all duration-300 hover:shadow-xl ${
+                      isSelected ? 'ring-2 ring-purple-500 shadow-lg transform scale-105' : ''
+                    } ${area.featured ? 'border-purple-300' : ''}`}
+                    onClick={() => setSelectedResearchArea(area.id)}
+                  >
                     <CardHeader>
-                      <div className="flex items-center justify-between">
-                        <div>
-                          <CardTitle className="text-2xl">{currentResearchArea.name}</CardTitle>
-                          <CardDescription className="text-lg mt-2">
-                            {currentResearchArea.description}
-                          </CardDescription>
-                        </div>
-                        <div className={`w-16 h-16 bg-${currentResearchArea.color}-100 rounded-xl flex items-center justify-center`}>
-                          <currentResearchArea.icon className={`h-8 w-8 text-${currentResearchArea.color}-600`} />
-                        </div>
+                      {area.featured && (
+                        <Badge className="mb-2 bg-purple-500 text-white w-fit">
+                          <Star className="h-3 w-3 mr-1" />
+                          Trọng điểm
+                        </Badge>
+                      )}
+                      <div className={`w-12 h-12 bg-${area.color}-100 rounded-lg flex items-center justify-center mb-4`}>
+                        <Icon className={`h-6 w-6 text-${area.color}-600`} />
                       </div>
+                      <CardTitle className="text-lg">{area.name}</CardTitle>
+                      <CardDescription className="line-clamp-3">{area.description}</CardDescription>
                     </CardHeader>
                     <CardContent>
-                      <Tabs defaultValue="overview" className="w-full">
-                        <TabsList className="grid w-full grid-cols-4">
-                          <TabsTrigger value="overview">Tổng quan</TabsTrigger>
-                          <TabsTrigger value="research">Nghiên cứu</TabsTrigger>
-                          <TabsTrigger value="facilities">Cơ sở vật chất</TabsTrigger>
-                          <TabsTrigger value="partnerships">Đối tác</TabsTrigger>
-                        </TabsList>
-
-                        <TabsContent value="overview" className="space-y-6">
-                          <div className="grid md:grid-cols-3 gap-6">
-                            <Card>
-                              <CardContent className="pt-6 text-center">
-                                <Target className="h-8 w-8 text-blue-600 mx-auto mb-2" />
-                                <div className="font-semibold">{currentResearchArea.projects}</div>
-                                <div className="text-sm text-gray-600">Dự án nghiên cứu</div>
-                              </CardContent>
-                            </Card>
-                            <Card>
-                              <CardContent className="pt-6 text-center">
-                                <FileText className="h-8 w-8 text-green-600 mx-auto mb-2" />
-                                <div className="font-semibold">{currentResearchArea.publications}</div>
-                                <div className="text-sm text-gray-600">Công trình xuất bản</div>
-                              </CardContent>
-                            </Card>
-                            <Card>
-                              <CardContent className="pt-6 text-center">
-                                <TrendingUp className="h-8 w-8 text-purple-600 mx-auto mb-2" />
-                                <div className="font-semibold">{currentResearchArea.funding}</div>
-                                <div className="text-sm text-gray-600">Kinh phí nghiên cứu</div>
-                              </CardContent>
-                            </Card>
-                          </div>
-
-                          <div>
-                            <h3 className="text-lg font-semibold mb-4">Thành tựu nổi bật</h3>
-                            <div className="space-y-3">
-                              {currentResearchArea.achievements.map((achievement, index) => (
-                                <div key={index} className="flex items-start space-x-3 p-3 bg-yellow-50 rounded-lg">
-                                  <Award className="h-5 w-5 text-yellow-600 mt-0.5 flex-shrink-0" />
-                                  <span className="text-gray-700">{achievement}</span>
-                                </div>
-                              ))}
-                            </div>
-                          </div>
-                        </TabsContent>
-
-                        <TabsContent value="research" className="space-y-6">
-                          <div>
-                            <h3 className="text-lg font-semibold mb-4">Hướng nghiên cứu chính</h3>
-                            <div className="grid gap-4">
-                              {currentResearchArea.keyResearch.map((research, index) => (
-                                <Card key={index}>
-                                  <CardContent className="pt-4">
-                                    <div className="flex items-center space-x-3">
-                                      <Lightbulb className="h-5 w-5 text-blue-500" />
-                                      <span className="font-medium">{research}</span>
-                                    </div>
-                                  </CardContent>
-                                </Card>
-                              ))}
-                            </div>
-                          </div>
-                        </TabsContent>
-
-                        <TabsContent value="facilities" className="space-y-6">
-                          <div>
-                            <h3 className="text-lg font-semibold mb-4">Cơ sở vật chất</h3>
-                            <div className="grid gap-4">
-                              {currentResearchArea.facilities.map((facility, index) => (
-                                <Card key={index}>
-                                  <CardContent className="pt-4">
-                                    <div className="flex items-center space-x-3">
-                                      <Building className="h-5 w-5 text-green-500" />
-                                      <span>{facility}</span>
-                                    </div>
-                                  </CardContent>
-                                </Card>
-                              ))}
-                            </div>
-                          </div>
-                        </TabsContent>
-
-                        <TabsContent value="partnerships" className="space-y-6">
-                          <div>
-                            <h3 className="text-lg font-semibold mb-4">Đối tác hợp tác</h3>
-                            <div className="grid md:grid-cols-2 gap-4">
-                              {currentResearchArea.partnerships.map((partner, index) => (
-                                <Card key={index}>
-                                  <CardContent className="pt-4">
-                                    <div className="flex items-center space-x-3">
-                                      <Globe className="h-5 w-5 text-blue-500" />
-                                      <span className="font-medium">{partner}</span>
-                                    </div>
-                                  </CardContent>
-                                </Card>
-                              ))}
-                            </div>
-                          </div>
-                        </TabsContent>
-                      </Tabs>
+                      <div className="space-y-2 text-sm">
+                        <div className="flex justify-between">
+                          <span className="text-gray-600">Dự án:</span>
+                          <span className="font-medium">{area.projects}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-600">Công bố:</span>
+                          <span className="text-blue-600 font-medium">{area.publications}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-600">Kinh phí:</span>
+                          <span className="text-green-600 font-medium">{area.funding}</span>
+                        </div>
+                      </div>
+                      <Button 
+                        variant={isSelected ? 'default' : 'outline'} 
+                        className="w-full mt-4"
+                      >
+                        {isSelected ? 'Đang xem' : 'Chi tiết'}
+                        <ChevronRight className="ml-2 h-4 w-4" />
+                      </Button>
                     </CardContent>
                   </Card>
-                </div>
-
-                {/* Sidebar */}
-                <div className="space-y-6">
-                  <Card>
-                    <CardHeader>
-                      <CardTitle>Thông tin nghiên cứu</CardTitle>
-                    </CardHeader>
-                    <CardContent className="space-y-3">
-                      <div className="flex justify-between text-sm">
-                        <span className="text-gray-600">Dự án đang thực hiện:</span>
-                        <span className="font-medium">{currentResearchArea.projects}</span>
-                      </div>
-                      <div className="flex justify-between text-sm">
-                        <span className="text-gray-600">Công bố khoa học:</span>
-                        <span className="font-medium">{currentResearchArea.publications}</span>
-                      </div>
-                      <div className="flex justify-between text-sm">
-                        <span className="text-gray-600">Kinh phí nghiên cứu:</span>
-                        <span className="text-green-600 font-medium">{currentResearchArea.funding}</span>
-                      </div>
-                    </CardContent>
-                  </Card>
-
-                  <Card>
-                    <CardHeader>
-                      <CardTitle>Hợp tác nghiên cứu</CardTitle>
-                    </CardHeader>
-                    <CardContent className="space-y-4">
-                      <p className="text-sm text-gray-600">
-                        Chúng tôi luôn mở cửa cho các cơ hội hợp tác nghiên cứu với doanh nghiệp và tổ chức.
-                      </p>
-                      <div className="space-y-2">
-                        <Button className="w-full">Liên hệ hợp tác</Button>
-                        <Button variant="outline" className="w-full">
-                          <FileText className="h-4 w-4 mr-2" />
-                          Xem công trình
-                        </Button>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </div>
-              </div>
+                );
+              })}
             </div>
-          </section>
-        </>
+
+            {/* Research Area Details */}
+            <Card>
+              <CardHeader>
+                <div className="flex items-center justify-between">
+                  <div>
+                    <CardTitle className="text-2xl">{currentResearchArea.name}</CardTitle>
+                    <CardDescription className="text-lg mt-2">
+                      {currentResearchArea.description}
+                    </CardDescription>
+                  </div>
+                  <div className={`w-16 h-16 bg-${currentResearchArea.color}-100 rounded-xl flex items-center justify-center`}>
+                    <currentResearchArea.icon className={`h-8 w-8 text-${currentResearchArea.color}-600`} />
+                  </div>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <Tabs defaultValue="research" className="w-full">
+                  <TabsList className="grid w-full grid-cols-4">
+                    <TabsTrigger value="research">Nghiên cứu</TabsTrigger>
+                    <TabsTrigger value="facilities">Cơ sở</TabsTrigger>
+                    <TabsTrigger value="partnerships">Đối tác</TabsTrigger>
+                    <TabsTrigger value="achievements">Thành tựu</TabsTrigger>
+                  </TabsList>
+
+                  <TabsContent value="research" className="space-y-6">
+                    <div className="grid md:grid-cols-3 gap-4 mb-6">
+                      <Card>
+                        <CardContent className="pt-4 text-center">
+                          <div className="text-2xl font-bold text-purple-600 mb-1">{currentResearchArea.projects}</div>
+                          <div className="text-sm text-gray-600">Dự án đang triển khai</div>
+                        </CardContent>
+                      </Card>
+                      <Card>
+                        <CardContent className="pt-4 text-center">
+                          <div className="text-2xl font-bold text-blue-600 mb-1">{currentResearchArea.publications}</div>
+                          <div className="text-sm text-gray-600">Công bố khoa học</div>
+                        </CardContent>
+                      </Card>
+                      <Card>
+                        <CardContent className="pt-4 text-center">
+                          <div className="text-2xl font-bold text-green-600 mb-1">{currentResearchArea.funding}</div>
+                          <div className="text-sm text-gray-600">Kinh phí nghiên cứu</div>
+                        </CardContent>
+                      </Card>
+                    </div>
+
+                    <div>
+                      <h3 className="text-lg font-semibold mb-4">Hướng nghiên cứu chính</h3>
+                      <div className="grid md:grid-cols-2 gap-4">
+                        {currentResearchArea.keyResearch.map((research, index) => (
+                          <Card key={index}>
+                            <CardContent className="pt-4">
+                              <div className="flex items-start space-x-3">
+                                <div className="w-2 h-2 bg-purple-500 rounded-full mt-2"></div>
+                                <span className="font-medium">{research}</span>
+                              </div>
+                            </CardContent>
+                          </Card>
+                        ))}
+                      </div>
+                    </div>
+                  </TabsContent>
+
+                  <TabsContent value="facilities" className="space-y-6">
+                    <div>
+                      <h3 className="text-lg font-semibold mb-4">Cơ sở vật chất</h3>
+                      <div className="grid gap-4">
+                        {currentResearchArea.facilities.map((facility, index) => (
+                          <Card key={index}>
+                            <CardContent className="pt-4">
+                              <div className="flex items-center space-x-3">
+                                <Building className="h-5 w-5 text-gray-500" />
+                                <span>{facility}</span>
+                              </div>
+                            </CardContent>
+                          </Card>
+                        ))}
+                      </div>
+                    </div>
+                  </TabsContent>
+
+                  <TabsContent value="partnerships" className="space-y-6">
+                    <div>
+                      <h3 className="text-lg font-semibold mb-4">Đối tác nghiên cứu</h3>
+                      <div className="grid md:grid-cols-2 gap-4">
+                        {currentResearchArea.partnerships.map((partner, index) => (
+                          <Card key={index}>
+                            <CardContent className="pt-4">
+                              <div className="flex items-center space-x-3">
+                                <Globe className="h-5 w-5 text-blue-500" />
+                                <span className="font-medium">{partner}</span>
+                              </div>
+                            </CardContent>
+                          </Card>
+                        ))}
+                      </div>
+                    </div>
+                  </TabsContent>
+
+                  <TabsContent value="achievements" className="space-y-6">
+                    <div>
+                      <h3 className="text-lg font-semibold mb-4">Thành tựu nổi bật</h3>
+                      <div className="space-y-4">
+                        {currentResearchArea.achievements.map((achievement, index) => (
+                          <Card key={index}>
+                            <CardContent className="pt-4">
+                              <div className="flex items-start space-x-3">
+                                <Award className="h-5 w-5 text-yellow-500 mt-0.5" />
+                                <span>{achievement}</span>
+                              </div>
+                            </CardContent>
+                          </Card>
+                        ))}
+                      </div>
+                    </div>
+                  </TabsContent>
+                </Tabs>
+              </CardContent>
+            </Card>
+          </div>
+        </section>
       )}
     </div>
   );

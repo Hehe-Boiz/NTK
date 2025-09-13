@@ -27,6 +27,8 @@ import {
 } from 'lucide-react';
 import { ImageWithFallback } from './fallback/ImageWithFallback';
 import { useTheme } from './ThemeProvider';
+import { WishForm } from './WishForm';
+import { WishBubbles } from './WishBubbles';
 
 interface HomePageProps {
   onNavigate: (page: string) => void;
@@ -404,7 +406,12 @@ export function HomePage({ onNavigate }: HomePageProps) {
             <div className="relative max-w-5xl mx-auto">
               <div className="absolute left-1/2 transform -translate-x-px h-full w-0.5 bg-gray-200"></div>
               
-              <div className="space-y-16">
+              {/* Wish Bubbles Overlay - positioned to cover the entire timeline area */}
+              <div className="absolute inset-0 z-30 pointer-events-none">
+                <WishBubbles />
+              </div>
+              
+              <div className="space-y-16 relative z-20">
                 {theme.milestones.map((milestone, index) => {
                   const IconComponent = iconMap[milestone.icon as keyof typeof iconMap] || Building;
                   const isEven = index % 2 === 0;
@@ -613,6 +620,161 @@ export function HomePage({ onNavigate }: HomePageProps) {
                 </CardContent>
               </Card>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Anniversary Wish Form */}
+      <WishForm />
+
+      {/* Campus Gallery */}
+      <section className="py-20 bg-white">
+        <div className="container-university">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold university-text-primary mb-6">
+              Hình ảnh Trường
+            </h2>
+            <p className="text-xl university-text-secondary max-w-4xl mx-auto">
+              Khám phá không gian học tập hiện đại và môi trường sống động tại 
+              {theme.facultyName} qua những hình ảnh đẹp nhất
+            </p>
+          </div>
+
+          {/* Featured Image */}
+          <div className="mb-12">
+            <Card className="overflow-hidden university-shadow-lg">
+              <div className="relative">
+                <ImageWithFallback
+                  src="https://images.unsplash.com/photo-1610967999370-080d066b4543?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx1bml2ZXJzaXR5JTIwbW9kZXJuJTIwYnVpbGRpbmclMjBhcmNoaXRlY3R1cmV8ZW58MXx8fHwxNzU4MTkyNDUzfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
+                  alt="Modern University Building"
+                  className="w-full h-96 md:h-[500px] object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                <div className="absolute bottom-8 left-8 text-white">
+                  <h3 className="text-3xl font-bold mb-2">Tòa nhà Khoa CNTT</h3>
+                  <p className="text-lg text-white/90">Cơ sở vật chất hiện đại với hệ thống lab tối tân</p>
+                </div>
+              </div>
+            </Card>
+          </div>
+
+          {/* Gallery Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+            {/* Row 1 */}
+            <div className="lg:col-span-2">
+              <Card className="overflow-hidden h-64 university-shadow hover:university-shadow-lg transition-all group">
+                <div className="relative h-full">
+                  <ImageWithFallback
+                    src="https://images.unsplash.com/photo-1731834453355-df041245e7d7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx1bml2ZXJzaXR5JTIwbGFib3JhdG9yeSUyMGNvbXB1dGVyJTIwc2NpZW5jZXxlbnwxfHx8fDE3NTgxOTI0NDZ8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
+                    alt="Computer Laboratory"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
+                  <div className="absolute inset-0 bg-black/30 group-hover:bg-black/40 transition-colors"></div>
+                  <div className="absolute bottom-4 left-4 text-white">
+                    <h4 className="text-lg font-semibold">Phòng Lab Máy tính</h4>
+                    <p className="text-sm text-white/90">100+ máy trạm hiệu năng cao</p>
+                  </div>
+                </div>
+              </Card>
+            </div>
+            
+            <Card className="overflow-hidden h-64 university-shadow hover:university-shadow-lg transition-all group">
+              <div className="relative h-full">
+                <ImageWithFallback
+                  src="https://images.unsplash.com/photo-1606761568499-6d2451b23c66?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx1bml2ZXJzaXR5JTIwY2FtcHVzJTIwc3R1ZGVudHMlMjBsZWFybmluZ3xlbnwxfHx8fDE3NTgxOTI0NDJ8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
+                  alt="Students Learning"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                />
+                <div className="absolute inset-0 bg-black/30 group-hover:bg-black/40 transition-colors"></div>
+                <div className="absolute bottom-4 left-4 text-white">
+                  <h4 className="text-lg font-semibold">Sinh viên học tập</h4>
+                  <p className="text-sm text-white/90">Môi trường năng động</p>
+                </div>
+              </div>
+            </Card>
+
+            <Card className="overflow-hidden h-64 university-shadow hover:university-shadow-lg transition-all group">
+              <div className="relative h-full">
+                <ImageWithFallback
+                  src="https://images.unsplash.com/photo-1620663823969-631e014e5e97?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx1bml2ZXJzaXR5JTIwc3R1ZGVudHMlMjBncmFkdWF0aW9uJTIwY2VyZW1vbnl8ZW58MXx8fHwxNzU4MTkyNDUwfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
+                  alt="Graduation Ceremony"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                />
+                <div className="absolute inset-0 bg-black/30 group-hover:bg-black/40 transition-colors"></div>
+                <div className="absolute bottom-4 left-4 text-white">
+                  <h4 className="text-lg font-semibold">Lễ tốt nghiệp</h4>
+                  <p className="text-sm text-white/90">Khoảnh khắc vinh quang</p>
+                </div>
+              </div>
+            </Card>
+
+            {/* Row 2 */}
+            <Card className="overflow-hidden h-64 university-shadow hover:university-shadow-lg transition-all group">
+              <div className="relative h-full">
+                <ImageWithFallback
+                  src="https://images.unsplash.com/photo-1600903308878-bf5e554ab841?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx1bml2ZXJzaXR5JTIwY2FtcHVzJTIwYnVpbGRpbmclMjBtb2Rlcm4lMjBhcmNoaXRlY3R1cmV8ZW58MXx8fHwxNzU4MTcxMjAwfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
+                  alt="Campus Building"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                />
+                <div className="absolute inset-0 bg-black/30 group-hover:bg-black/40 transition-colors"></div>
+                <div className="absolute bottom-4 left-4 text-white">
+                  <h4 className="text-lg font-semibold">Campus chính</h4>
+                  <p className="text-sm text-white/90">Kiến trúc hiện đại</p>
+                </div>
+              </div>
+            </Card>
+
+            <div className="lg:col-span-2">
+              <Card className="overflow-hidden h-64 university-shadow hover:university-shadow-lg transition-all group">
+                <div className="relative h-full">
+                  <ImageWithFallback
+                    src="https://images.unsplash.com/photo-1610967999370-080d066b4543?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx1bml2ZXJzaXR5JTIwbW9kZXJuJTIwYnVpbGRpbmclMjBhcmNoaXRlY3R1cmV8ZW58MXx8fHwxNzU4MTkyNDUzfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
+                    alt="Innovation Center"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
+                  <div className="absolute inset-0 bg-black/30 group-hover:bg-black/40 transition-colors"></div>
+                  <div className="absolute bottom-4 left-4 text-white">
+                    <h4 className="text-lg font-semibold">Trung tâm Đổi mới Sáng tạo</h4>
+                    <p className="text-sm text-white/90">Hub khởi nghiệp và nghiên cứu</p>
+                  </div>
+                </div>
+              </Card>
+            </div>
+
+            <Card className="overflow-hidden h-64 university-shadow hover:university-shadow-lg transition-all group">
+              <div className="relative h-full">
+                <ImageWithFallback
+                  src="https://images.unsplash.com/photo-1731834453355-df041245e7d7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx1bml2ZXJzaXR5JTIwbGFib3JhdG9yeSUyMGNvbXB1dGVyJTIwc2NpZW5jZXxlbnwxfHx8fDE3NTgxOTI0NDZ8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
+                  alt="AI Research Lab"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                />
+                <div className="absolute inset-0 bg-black/30 group-hover:bg-black/40 transition-colors"></div>
+                <div className="absolute bottom-4 left-4 text-white">
+                  <h4 className="text-lg font-semibold">Lab Nghiên cứu AI</h4>
+                  <p className="text-sm text-white/90">Công nghệ tiên tiến</p>
+                </div>
+              </div>
+            </Card>
+          </div>
+
+          {/* Gallery Statistics */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+            <div className="p-6">
+              <div className="text-3xl font-bold university-text-primary mb-2">50+</div>
+              <div className="text-sm university-text-secondary">Phòng học hiện đại</div>
+            </div>
+            <div className="p-6">
+              <div className="text-3xl font-bold university-text-primary mb-2">20+</div>
+              <div className="text-sm university-text-secondary">Phòng Lab chuyên dụng</div>
+            </div>
+            <div className="p-6">
+              <div className="text-3xl font-bold university-text-primary mb-2">5</div>
+              <div className="text-sm university-text-secondary">Tòa nhà Khoa</div>
+            </div>
+            <div className="p-6">
+              <div className="text-3xl font-bold university-text-primary mb-2">100ha</div>
+              <div className="text-sm university-text-secondary">Diện tích campus</div>
+            </div>
           </div>
         </div>
       </section>

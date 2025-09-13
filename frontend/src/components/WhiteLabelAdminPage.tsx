@@ -9,6 +9,7 @@ import { Badge } from './ui/badge';
 import { Switch } from './ui/switch';
 import { Separator } from './ui/separator';
 import { useTheme } from './ThemeProvider';
+import { useWishes } from './WishesContext';
 import { 
   Palette, 
   Settings, 
@@ -29,14 +30,31 @@ import {
   Cloud,
   History,
   Plus,
-  Minus
+  Minus,
+  Heart,
+  Check,
+  X,
+  Clock,
+  Trash2,
+  Calendar,
+  User
 } from 'lucide-react';
 import { toast } from 'sonner@2.0.3';
 
 export function WhiteLabelAdminPage() {
   const { theme, updateTheme, resetTheme, isCustomized } = useTheme();
+  const { 
+    wishes, 
+    getPendingWishes, 
+    getApprovedWishes, 
+    getRejectedWishes,
+    approveWish,
+    rejectWish,
+    deleteWish
+  } = useWishes();
   const [activePreview, setActivePreview] = useState('desktop');
   const [changes, setChanges] = useState<any>({});
+  const [wishesFilter, setWishesFilter] = useState<'all' | 'pending' | 'approved' | 'rejected'>('pending');
 
   const handleInputChange = (field: string, value: any) => {
     if (field === 'contactInfo') {
@@ -125,10 +143,21 @@ export function WhiteLabelAdminPage() {
           {/* Configuration Panel */}
           <div className="lg:col-span-2 space-y-6">
             <Tabs defaultValue="branding" className="w-full">
-              <TabsList className="grid w-full grid-cols-4">
+              <TabsList className="grid w-full grid-cols-5">
                 <TabsTrigger value="branding">Thương hiệu</TabsTrigger>
                 <TabsTrigger value="design">Thiết kế</TabsTrigger>
                 <TabsTrigger value="content">Nội dung</TabsTrigger>
+                <TabsTrigger value="wishes">
+                  <div className="flex items-center space-x-1">
+                    <Heart className="h-3 w-3" />
+                    <span>Duyệt lời chúc</span>
+                    {getPendingWishes().length > 0 && (
+                      <span className="bg-red-500 text-white text-xs rounded-full px-1 min-w-[16px] h-4 flex items-center justify-center">
+                        {getPendingWishes().length}
+                      </span>
+                    )}
+                  </div>
+                </TabsTrigger>
                 <TabsTrigger value="advanced">Nâng cao</TabsTrigger>
               </TabsList>
 
@@ -513,6 +542,276 @@ export function WhiteLabelAdminPage() {
                         Thêm mốc mới
                       </Button>
                     </div>
+                  </CardContent>
+                </Card>
+              </TabsContent>
+
+              {/* Wishes Management Tab */}
+              <TabsContent value="wishes" className="space-y-6">
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="flex items-center justify-between">
+                      <div className="flex items-center">
+                        <Heart className="h-5 w-5 mr-2" />
+                        Quản lý Lời chúc Kỷ niệm
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <Badge variant="outline" className="text-xs">
+                          Tổng: {wishes.length}
+                        </Badge>
+                        <Badge variant="secondary" className="text-xs bg-yellow-100 text-yellow-800">
+                          Chờ duyệt: {getPendingWishes().length}
+                        </Badge>
+                        <Badge variant="secondary" className="text-xs bg-green-100 text-green-800">
+                          Đã duyệt: {getApprovedWishes().length}
+                        </Badge>
+                        <Badge variant="secondary" className="text-xs bg-red-100 text-red-800">
+                          Từ chối: {getRejectedWishes().length}
+                        </Badge>
+                      </div>
+                    </CardTitle>
+                    <CardDescription>
+                      Duyệt và quản lý các lời chúc từ sinh viên, cựu sinh viên và đối tác
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    {/* Filter Tabs */}
+                    <div className="flex space-x-2 mb-6">
+                      <Button
+                        variant={wishesFilter === 'pending' ? 'default' : 'outline'}
+                        size="sm"
+                        onClick={() => setWishesFilter('pending')}
+                        className="flex items-center space-x-1"
+                      >
+                        <Clock className="h-3 w-3" />
+                        <span>Chờ duyệt ({getPendingWishes().length})</span>
+                      </Button>
+                      <Button
+                        variant={wishesFilter === 'approved' ? 'default' : 'outline'}
+                        size="sm"
+                        onClick={() => setWishesFilter('approved')}
+                        className="flex items-center space-x-1"
+                      >
+                        <Check className="h-3 w-3" />
+                        <span>Đã duyệt ({getApprovedWishes().length})</span>
+                      </Button>
+                      <Button
+                        variant={wishesFilter === 'rejected' ? 'default' : 'outline'}
+                        size="sm"
+                        onClick={() => setWishesFilter('rejected')}
+                        className="flex items-center space-x-1"
+                      >
+                        <X className="h-3 w-3" />
+                        <span>Từ chối ({getRejectedWishes().length})</span>
+                      </Button>
+                      <Button
+                        variant={wishesFilter === 'all' ? 'default' : 'outline'}
+                        size="sm"
+                        onClick={() => setWishesFilter('all')}
+                      >
+                        Tất cả ({wishes.length})
+                      </Button>
+                    </div>
+
+                    {/* Wishes List */}
+                    <div className="space-y-4 max-h-96 overflow-y-auto">
+                      {(() => {
+                        let filteredWishes = wishes;
+                        switch (wishesFilter) {
+                          case 'pending':
+                            filteredWishes = getPendingWishes();
+                            break;
+                          case 'approved':
+                            filteredWishes = getApprovedWishes();
+                            break;
+                          case 'rejected':
+                            filteredWishes = getRejectedWishes();
+                            break;
+                          default:
+                            filteredWishes = wishes;
+                        }
+
+                        if (filteredWishes.length === 0) {
+                          return (
+                            <div className="text-center py-8 text-gray-500">
+                              <Heart className="h-12 w-12 mx-auto mb-4 opacity-30" />
+                              <p>Không có lời chúc nào trong danh mục này</p>
+                            </div>
+                          );
+                        }
+
+                        return filteredWishes.map((wish) => (
+                          <div
+                            key={wish.id}
+                            className={`border rounded-lg p-4 space-y-3 ${
+                              wish.status === 'pending' ? 'border-yellow-200 bg-yellow-50' :
+                              wish.status === 'approved' ? 'border-green-200 bg-green-50' :
+                              'border-red-200 bg-red-50'
+                            }`}
+                          >
+                            {/* Status Badge */}
+                            <div className="flex items-center justify-between">
+                              <Badge
+                                variant="secondary"
+                                className={
+                                  wish.status === 'pending' ? 'bg-yellow-100 text-yellow-800' :
+                                  wish.status === 'approved' ? 'bg-green-100 text-green-800' :
+                                  'bg-red-100 text-red-800'
+                                }
+                              >
+                                {wish.status === 'pending' && <Clock className="h-3 w-3 mr-1" />}
+                                {wish.status === 'approved' && <Check className="h-3 w-3 mr-1" />}
+                                {wish.status === 'rejected' && <X className="h-3 w-3 mr-1" />}
+                                {wish.status === 'pending' ? 'Chờ duyệt' :
+                                 wish.status === 'approved' ? 'Đã duyệt' : 'Từ chối'}
+                              </Badge>
+                              
+                              <div className="flex items-center space-x-2 text-xs text-gray-500">
+                                <Calendar className="h-3 w-3" />
+                                <span>
+                                  {new Intl.DateTimeFormat('vi-VN', {
+                                    day: '2-digit',
+                                    month: '2-digit',
+                                    year: 'numeric',
+                                    hour: '2-digit',
+                                    minute: '2-digit'
+                                  }).format(wish.timestamp)}
+                                </span>
+                              </div>
+                            </div>
+
+                            {/* Wish Content */}
+                            <div className="space-y-2">
+                              <p className="text-gray-800 leading-relaxed">
+                                "{wish.content}"
+                              </p>
+                              <div className="flex items-center space-x-2 text-sm text-gray-600">
+                                <User className="h-4 w-4" />
+                                <span className="font-medium">{wish.author}</span>
+                                <span className="text-gray-400">•</span>
+                                <span className="text-xs text-gray-500">ID: {wish.authorId}</span>
+                              </div>
+                            </div>
+
+                            {/* Action Buttons */}
+                            <div className="flex items-center justify-end space-x-2 pt-2 border-t">
+                              {wish.status === 'pending' && (
+                                <>
+                                  <Button
+                                    size="sm"
+                                    variant="outline"
+                                    onClick={() => {
+                                      approveWish(wish.id);
+                                      toast.success(`Đã duyệt lời chúc của ${wish.author}`);
+                                    }}
+                                    className="text-green-600 border-green-200 hover:bg-green-50"
+                                  >
+                                    <Check className="h-3 w-3 mr-1" />
+                                    Duyệt
+                                  </Button>
+                                  <Button
+                                    size="sm"
+                                    variant="outline"
+                                    onClick={() => {
+                                      rejectWish(wish.id);
+                                      toast.success(`Đã từ chối lời chúc của ${wish.author}`);
+                                    }}
+                                    className="text-red-600 border-red-200 hover:bg-red-50"
+                                  >
+                                    <X className="h-3 w-3 mr-1" />
+                                    Từ chối
+                                  </Button>
+                                </>
+                              )}
+                              
+                              {wish.status === 'approved' && (
+                                <Button
+                                  size="sm"
+                                  variant="outline"
+                                  onClick={() => {
+                                    rejectWish(wish.id);
+                                    toast.success(`Đã chuyển lời chúc của ${wish.author} sang trạng thái từ chối`);
+                                  }}
+                                  className="text-red-600 border-red-200 hover:bg-red-50"
+                                >
+                                  <X className="h-3 w-3 mr-1" />
+                                  Thu hồi
+                                </Button>
+                              )}
+                              
+                              {wish.status === 'rejected' && (
+                                <Button
+                                  size="sm"
+                                  variant="outline"
+                                  onClick={() => {
+                                    approveWish(wish.id);
+                                    toast.success(`Đã duyệt lại lời chúc của ${wish.author}`);
+                                  }}
+                                  className="text-green-600 border-green-200 hover:bg-green-50"
+                                >
+                                  <Check className="h-3 w-3 mr-1" />
+                                  Duyệt lại
+                                </Button>
+                              )}
+                              
+                              <Button
+                                size="sm"
+                                variant="outline"
+                                onClick={() => {
+                                  if (confirm(`Bạn có chắc chắn muốn xóa vĩnh viễn lời chúc của ${wish.author}?`)) {
+                                    deleteWish(wish.id);
+                                    toast.success(`Đã xóa lời chúc của ${wish.author}`);
+                                  }
+                                }}
+                                className="text-gray-600 border-gray-200 hover:bg-gray-50"
+                              >
+                                <Trash2 className="h-3 w-3 mr-1" />
+                                Xóa
+                              </Button>
+                            </div>
+                          </div>
+                        ));
+                      })()}
+                    </div>
+
+                    {/* Quick Actions */}
+                    {getPendingWishes().length > 0 && (
+                      <div className="border-t pt-4 mt-6">
+                        <div className="flex items-center justify-between">
+                          <span className="text-sm text-gray-600">
+                            Thao tác nhanh với {getPendingWishes().length} lời chúc đang chờ:
+                          </span>
+                          <div className="flex items-center space-x-2">
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              onClick={() => {
+                                getPendingWishes().forEach(wish => approveWish(wish.id));
+                                toast.success(`Đã duyệt tất cả ${getPendingWishes().length} lời chúc`);
+                              }}
+                              className="text-green-600 border-green-200 hover:bg-green-50"
+                            >
+                              <Check className="h-3 w-3 mr-1" />
+                              Duyệt tất cả
+                            </Button>
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              onClick={() => {
+                                if (confirm(`Bạn có chắc chắn muốn từ chối tất cả ${getPendingWishes().length} lời chúc đang chờ?`)) {
+                                  getPendingWishes().forEach(wish => rejectWish(wish.id));
+                                  toast.success(`Đã từ chối tất cả lời chúc`);
+                                }
+                              }}
+                              className="text-red-600 border-red-200 hover:bg-red-50"
+                            >
+                              <X className="h-3 w-3 mr-1" />
+                              Từ chối tất cả
+                            </Button>
+                          </div>
+                        </div>
+                      </div>
+                    )}
                   </CardContent>
                 </Card>
               </TabsContent>

@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { Button } from './ui/button';
-import { Menu, X, Settings } from 'lucide-react';
+import { Menu, X, Settings, LogIn, LogOut, User } from 'lucide-react';
 import { useTheme } from './ThemeProvider';
+import { useAuth } from './AuthContext';
 
 interface HeaderProps {
   currentPage: string;
@@ -11,13 +12,13 @@ interface HeaderProps {
 export function Header({ currentPage, onNavigate }: HeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { theme } = useTheme();
+  const { user, isLoggedIn, isAdmin, logout } = useAuth();
 
   const navigationItems = [
     { id: 'home', label: 'Trang chủ' },
     { id: 'academic', label: 'Đào tạo & Nghiên cứu' },
     { id: 'news', label: 'Tin tức' },
-    { id: 'white-label', label: 'Tùy chỉnh' },
-    { id: 'white-label-admin', label: 'Quản trị', icon: Settings, adminOnly: true },
+    ...(isAdmin ? [{ id: 'white-label-admin', label: 'Quản trị', icon: Settings, adminOnly: true }] : []),
     { id: 'contact', label: 'Liên hệ' },
   ];
 
@@ -53,13 +54,49 @@ export function Header({ currentPage, onNavigate }: HeaderProps) {
                       currentPage === item.id
                         ? 'bg-blue-900 text-white'
                         : 'university-text-primary hover:bg-blue-50'
-                    } ${item.adminOnly ? 'border border-dashed border-gray-300 opacity-75' : ''}`}
+                    } ${item.adminOnly ? 'border border-dashed border-blue-300 bg-blue-50' : ''}`}
                   >
                     {Icon && <Icon className="h-4 w-4" />}
                     <span>{item.label}</span>
                   </button>
                 );
               })}
+              
+              {/* User Menu */}
+              <div className="flex items-center space-x-2 ml-4 pl-4 border-l university-border">
+                {isLoggedIn ? (
+                  <>
+                    <div className="flex items-center space-x-2 px-3 py-2 rounded-md bg-muted">
+                      <User className="h-4 w-4 text-muted-foreground" />
+                      <span className="text-sm font-medium">{user?.fullName}</span>
+                      {isAdmin && (
+                        <span className="text-xs px-2 py-1 bg-university-accent text-white rounded-full">
+                          Admin
+                        </span>
+                      )}
+                    </div>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={logout}
+                      className="text-sm university-text-primary hover:bg-red-50 hover:text-red-600"
+                    >
+                      <LogOut className="h-4 w-4 mr-2" />
+                      Đăng xuất
+                    </Button>
+                  </>
+                ) : (
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => onNavigate('login')}
+                    className="text-sm university-text-primary hover:bg-blue-50"
+                  >
+                    <LogIn className="h-4 w-4 mr-2" />
+                    Đăng nhập
+                  </Button>
+                )}
+              </div>
             </div>
           </nav>
 
@@ -93,13 +130,53 @@ export function Header({ currentPage, onNavigate }: HeaderProps) {
                       currentPage === item.id
                         ? 'bg-blue-900 text-white'
                         : 'university-text-primary hover:bg-blue-50'
-                    } ${item.adminOnly ? 'border border-dashed border-gray-300 opacity-75' : ''}`}
+                    } ${item.adminOnly ? 'border border-dashed border-blue-300 bg-blue-50' : ''}`}
                   >
                     {Icon && <Icon className="h-5 w-5" />}
                     <span>{item.label}</span>
                   </button>
                 );
               })}
+              
+              {/* Mobile User Menu */}
+              <div className="pt-4 border-t university-border space-y-2">
+                {isLoggedIn ? (
+                  <>
+                    <div className="px-4 py-3 bg-muted rounded-md">
+                      <div className="flex items-center space-x-2">
+                        <User className="h-4 w-4 text-muted-foreground" />
+                        <span className="font-medium">{user?.fullName}</span>
+                        {isAdmin && (
+                          <span className="text-xs px-2 py-1 bg-university-accent text-white rounded-full">
+                            Admin
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                    <button
+                      onClick={() => {
+                        logout();
+                        setIsMenuOpen(false);
+                      }}
+                      className="w-full text-left px-4 py-3 rounded-md font-medium transition-all flex items-center space-x-3 text-red-600 hover:bg-red-50"
+                    >
+                      <LogOut className="h-5 w-5" />
+                      <span>Đăng xuất</span>
+                    </button>
+                  </>
+                ) : (
+                  <button
+                    onClick={() => {
+                      onNavigate('login');
+                      setIsMenuOpen(false);
+                    }}
+                    className="w-full text-left px-4 py-3 rounded-md font-medium transition-all flex items-center space-x-3 university-text-primary hover:bg-blue-50"
+                  >
+                    <LogIn className="h-5 w-5" />
+                    <span>Đăng nhập</span>
+                  </button>
+                )}
+              </div>
             </div>
           </div>
         )}
