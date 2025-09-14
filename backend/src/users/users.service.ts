@@ -1,74 +1,59 @@
 import { Injectable, NotFoundException, Param } from '@nestjs/common';
 import * as bcrypt from 'bcrypt'
-import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
+import { Prisma } from 'generated/prisma';
+import { DatabaseService } from 'src/database/database.service';
 
 @Injectable()
 export class UsersService {
-    private users = [{
-        id: 1,
-        name: 'Le Minh Nhut',
-        password: 'Nhut@123',
-        role: 'ADMIN'
-    }];
+    constructor(private readonly databaseService: DatabaseService) {}
 
-    findAll(role?: 'ADMIN' | 'USER') {
+    async findAll(role?: 'ADMIN' | 'USER') {
         if (role) {
-            const rolesArray =  this.users.filter(u => u.role === role)
-            if (rolesArray.length === 0) throw new NotFoundException('User Role Not Found')
-            return rolesArray
+            return this.databaseService.user.findMany({
+                where: {
+                    role,
+                }
+            })
         }
-        return this.users
+        return this.databaseService.user.findMany()
     }
 
-    findOne(id: number) {
-        const user = this.users.find(u => u.id === id)
-        if (!user) throw new NotFoundException('User Not Found')
-        return user
+    async findOne(id: number) {
+        return this.databaseService.user.findUnique({
+            where: {
+                id,
+            }
+        })
     }
     
-    async createOne(createUserDto: CreateUserDto) {
+    async createOne(createUserDto: Prisma.UserCreateInput) {
         const hashedPassword = await bcrypt.hash(createUserDto.password, 10);
 
-        const userByHighestId = [...this.users].sort((a, b) => b.id - a.id)
-        const newUser = {
-            id: userByHighestId[0].id + 1,
-            ...createUserDto,
-            password: hashedPassword
-        }
-        this.users.push(newUser)
-        return newUser
-    }
-
-    async patchOne(id:number, updatedUserDto: UpdateUserDto) {
-        let newHashedPassword: string
-        if (updatedUserDto.password) {
-            newHashedPassword = await bcrypt.hash(updatedUserDto.password, 10)
-        }
-
-        this.users = this.users.map(user => {
-            if (user.id === id) {
-                return { 
-                    ...user,
-                    ...updatedUserDto,
-                    ...(newHashedPassword && {password: newHashedPassword})
-                }
-            }
-            return user
+        return this.databaseService.user.create({
+            data:  {...createUserDto, password: hashedPassword}
         })
-
-        return this.findOne(id)
     }
 
-    deleteOne(id: number) {
-        const removedUser = this.findOne(id)
-        this.users = this.users.filter(user => user.id !== id )
+    async patchOne(id:number, updatedUserDto: Prisma.UserUpdateInput) {
+        if (updatedUserDto.password) {
+            updatedUserDto.password = await bcrypt.hash(updatedUserDto.password.toString(), 10)
+        }
 
-        return removedUser
+        return this.databaseService.user.update({
+            where: { id },
+            data: updatedUserDto
+        })
+    }
+
+    async deleteOne(id: number) {
+        return this.databaseService.user.delete({
+            where: {id}
+        })
     }
 
     async validateUser(id: number, password: string): Promise<any> {
-        const user = this.findOne(id)
+        const user = await this.findOne(id)
+
         if (user && await bcrypt.compare(password, user.password)) {
             const { password, ...result } = user
             return result
