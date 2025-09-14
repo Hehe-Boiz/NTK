@@ -1,26 +1,37 @@
 import { Injectable } from '@nestjs/common';
-import { CreateWishDto } from './dto/create-wish.dto';
-import { UpdateWishDto } from './dto/update-wish.dto';
+import { Prisma } from 'generated/prisma';
+import { DatabaseService } from 'src/database/database.service';
 
 @Injectable()
 export class WishService {
-  create(createWishDto: CreateWishDto) {
-    return 'This action adds a new wish';
+  constructor(private readonly databaseService: DatabaseService) {}
+
+  create(createWishDto: Prisma.WishCreateInput) {
+    return this.databaseService.wish.create({
+      data: createWishDto
+    });
   }
 
   findAll() {
-    return `This action returns all wish`;
+    return this.databaseService.wish.findMany();
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} wish`;
+    return this.databaseService.wish.findUnique({
+      where: {id}
+    });
   }
 
-  update(id: number, updateWishDto: UpdateWishDto) {
-    return `This action updates a #${id} wish`;
+  update(id: number, updateWishDto: Prisma.WishUpdateInput) {
+    return this.databaseService.wish.update({
+      where: {id},
+      data: updateWishDto
+    });
   }
 
   remove(id: number) {
-    return `This action removes a #${id} wish`;
+    return this.databaseService.wish.delete({
+      where: {id}
+    });
   }
 }

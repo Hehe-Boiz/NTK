@@ -1,14 +1,13 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { WishService } from './wish.service';
-import { CreateWishDto } from './dto/create-wish.dto';
-import { UpdateWishDto } from './dto/update-wish.dto';
+import { Prisma } from 'generated/prisma';
 
 @Controller('wish')
 export class WishController {
   constructor(private readonly wishService: WishService) {}
 
   @Post()
-  create(@Body() createWishDto: CreateWishDto) {
+  create(@Body() createWishDto: Prisma.WishCreateInput) {
     return this.wishService.create(createWishDto);
   }
 
@@ -23,7 +22,7 @@ export class WishController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateWishDto: UpdateWishDto) {
+  update(@Param('id') id: string, @Body() updateWishDto: Prisma.WishUpdateInput) {
     return this.wishService.update(+id, updateWishDto);
   }
 
