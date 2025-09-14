@@ -1,0 +1,71 @@
+{
+  "primaryColor": "#1e40af",
+  "secondaryColor": "#a855f7",
+  "backgroundColor": "#ffffff",
+  "textColor": "#1f2937",
+  "logoText": "Khoa Tài chính",
+  "universityName": "Trường Đại học XYZ",
+  "facultyName": "Khoa Công nghệ Thông tin",
+  "establishedYear": "1990",
+  "motto": "35 năm đồng hành cùng sự phát triển của ngành Công nghệ Thông tin Việt Nam",
+  "contactInfo": {
+    "phone": "(028) 1234 5678",
+    "email": "cntt@university.edu.vn",
+    "address": "123 Đường ABC, Quận 1, TP.HCM"
+  },
+  "anniversaryYear": "2025",
+  "anniversarySlogan": "35 năm kiến tạo tương lai số",
+  "mission": "Đào tạo nguồn nhân lực công nghệ thông tin chất lượng cao, thúc đẩy nghiên cứu khoa học và chuyển giao công nghệ, đóng góp vào sự phát triển của xã hội số.",
+  "vision": "Trở thành một trong 10 khoa công nghệ thông tin hàng đầu Đông Nam Á, được quốc tế công nhận về chất lượng đào tạo và nghiên cứu khoa học.",
+  "coreValues": "Chất lượng - Đổi mới - Hợp tác - Phát triển bền vững",
+  "milestones": [
+    {
+      "year": "1990",
+      "title": "Thành lập Khoa CNTT",
+      "description": "Khoa Công nghệ Thông tin được thành lập với sứ mệnh đào tạo nhân lực chất lượng cao",
+      "icon": "Building"
+    },
+    {
+      "year": "1995",
+      "title": "Chương trình Cử nhân",
+      "description": "Triển khai chương trình đào tạo Cử nhân Công nghệ Thông tin đạt chuẩn quốc gia",
+      "icon": "GraduationCap"
+    },
+    {
+      "year": "2000",
+      "title": "Hợp tác quốc tế",
+      "description": "Thiết lập quan hệ đối tác với các trường đại học hàng đầu trên thế giới",
+      "icon": "Globe"
+    },
+    {
+      "year": "2005",
+      "title": "Chương trình Thạc sĩ",
+      "description": "Mở rộng hệ thống đào tạo với chương trình Thạc sĩ và nghiên cứu khoa học",
+      "icon": "Award"
+    },
+    {
+      "year": "2010",
+      "title": "Đổi mới giáo dục",
+      "description": "Triển khai phương pháp giảng dạy hiện đại và học tập tích cực",
+      "icon": "Lightbulb"
+    },
+    {
+      "year": "2015",
+      "title": "Chuyển đổi số",
+      "description": "Tiên phong trong ứng dụng công nghệ số vào giáo dục và quản lý",
+      "icon": "TrendingUp"
+    },
+    {
+      "year": "2020",
+      "title": "Nghiên cứu AI",
+      "description": "Thành lập trung tâm nghiên cứu Trí tuệ Nhân tạo và Machine Learning",
+      "icon": "Target"
+    },
+    {
+      "year": "2025",
+      "title": "Kỷ niệm 35 năm",
+      "description": "Đạt mốc 15,000+ cử nhân tốt nghiệp và định hướng phát triển bền vững",
+      "icon": "Trophy"
+    }
+  ]
+}
