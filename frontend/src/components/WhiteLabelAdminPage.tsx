@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card_bak';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Label } from './ui/label';
@@ -41,6 +41,7 @@ import {
   Info
 } from 'lucide-react';
 import { toast } from 'sonner';
+
 const ColorInput = ({ 
   label, 
   value, 
@@ -51,13 +52,13 @@ const ColorInput = ({
   value: string; 
   onChange: (color: string) => void;
   description?: string;
-}) => (
+}) => (   
   <div className="space-y-2">
 
     <Label className="text-sm font-medium">{label}</Label>
     <div className="flex items-center space-x-3">
       <div 
-          className="w-12 h-10 rounded-lg border-2 border-border cursor-pointer shadow-sm"
+          className="w-12 h-10 rounded-lg border-2 mt-1 border-border cursor-pointer shadow-sm"
           style={{ backgroundColor: value }}
           onClick={() => {
             // Tạo input ẩn để mở công cụ chọn màu
@@ -454,7 +455,7 @@ export function WhiteLabelAdminPage() {
                     <div className="space-y-4">
                       {currentTheme.milestones.map((milestone: any, index: number) => (
                         <div key={index} className="border rounded-lg p-4 bg-gray-50">
-                          <div className="grid md:grid-cols-4 gap-4">
+                          <div className="grid md:grid-cols-5 gap-4">
                             <div>
                               <Label>Năm</Label>
                               <Input
@@ -503,6 +504,17 @@ export function WhiteLabelAdminPage() {
                                 <option value="Star">⭐ Star</option>
                               </select>
                             </div>
+                            <div>
+                              <ColorInput 
+                                label=""
+                                value={milestone.color}
+                                onChange={(color) =>{const newMilestones = [...currentTheme.milestones];
+                                    newMilestones[index] = { ...milestone, color: color };
+                                    handleInputChange('milestones', newMilestones); }}
+                                description="Màu chính được sử dụng cho các button, link và elements quan trọng"
+                            />
+                            </div>
+                            
                             <div className="md:col-span-4">
                               <Label>Mô tả</Label>
                               <Textarea

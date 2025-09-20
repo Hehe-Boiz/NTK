@@ -180,13 +180,15 @@ export function ContactPage() {
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-blue-900 to-indigo-900 text-white py-20">
+      <section className="bg-gradient-to-r from-blue-900 to-indigo-900 py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
-            <h1 className="text-4xl md:text-6xl font-bold mb-6">
+          
+            <h1 className="text-4xl md:text-6xl font-bold mb-6 text-white ">
               Liên hệ với chúng tôi
             </h1>
-            <p className="text-xl md:text-2xl mb-8 max-w-4xl mx-auto">
+         
+            <p className="text-sm md:text-2xl text-gray-300 mb-8 max-w-4xl mx-auto">
               Chúng tôi luôn sẵn sàng lắng nghe và hỗ trợ bạn. 
               Hãy liên hệ để được tư vấn và giải đáp mọi thắc mắc.
             </p>

@@ -3,7 +3,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/
 import { Badge } from './ui/badge';
 import { Button } from './ui/button';
 import { Separator } from './ui/separator';
-import { AchievementsSection} from './AchievementsSection'
+import { AchievementsSection} from './Home/AchievementsSection'
+import locallLabImage from '../public/images/ouimage.jpg'
 import { 
   Users, 
   Award, 
@@ -31,6 +32,10 @@ import { useTheme } from './ThemeProvider';
 import { WishForm } from './WishForm';
 import { WishBubbles } from './WishBubbles';
 
+import { useHeroData } from "../contexts/AdminConfigContext";
+import { HistoryTimeline } from './Home/HistoryTimeline';
+import { leadership, testimonials } from '../data/homepage-data';
+
 interface HomePageProps {
   onNavigate: (page: string) => void;
 }
@@ -53,95 +58,14 @@ const iconMap = {
 export function HomePage({ onNavigate }: HomePageProps) {
   const { theme } = useTheme();
 
-  const achievements = [
-    {
-      number: '15,000+',
-      label: 'Cử nhân tốt nghiệp',
-      description: '35 năm đào tạo'
-    },
-    {
-      number: '96%',
-      label: 'Tỷ lệ có việc làm',
-      description: 'Trong vòng 6 tháng'
-    },
-    {
-      number: '200+',
-      label: 'Công trình nghiên cứu',
-      description: 'Tạp chí quốc tế'
-    },
-    {
-      number: '50+',
-      label: 'Giải thưởng',
-      description: 'Trong và ngoài nước'
-    }
-  ];
-
-  const leadership = [
-    {
-      name: 'GS.TS. Nguyễn Văn An',
-      position: 'Trưởng khoa',
-      expertise: 'Trí tuệ Nhân tạo, Machine Learning',
-      education: 'Ph.D Computer Science, Stanford University',
-      achievements: [
-        'Tác giả 80+ công trình nghiên cứu',
-        'Giải thưởng Nhà khoa học xuất sắc 2023',
-        'Chuyên gia tư vấn Chính phủ về AI'
-      ]
-    },
-    {
-      name: 'PGS.TS. Trần Thị Minh',
-      position: 'Phó Trưởng khoa phụ trách Đào tạo',
-      expertise: 'An toàn Thông tin, Blockchain',
-      education: 'Ph.D Information Security, MIT',
-      achievements: [
-        'Trưởng nhóm nghiên cứu Cybersecurity',
-        'Chủ biên 5 giáo trình chuyên ngành',
-        'Cố vấn an ninh mạng quốc gia'
-      ]
-    },
-    {
-      name: 'TS. Lê Hoàng Nam',
-      position: 'Trưởng Bộ môn Kỹ thuật Phần mềm',
-      expertise: 'Software Engineering, Cloud Computing',
-      education: 'Ph.D Software Engineering, CMU',
-      achievements: [
-        'Kiến trúc sư phần mềm cấp cao',
-        'Founder 2 startup công nghệ thành công',
-        'Cố vấn kỹ thuật cho 20+ doanh nghiệp'
-      ]
-    }
-  ];
-
-  const testimonials = [
-    {
-      name: 'Nguyễn Minh Tuấn',
-      role: 'CTO, VinTech Solutions',
-      year: 'K44 - 2018',
-      content: 'Chương trình đào tạo tại Khoa không chỉ trang bị kiến thức chuyên môn vững chắc mà còn phát triển tư duy phản biện và khả năng giải quyết vấn đề phức tạp. Điều này giúp tôi thành công trong vai trò lãnh đạo công nghệ.',
-      company: 'VinTech Solutions'
-    },
-    {
-      name: 'Phạm Thu Hương',
-      role: 'Data Science Manager, FPT Software',
-      year: 'K46 - 2020',
-      content: 'Những dự án thực tế trong quá trình học đã chuẩn bị tốt cho tôi bước vào thế giới Data Science. Các thầy cô luôn cập nhật xu hướng công nghệ mới nhất và tạo điều kiện cho sinh viên nghiên cứu.',
-      company: 'FPT Software'
-    },
-    {
-      name: 'Lê Đức Minh',
-      role: 'Co-founder & CEO, TechStart Vietnam',
-      year: 'K42 - 2016',
-      content: 'Môi trường học tập tại Khoa khuyến khích sự sáng tạo và tinh thần khởi nghiệp. Tôi đã học được không chỉ kỹ thuật mà còn cả kỹ năng lãnh đạo và quản trị doanh nghiệp từ các hoạt động ngoại khóa.',
-      company: 'TechStart Vietnam'
-    }
-  ];
+  const heroData = useHeroData();
 
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
       <section className="relative min-h-[90vh] flex items-center overflow-hidden bg-gray-50">
         {/* Background Image */}
-        <div className="absolute inset-0 z-0">
+        <div className="absolute inset-0 ">
           <ImageWithFallback
             src="https://images.unsplash.com/photo-1600903308878-bf5e554ab841?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx1bml2ZXJzaXR5JTIwY2FtcHVzJTIwYnVpbGRpbmclMjBtb2Rlcm4lMjBhcmNoaXRlY3R1cmV8ZW58MXx8fHwxNzU4MTcxMjAwfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
             alt="University Campus"
@@ -151,11 +75,10 @@ export function HomePage({ onNavigate }: HomePageProps) {
         </div>
 
         {/* Content */}
-        <div className="relative z-10 container-super-university py-20">
-          <div className="grid w-900px lg:grid-cols-3 gap-12 items-center">
-            
+        <div className="container-super-university py-20">
+          <div className="grid w-900px lg:grid-cols-2 gap-32 items-center">
             {/* Left Column - Text Content */}
-            <div className="text-white lg:col-span-2">
+            <div className="text-white z-1">
               {/* Anniversary Badge */}
               <Badge className="bg-white/20 text-white border-white/30 backdrop-blur-sm px-4 py-2 mb-8 inline-flex items-center">
                 <History className="h-4 w-4 mr-2" />
@@ -179,57 +102,35 @@ export function HomePage({ onNavigate }: HomePageProps) {
                   — {theme.anniversarySlogan}
                 </p>
               </div>
-              <div className="grid grid-cols-2 gap-4">
-                {achievements.slice(0, 4).map((achievement, index) => (
-                  <Card key={index} className="bg-white/95 backdrop-blur-sm border-0 university-shadow">
-                    <CardContent className="p-6 text-center">
-                      <div className="text-2xl md:text-3xl font-bold university-text-primary mb-1">
-                        {achievement.number}
-                      </div>
-                      <div className="text-sm font-medium text-gray-800 mb-1">
-                        {achievement.label}
-                      </div>
-                      <div className="text-xs university-text-secondary">
-                        {achievement.description}
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))}
+              
+              <div className="flex flex-col sm:flex-row gap-4 ">
+                <Button size="lg" className="text-base text-blue-900 bg-white" asChild>
+                  <a href={heroData.cta.primary.href}>
+                    {heroData.cta.primary.text}
+                  </a>
+                </Button>
+                <Button variant="outline" size="lg" className="text-base" asChild>
+                  <a href={heroData.cta.secondary.href}>
+                    {heroData.cta.secondary.text}
+                  </a>
+                </Button>
               </div>
 
-          
+
 
               {/* CTA Buttons */}
-              {/* <div className="flex flex-col sm:flex-row gap-4">
-                <Button 
-                  size="lg" 
-                  className="bg-white text-blue-900 hover:bg-blue-50 hover:scale-105 transition-transform px-8 py-4"
-                  onClick={() => onNavigate('academic')}
-                >
-                  <BookOpen className="mr-2 h-5 w-5" />
-                  Chương trình đào tạo
-                </Button>
-                <Button 
-                  size="lg" 
-                  variant="outline" 
-                  className="border-2 border-white text-white hover:bg-white hover:text-blue-900 hover:scale-105 transition-transform px-8 py-4 backdrop-blur-sm"
-                  onClick={() => onNavigate('contact')}
-                >
-                  <Phone className="mr-2 h-4 w-4" />
-                  Liên hệ tư vấn
-                </Button>
-              </div> */}
             </div>
-            <div className="relative rounded-md">
-              <div className="relative rounded-md overflow-hidden">
+            {/* Ảnh bên phải */}
+            <div className="">
+              <div className="rounded-md relative ">
                   <ImageWithFallback
-                    src="https://images.unsplash.com/photo-1648279430956-a7d4a5d66c3a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjb21wdXRlciUyMHNjaWVuY2UlMjB1bml2ZXJzaXR5JTIwdGVjaG5vbG9neXxlbnwxfHx8fDE3NTgxODc4NDl8MA&ixlib=rb-4.1.0&q=80&w=1080"
+                    src={locallLabImage}
                     alt="Technology and Computer Science"
-                    className="rounded-2xl shadow-2xl "
+                    className="rounded-2xl shadow-2xl w-[600px] h-[500px] object-cover z-1 relative"
                   />
                 {/* Decorative elements */}
-                <div className="absolute -top-6 -right-6 w-24 h-24 bg-gradient-to-br from-blue-400 to-indigo-500 rounded-2xl opacity-20"></div>
-                <div className="absolute -bottom-6 -left-6 w-32 h-32 bg-gradient-to-br from-purple-400 to-pink-500 rounded-2xl opacity-20"></div>
+                <div className="absolute -top-8 -right-12 w-32 h-32 bg-white rounded-2xl opacity-70 z-0"></div>
+                <div className="absolute -bottom-10 -left-10 w-42 h-42 bg-gradient-to-br from-white to-blue-900 rounded-2xl z-0"></div>
               </div>
             </div>
           </div>
@@ -243,28 +144,13 @@ export function HomePage({ onNavigate }: HomePageProps) {
           </div>
         </div>
       </section>
-
-      {/* Key Statistics */}
-      <section className="py-16 bg-white border-b university-border">
-        <div className="container-university">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            {achievements.map((achievement, index) => (
-              <div key={index} className="text-center">
-                <div className="text-4xl md:text-5xl font-bold university-text-primary mb-2">
-                  {achievement.number}
-                </div>
-                <div className="font-medium text-lg mb-1">{achievement.label}</div>
-                <div className="text-sm university-text-secondary">{achievement.description}</div>
-              </div>
-            ))}
-          </div>
-        </div>
+      <section  className="university-border border-t">
+        <AchievementsSection></AchievementsSection>
       </section>
-
       {/* About Section - Long Form */}
-      <section className="py-20">
-        <div className="container-university">
-          <div className="text-center mb-16">
+      <section id="chuong-trinh" className="py-20 border-t">
+        <div className="container-university border-b ">
+          <div className="text-center container-university mb-16">
             <h2 className="text-4xl font-bold university-text-primary mb-6">
               Về {theme.facultyName}
             </h2>
@@ -336,58 +222,8 @@ export function HomePage({ onNavigate }: HomePageProps) {
             </div>
           </div>
 
-          {/* Timeline - Editable from Admin */}
-          <div className="mb-20">
-            <div className="text-center mb-16">
-              <h3 className="text-3xl font-bold university-text-primary mb-6">
-                Hành trình {parseInt(theme.anniversaryYear) - parseInt(theme.establishedYear)} năm phát triển
-              </h3>
-              <p className="text-xl university-text-secondary max-w-3xl mx-auto">
-                Từ những bước đầu khiêm tốn đến trở thành một trong những 
-                khoa công nghệ thông tin hàng đầu của quốc gia
-              </p>
-            </div>
-
-            <div className="relative max-w-5xl mx-auto">
-              <div className="absolute left-1/2 transform -translate-x-px h-full w-0.5 bg-gray-200"></div>
-              
-              {/* Wish Bubbles Overlay - positioned to cover the entire timeline area */}
-              <div className="absolute inset-0 z-30 pointer-events-none">
-                <WishBubbles />
-              </div>
-              
-              <div className="space-y-16 relative z-20">
-                {theme.milestones.map((milestone, index) => {
-                  const IconComponent = iconMap[milestone.icon as keyof typeof iconMap] || Building;
-                  const isEven = index % 2 === 0;
-                  
-                  return (
-                    <div key={index} className="relative flex items-center">
-                      <div className="absolute left-1/2 transform -translate-x-1/2 w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center z-10 university-shadow-lg">
-                        <IconComponent className="h-6 w-6 text-white" />
-                      </div>
-                      
-                      <div className={`w-5/12 ${isEven ? 'pr-12 text-right' : 'ml-auto pl-12'}`}>
-                        <Card className="university-shadow hover:university-shadow-lg transition-all">
-                          <CardContent className="pt-8">
-                            <Badge variant="outline" className="mb-4 text-base px-4 py-2">
-                              {milestone.year}
-                            </Badge>
-                            <h4 className="text-xl font-bold mb-4 university-text-primary">
-                              {milestone.title}
-                            </h4>
-                            <p className="university-text-secondary leading-relaxed">
-                              {milestone.description}
-                            </p>
-                          </CardContent>
-                        </Card>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          </div>
+          
+          <HistoryTimeline></HistoryTimeline>
 
           {/* Leadership Team */}
           <div className="mb-20">
@@ -528,7 +364,7 @@ export function HomePage({ onNavigate }: HomePageProps) {
         <div className="container-university">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold university-text-primary mb-6">
-              Câu chuyện Thành công
+              Thành tích của Khoa
             </h2>
             <p className="text-xl university-text-secondary max-w-4xl mx-auto">
               Những chia sẻ từ các cựu sinh viên đã thành công trong sự nghiệp, 
@@ -701,31 +537,9 @@ export function HomePage({ onNavigate }: HomePageProps) {
               </div>
             </Card>
           </div>
-
-          {/* Gallery Statistics */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-            <div className="p-6">
-              <div className="text-3xl font-bold university-text-primary mb-2">50+</div>
-              <div className="text-sm university-text-secondary">Phòng học hiện đại</div>
-            </div>
-            <div className="p-6">
-              <div className="text-3xl font-bold university-text-primary mb-2">20+</div>
-              <div className="text-sm university-text-secondary">Phòng Lab chuyên dụng</div>
-            </div>
-            <div className="p-6">
-              <div className="text-3xl font-bold university-text-primary mb-2">5</div>
-              <div className="text-sm university-text-secondary">Tòa nhà Khoa</div>
-            </div>
-            <div className="p-6">
-              <div className="text-3xl font-bold university-text-primary mb-2">100ha</div>
-              <div className="text-sm university-text-secondary">Diện tích campus</div>
-            </div>
-          </div>
         </div>
       </section>
-      <section className="university-border border-t">
-        <AchievementsSection></AchievementsSection>
-      </section>
+      
       {/* Call to Action */}
       <section className="py-20 bg-white border-t university-border">
         <div className="container-university text-center">

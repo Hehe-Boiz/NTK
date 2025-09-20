@@ -16,15 +16,15 @@ export function Header({ currentPage, onNavigate }: HeaderProps) {
 
   const navigationItems = [
     { id: 'home', label: 'Trang chủ' },
-    { id: 'academic', label: 'Đào tạo & Nghiên cứu' },
+    { id: 'academic', label: 'Đào tạo' },
     { id: 'news', label: 'Tin tức' },
     ...(isAdmin ? [{ id: 'white-label-admin', label: 'Quản trị', icon: Settings, adminOnly: true }] : []),
     { id: 'contact', label: 'Liên hệ' },
   ];
 
   return (
-    <header className="bg-white university-shadow sticky top-0 z-50 border-b university-border">
-      <div className="container-university">
+    <header className="bg-white university-shadow sticky top-0 z-50 border-b university-border pl-20 pr-20">
+      <div className="container-super-university">
         <div className="flex justify-between items-center h-20">
           {/* Logo */}
           <div className="flex items-center space-x-4">

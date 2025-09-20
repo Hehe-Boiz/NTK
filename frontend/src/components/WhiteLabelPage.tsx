@@ -248,6 +248,7 @@ export function WhiteLabelPage() {
                       <Star className="w-4 h-4 mr-1" />
                       Phổ biến nhất
                     </Badge>
+                    
                   </div>
                 )}
                 <CardHeader className="text-center">

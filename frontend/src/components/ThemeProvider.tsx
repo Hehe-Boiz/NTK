@@ -1,9 +1,12 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 
+import { Calendar, Trophy, Globe, GraduationCap, Monitor, Brain, Smartphone, Star } from "lucide-react";
+
 interface Milestone {
   year: string;
   title: string;
   description: string;
+  color: string;
   icon: string;
 }
 
@@ -30,6 +33,7 @@ interface ThemeConfig {
   coreValues: string;
   milestones: Milestone[];
 }
+
 
 interface ThemeContextType {
   theme: ThemeConfig;
@@ -59,58 +63,68 @@ const defaultTheme: ThemeConfig = {
   mission: 'Đào tạo nguồn nhân lực công nghệ thông tin chất lượng cao, thúc đẩy nghiên cứu khoa học và chuyển giao công nghệ, đóng góp vào sự phát triển của xã hội số.',
   vision: 'Trở thành một trong 10 khoa công nghệ thông tin hàng đầu Đông Nam Á, được quốc tế công nhận về chất lượng đào tạo và nghiên cứu khoa học.',
   coreValues: 'Chất lượng - Đổi mới - Hợp tác - Phát triển bền vững',
-  milestones: [
+  milestones : [
     {
-      year: '1990',
-      title: 'Thành lập Khoa CNTT',
-      description: 'Khoa Công nghệ Thông tin được thành lập với sứ mệnh đào tạo nhân lực chất lượng cao',
-      icon: 'Building'
+      year: "1989",
+      title: "Thành lập Khoa CNTT",
+      description: "Khoa Công nghệ thông tin được thành lập với 5 giảng viên và 50 sinh viên đầu tiên.",
+      icon: "Building",
+      color: "from-blue-500 to-blue-700",
     },
     {
-      year: '1995',
-      title: 'Chương trình Cử nhân',
-      description: 'Triển khai chương trình đào tạo Cử nhân Công nghệ Thông tin đạt chuẩn quốc gia',
-      icon: 'GraduationCap'
+      year: "1995",
+      title: "Mở rộng chương trình đào tạo",
+      description: "Bổ sung thêm các chuyên ngành Kỹ thuật phần mềm và Hệ thống thông tin.",
+      icon: 'GraduationCap',
+      color: "from-cyan-400 to-cyan-600",
     },
     {
-      year: '2000',
-      title: 'Hợp tác quốc tế',
-      description: 'Thiết lập quan hệ đối tác với các trường đại học hàng đầu trên thế giới',
-      icon: 'Globe'
+      year: "2000",
+      title: "Chuẩn hóa chất lượng",
+      description: "Được công nhận đạt chuẩn chất lượng đào tạo đại học theo tiêu chuẩn quốc gia.",
+      icon: 'Globe',
+      color: "from-amber-500 to-amber-500",
     },
     {
-      year: '2005',
-      title: 'Chương trình Thạc sĩ',
-      description: 'Mở rộng hệ thống đào tạo với chương trình Thạc sĩ và nghiên cứu khoa học',
-      icon: 'Award'
+      year: "2005",
+      title: "Hợp tác quốc tế",
+      description: "Ký kết các thỏa thuận hợp tác với các trường đại học hàng đầu thế giới.",
+      icon: 'Award',
+      color: "from-purple-500 to-indigo-600",
     },
     {
-      year: '2010',
-      title: 'Đổi mới giáo dục',
-      description: 'Triển khai phương pháp giảng dạy hiện đại và học tập tích cực',
-      icon: 'Lightbulb'
+      year: "2010",
+      title: "Phòng lab hiện đại",
+      description: "Đầu tư xây dựng hệ thống phòng thí nghiệm với trang thiết bị hiện đại.",
+      icon: 'Lightbulb',
+      color: "from-green-500 to-emerald-600",
     },
     {
-      year: '2015',
-      title: 'Chuyển đổi số',
-      description: 'Tiên phong trong ứng dụng công nghệ số vào giáo dục và quản lý',
-      icon: 'TrendingUp'
+      year: "2015",
+      title: "Chương trình thạc sĩ",
+      description: "Mở chương trình đào tạo thạc sĩ và tiến sĩ chuyên ngành CNTT.",
+      icon: 'TrendingUp',
+      color: "from-rose-500 to-pink-600",
     },
     {
-      year: '2020',
-      title: 'Nghiên cứu AI',
-      description: 'Thành lập trung tâm nghiên cứu Trí tuệ Nhân tạo và Machine Learning',
-      icon: 'Target'
+      year: "2020",
+      title: "Chuyển đổi số",
+      description: "Triển khai toàn diện chương trình chuyển đổi số trong giảng dạy và quản lý.",
+      icon: 'Target',
+      color: "from-teal-500 to-teal-600",
     },
     {
-      year: '2025',
-      title: 'Kỷ niệm 35 năm',
-      description: 'Đạt mốc 15,000+ cử nhân tốt nghiệp và định hướng phát triển bền vững',
-      icon: 'Trophy'
-    }
-  ]
+      year: "2024",
+      title: "Kỷ niệm 35 năm",
+      description: "Tự hào kỷ niệm 35 năm thành lập với nhiều thành tựu đáng tự hào.",
+      icon: 'Trophy',
+      color: "from-yellow-500 to-orange-500",
+    },
+  ],
 };
-
+export function GetDefaultTheme(){
+  return defaultTheme
+}
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
