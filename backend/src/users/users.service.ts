@@ -74,4 +74,12 @@ export class UsersService {
         }
         return user.role === 'ADMIN';
     }
+
+    async isUser(id: number): Promise<any> {
+        const user = await this.findOne(id);
+        if (!user) {
+            throw new NotFoundException('User not found');
+        }
+        return user.role === 'USER';
+    }
 }

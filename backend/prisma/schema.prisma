@@ -22,8 +22,10 @@ model Subject {
 
 model Wish {
   id Int @id @default(autoincrement())
-  name String
   content String
+
+  user User @relation(fields: [userName], references: [name])
+  userName String
 }
 
 model User {
@@ -31,6 +33,7 @@ model User {
   name String @unique
   password String
   role Role
+  wish Wish[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }

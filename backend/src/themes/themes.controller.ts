@@ -2,7 +2,7 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@n
 import { ThemesService } from './themes.service';
 import { UpdateThemeDto } from './dto/update-theme.dto';
 import { AuthGuard } from '@nestjs/passport';
-import { AdminGuard } from 'src/auth/auth.guard';
+import { AdminGuard } from 'src/auth/admin.guard';
 
 @Controller('themes')
 @UseGuards(AuthGuard('jwt'), AdminGuard)
