@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException, Param } from '@nestjs/common';
+import { Injectable, NotFoundException, Param, UseGuards } from '@nestjs/common';
 import * as bcrypt from 'bcrypt'
 import { Prisma } from 'generated/prisma';
 import { DatabaseService } from 'src/database/database.service';
@@ -51,13 +51,27 @@ export class UsersService {
         })
     }
 
-    async validateUser(id: number, password: string): Promise<any> {
-        const user = await this.findOne(id)
+    async validateUser(username: string, password: string): Promise<any> {
+        const user = await this.findByName(username)
 
         if (user && await bcrypt.compare(password, user.password)) {
             const { password, ...result } = user
             return result
         }
         return null
+    }
+
+    async findByName(username: string) {
+        return this.databaseService.user.findUnique({
+            where: { name: username },
+        });
+    }
+
+    async isAdmin(id: number): Promise<any> {
+        const user = await this.findOne(id);
+        if (!user) {
+            throw new NotFoundException('User not found');
+        }
+        return user.role === 'ADMIN';
     }
 }

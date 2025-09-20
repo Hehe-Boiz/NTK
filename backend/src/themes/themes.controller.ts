@@ -1,34 +1,26 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
 import { ThemesService } from './themes.service';
-import { CreateThemeDto } from './dto/create-theme.dto';
 import { UpdateThemeDto } from './dto/update-theme.dto';
+import { AuthGuard } from '@nestjs/passport';
+import { AdminGuard } from 'src/auth/auth.guard';
 
 @Controller('themes')
+@UseGuards(AuthGuard('jwt'), AdminGuard)
 export class ThemesController {
   constructor(private readonly themesService: ThemesService) {}
 
-  @Post()
-  create(@Body() createThemeDto: CreateThemeDto) {
-    return this.themesService.create(createThemeDto);
-  }
-
   @Get()
-  findAll() {
-    return this.themesService.findAll();
+  getCurrent() {
+    return this.themesService.getCurrent();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.themesService.findOne(+id);
+  @Post()
+  update(@Body() updateThemeDto: UpdateThemeDto) {
+    return this.themesService.update(updateThemeDto);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateThemeDto: UpdateThemeDto) {
-    return this.themesService.update(+id, updateThemeDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.themesService.remove(+id);
+  @Delete()
+  reset() {
+    return this.themesService.reset();
   }
 }

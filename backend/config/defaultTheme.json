@@ -23,49 +23,57 @@
       "year": "1990",
       "title": "Thành lập Khoa CNTT",
       "description": "Khoa Công nghệ Thông tin được thành lập với sứ mệnh đào tạo nhân lực chất lượng cao",
-      "icon": "Building"
+      "icon": "Building",
+      "color": "#1e40af"
     },
     {
       "year": "1995",
       "title": "Chương trình Cử nhân",
       "description": "Triển khai chương trình đào tạo Cử nhân Công nghệ Thông tin đạt chuẩn quốc gia",
-      "icon": "GraduationCap"
+      "icon": "GraduationCap",
+      "color": "#1e40af"
     },
     {
       "year": "2000",
       "title": "Hợp tác quốc tế",
       "description": "Thiết lập quan hệ đối tác với các trường đại học hàng đầu trên thế giới",
-      "icon": "Globe"
+      "icon": "Globe",
+      "color": "#1e40af"
     },
     {
       "year": "2005",
       "title": "Chương trình Thạc sĩ",
       "description": "Mở rộng hệ thống đào tạo với chương trình Thạc sĩ và nghiên cứu khoa học",
-      "icon": "Award"
+      "icon": "Award",
+      "color": "#1e40af"
     },
     {
       "year": "2010",
       "title": "Đổi mới giáo dục",
       "description": "Triển khai phương pháp giảng dạy hiện đại và học tập tích cực",
-      "icon": "Lightbulb"
+      "icon": "Lightbulb",
+      "color": "#1e40af"
     },
     {
       "year": "2015",
       "title": "Chuyển đổi số",
       "description": "Tiên phong trong ứng dụng công nghệ số vào giáo dục và quản lý",
-      "icon": "TrendingUp"
+      "icon": "TrendingUp",
+      "color": "#1e40af"
     },
     {
       "year": "2020",
       "title": "Nghiên cứu AI",
       "description": "Thành lập trung tâm nghiên cứu Trí tuệ Nhân tạo và Machine Learning",
-      "icon": "Target"
+      "icon": "Target",
+      "color": "#1e40af"
     },
     {
       "year": "2025",
       "title": "Kỷ niệm 35 năm",
       "description": "Đạt mốc 15,000+ cử nhân tốt nghiệp và định hướng phát triển bền vững",
-      "icon": "Trophy"
+      "icon": "Trophy",
+      "color": "#1e40af"
     }
   ]
 }
