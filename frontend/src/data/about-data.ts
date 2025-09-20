@@ -1,9 +1,98 @@
-// About Section Data - Organizational information
+import { 
+  Award, 
+  Users, 
+  BookOpen, 
+  Globe, 
+  Target, 
+  Heart,
+  Star
+} from 'lucide-react';
+export const achievements = [
+    {
+      year: '1990',
+      title: 'Thành lập Khoa',
+      description: 'Khoa Công nghệ Thông tin được thành lập với 20 giảng viên và 100 sinh viên đầu tiên'
+    },
+    {
+      year: '2000',
+      title: 'Mở rộng chương trình',
+      description: 'Bổ sung các chuyên ngành mới: Hệ thống thông tin, Mạng máy tính'
+    },
+    {
+      year: '2010',
+      title: 'Chứng nhận quốc tế',
+      description: 'Đạt chứng nhận chất lượng giáo dục ABET và AUN-QA'
+    },
+    {
+      year: '2015',
+      title: 'Nghiên cứu AI',
+      description: 'Thành lập phòng thí nghiệm AI và Big Data đầu tiên tại miền Nam'
+    },
+    {
+      year: '2020',
+      title: 'Chuyển đổi số',
+      description: 'Tiên phong trong việc số hóa giáo dục với nền tảng học trực tuyến'
+    },
+    {
+      year: '2025',
+      title: 'Kỷ niệm 35 năm',
+      description: 'Tự hào với 15,000 cử nhân và 500 thạc sĩ đã tốt nghiệp'
+    }
+  ];
+
+ export const values = [
+    {
+      icon: Target,
+      title: 'Sứ mệnh',
+      description: 'Đào tạo nguồn nhân lực công nghệ thông tin chất lượng cao, góp phần xây dựng xã hội số và phát triển kinh tế tri thức.'
+    },
+    {
+      icon: Heart,
+      title: 'Tầm nhìn',
+      description: 'Trở thành một trong những khoa công nghệ thông tin hàng đầu khu vực Đông Nam Á vào năm 2030.'
+    },
+    {
+      icon: Star,
+      title: 'Giá trị cốt lõi',
+      description: 'Chất lượng - Sáng tạo - Trách nhiệm - Hợp tác - Phát triển bền vững'
+    }
+  ];
+
+export  const faculty = [
+    {
+      name: 'GS.TS. Nguyễn Văn A',
+      position: 'Trưởng Khoa',
+      specialty: 'Trí tuệ nhân tạo, Machine Learning',
+      experience: '25 năm kinh nghiệm',
+      publications: '150+ công trình nghiên cứu'
+    },
+    {
+      name: 'PGS.TS. Trần Thị B',
+      position: 'Phó Trưởng Khoa',
+      specialty: 'An toàn thông tin, Mật mã học',
+      experience: '20 năm kinh nghiệm',
+      publications: '100+ công trình nghiên cứu'
+    },
+    {
+      name: 'TS. Lê Văn C',
+      position: 'Trưởng bộ môn Kỹ thuật Phần mềm',
+      specialty: 'Software Engineering, DevOps',
+      experience: '15 năm kinh nghiệm',
+      publications: '80+ công trình nghiên cứu'
+    }
+  ];
+
+export  const stats = [
+    { label: 'Sinh viên hiện tại', value: 2500, icon: Users },
+    { label: 'Giảng viên', value: 85, icon: Award },
+    { label: 'Chương trình đào tạo', value: 12, icon: BookOpen },
+    { label: 'Đối tác quốc tế', value: 25, icon: Globe }
+  ];
 export const aboutData = {
   // Section Header
   header: {
     badge: {
-      text: "Được Thành Lập Năm 1990",
+      text: "Được Thành Lập Năm 1989",
       icon: "GraduationCap"
     },
     title: "Về Khoa Công Nghệ Thông Tin",

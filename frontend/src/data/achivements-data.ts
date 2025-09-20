@@ -1,4 +1,3 @@
-// Achievements Section Data - Accomplishments and milestones
 export const achievementsData = {
   // Section Header
   header: {
@@ -97,7 +96,7 @@ export const achievementsData = {
   timeline: {
     title: "Cột Mốc Phát Triển",
     milestones: [
-      { year: "1990", event: "Thành lập khoa CNTT với 50 sinh viên đầu tiên" },
+      { year: "1989", event: "Thành lập khoa CNTT với 50 sinh viên đầu tiên" },
       { year: "1995", event: "Mở rộng chương trình đào tạo, đạt 500 sinh viên" },
       { year: "2005", event: "Đạt chuẩn kiểm định chất lượng giáo dục quốc gia" },
       { year: "2015", event: "Thành lập trung tâm nghiên cứu AI và IoT" },
