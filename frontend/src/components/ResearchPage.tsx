@@ -24,7 +24,7 @@ import {
   Target,
   Lightbulb
 } from 'lucide-react';
-import { ImageWithFallback } from './fallback/ImageWithFallback';
+import { ImageWithFallback } from './figma/ImageWithFallback';
 
 export function ResearchPage() {
   const [selectedArea, setSelectedArea] = useState('artificial-intelligence');

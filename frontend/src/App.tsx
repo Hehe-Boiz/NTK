@@ -8,7 +8,7 @@ import { HomePage } from './components/HomePage';
 import { AcademicPage } from './components/AcademicPage';
 import { NewsPage } from './components/NewsPage';
 import { ContactPage } from './components/ContactPage';
-
+import { AchievementsSection} from './components/AchievementsSection'
 import { WhiteLabelAdminPage } from './components/WhiteLabelAdminPage';
 import { LoginPage } from './components/LoginPage';
 import { Toaster } from './components/ui/sonner';
@@ -28,7 +28,8 @@ export default function App() {
         return <AcademicPage />;
       case 'news':
         return <NewsPage />;
-
+      case 'achivements':
+        return <AchievementsSection></AchievementsSection>;
       case 'white-label-admin':
         return <WhiteLabelAdminPage />;
       case 'contact':

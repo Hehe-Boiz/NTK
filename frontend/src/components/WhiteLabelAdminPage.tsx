@@ -37,11 +37,51 @@ import {
   Clock,
   Trash2,
   Calendar,
-  User
+  User,
+  Info
 } from 'lucide-react';
-import { toast } from 'sonner@2.0.3';
+import { toast } from 'sonner';
+const ColorInput = ({ 
+  label, 
+  value, 
+  onChange, 
+  description 
+}: { 
+  label: string; 
+  value: string; 
+  onChange: (color: string) => void;
+  description?: string;
+}) => (
+  <div className="space-y-2">
 
+    <Label className="text-sm font-medium">{label}</Label>
+    <div className="flex items-center space-x-3">
+      <div 
+          className="w-12 h-10 rounded-lg border-2 border-border cursor-pointer shadow-sm"
+          style={{ backgroundColor: value }}
+          onClick={() => {
+            // Tạo input ẩn để mở công cụ chọn màu
+            const input = document.createElement('input');
+            input.type = 'color';
+            input.value = value;
+            input.onchange = (e) => {
+              const newColor = (e.target as HTMLInputElement).value;
+              onChange(newColor);
+            };
+            input.click();
+          }}
+        />
+        <Input 
+          value={value} 
+          onChange={(e) => onChange(e.target.value)}
+          className="flex-1 font-mono text-sm"
+          placeholder="#000000"
+        />
+      </div>
+    </div>
+);
 export function WhiteLabelAdminPage() {
+
   const { theme, updateTheme, resetTheme, isCustomized } = useTheme();
   const { 
     wishes, 
@@ -57,17 +97,17 @@ export function WhiteLabelAdminPage() {
   const [wishesFilter, setWishesFilter] = useState<'all' | 'pending' | 'approved' | 'rejected'>('pending');
 
   const handleInputChange = (field: string, value: any) => {
-    if (field === 'contactInfo') {
-      setChanges({ 
-        ...changes, 
-        contactInfo: { 
-          ...(changes.contactInfo || theme.contactInfo), 
-          ...value 
-        } 
-      });
-    } else {
-      setChanges({ ...changes, [field]: value });
-    }
+    setChanges({ ...changes, [field]: value });
+  };
+  
+  const handleNestedInputChange = (parent: string, field: string, value: any) => {
+    setChanges({
+      ...changes,
+      [parent]: {
+        ...(changes[parent] || theme[parent]),
+        [field]: value
+      }
+    });
   };
 
   const handleSave = () => {
@@ -97,13 +137,31 @@ export function WhiteLabelAdminPage() {
   };
 
   const colorPresets = [
-    { name: 'Xanh Dương', primary: '#1e40af', secondary: '#3b82f6' },
-    { name: 'Tím', primary: '#7c3aed', secondary: '#a855f7' },
-    { name: 'Xanh Lá', primary: '#059669', secondary: '#10b981' },
-    { name: 'Đỏ', primary: '#dc2626', secondary: '#ef4444' },
-    { name: 'Cam', primary: '#ea580c', secondary: '#f97316' },
-    { name: 'Hồng', primary: '#db2777', secondary: '#ec4899' }
+    { name: 'Blue Corporate', primary: '#2563eb', secondary: '#f1f5f9', accent: '#e2e8f0' },
+    { name: 'Green Healthcare', primary: '#059669', secondary: '#f0fdf4', accent: '#dcfce7' },
+    { name: 'Purple Education', primary: '#7c3aed', secondary: '#faf5ff', accent: '#e9d5ff' },
+    { name: 'Orange Creative', primary: '#ea580c', secondary: '#fff7ed', accent: '#fed7aa' },
+    { name: 'Red Finance', primary: '#dc2626', secondary: '#fef2f2', accent: '#fecaca' },
   ];
+
+  const applyColorPreset = (preset: typeof colorPresets[0]) => {
+    const colorChanges = {
+        primary: preset.primary,
+        secondary: preset.secondary,
+        accent: preset.accent
+    };
+    setChanges({
+        ...changes,
+        colors: {
+            ...(changes.colors || theme.colors),
+            ...colorChanges
+        }
+    });
+    toast.success(`🎨 Đã áp dụng theme ${preset.name}`);
+  };
+
+  const currentTheme = { ...theme, ...changes };
+  const currentColors = { ...theme.colors, ...(changes.colors || {}) };
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -142,7 +200,7 @@ export function WhiteLabelAdminPage() {
         <div className="grid lg:grid-cols-3 gap-8">
           {/* Configuration Panel */}
           <div className="lg:col-span-2 space-y-6">
-            <Tabs defaultValue="branding" className="w-full">
+            <Tabs defaultValue="design" className="w-full">
               <TabsList className="grid w-full grid-cols-5">
                 <TabsTrigger value="branding">Thương hiệu</TabsTrigger>
                 <TabsTrigger value="design">Thiết kế</TabsTrigger>
@@ -179,7 +237,7 @@ export function WhiteLabelAdminPage() {
                         <Label htmlFor="logoText">Tên khoa</Label>
                         <Input
                           id="logoText"
-                          value={changes.logoText || theme.logoText}
+                          value={currentTheme.logoText}
                           onChange={(e) => handleInputChange('logoText', e.target.value)}
                           placeholder="Khoa Công nghệ Thông tin"
                         />
@@ -188,7 +246,7 @@ export function WhiteLabelAdminPage() {
                         <Label htmlFor="universityName">Tên trường</Label>
                         <Input
                           id="universityName"
-                          value={changes.universityName || theme.universityName}
+                          value={currentTheme.universityName}
                           onChange={(e) => handleInputChange('universityName', e.target.value)}
                           placeholder="Trường Đại học XYZ"
                         />
@@ -200,7 +258,7 @@ export function WhiteLabelAdminPage() {
                         <Label htmlFor="establishedYear">Năm thành lập</Label>
                         <Input
                           id="establishedYear"
-                          value={changes.establishedYear || theme.establishedYear}
+                          value={currentTheme.establishedYear}
                           onChange={(e) => handleInputChange('establishedYear', e.target.value)}
                           placeholder="1990"
                         />
@@ -209,8 +267,8 @@ export function WhiteLabelAdminPage() {
                         <Label htmlFor="phone">Điện thoại</Label>
                         <Input
                           id="phone"
-                          value={changes.contactInfo?.phone || theme.contactInfo.phone}
-                          onChange={(e) => handleInputChange('contactInfo', { phone: e.target.value })}
+                          value={currentTheme.contactInfo.phone}
+                          onChange={(e) => handleNestedInputChange('contactInfo', 'phone', e.target.value)}
                           placeholder="(028) 1234 5678"
                         />
                       </div>
@@ -220,7 +278,7 @@ export function WhiteLabelAdminPage() {
                       <Label htmlFor="motto">Khẩu hiệu</Label>
                       <Textarea
                         id="motto"
-                        value={changes.motto || theme.motto}
+                        value={currentTheme.motto}
                         onChange={(e) => handleInputChange('motto', e.target.value)}
                         placeholder="35 năm đồng hành cùng sự phát triển..."
                         rows={3}
@@ -231,8 +289,8 @@ export function WhiteLabelAdminPage() {
                       <Label htmlFor="address">Địa chỉ</Label>
                       <Textarea
                         id="address"
-                        value={changes.contactInfo?.address || theme.contactInfo.address}
-                        onChange={(e) => handleInputChange('contactInfo', { address: e.target.value })}
+                        value={currentTheme.contactInfo.address}
+                        onChange={(e) => handleNestedInputChange('contactInfo', 'address', e.target.value)}
                         placeholder="123 Đường ABC, Quận 1, TP.HCM"
                         rows={2}
                       />
@@ -243,123 +301,75 @@ export function WhiteLabelAdminPage() {
 
               {/* Design Tab */}
               <TabsContent value="design" className="space-y-6">
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="flex items-center">
-                      <Palette className="h-5 w-5 mr-2" />
-                      Màu sắc & Giao diện
-                    </CardTitle>
-                    <CardDescription>
-                      Tùy chỉnh màu sắc và giao diện của website
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent className="space-y-6">
-                    {/* Color Presets */}
-                    <div>
-                      <Label>Bộ màu có sẵn</Label>
-                      <div className="grid grid-cols-3 gap-3 mt-2">
-                        {colorPresets.map((preset) => (
-                          <Button
-                            key={preset.name}
-                            variant="outline"
-                            className="h-12 justify-start"
-                            onClick={() => {
-                              handleInputChange('primaryColor', preset.primary);
-                              handleInputChange('secondaryColor', preset.secondary);
-                            }}
-                          >
-                            <div className="flex items-center space-x-2">
-                              <div className="w-4 h-4 rounded-full" style={{ backgroundColor: preset.primary }}></div>
-                              <div className="w-4 h-4 rounded-full" style={{ backgroundColor: preset.secondary }}></div>
-                              <span>{preset.name}</span>
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    {/* Bảng màu tùy chỉnh */}
+                    <Card>
+                      <CardHeader>
+                        <CardTitle className="text-base flex items-center space-x-2">
+                          <div className="w-2 h-2 bg-pink-500 rounded-full"></div>
+                          <span>Bảng Màu</span>
+                        </CardTitle>
+                      </CardHeader>
+                      <CardContent className="space-y-4">
+                        <ColorInput 
+                          label="Màu Chính (Primary)"
+                          value={currentColors.primary}
+                          onChange={(color) => handleNestedInputChange('colors', 'primary', color)}
+                          description="Màu chính được sử dụng cho các button, link và elements quan trọng"
+                        />
+                        <ColorInput 
+                          label="Màu Phụ (Secondary)"
+                          value={currentColors.secondary}
+                          onChange={(color) => handleNestedInputChange('colors', 'secondary', color)}
+                          description="Màu phụ cho background sections và subtle elements"
+                        />
+                        <ColorInput 
+                          label="Màu Nhấn (Accent)"
+                          value={currentColors.accent}
+                          onChange={(color) => handleNestedInputChange('colors', 'accent', color)}
+                          description="Màu nhấn cho hover effects và highlights"
+                        />
+                        <ColorInput 
+                          label="Màu Nền (Background)"
+                          value={currentColors.background}
+                          onChange={(color) => handleNestedInputChange('colors', 'background', color)}
+                          description="Màu nền chính của website"
+                        />
+                      </CardContent>
+                    </Card>
+
+                    {/* Bộ màu có sẵn */}
+                    <Card>
+                      <CardHeader>
+                        <CardTitle className="text-base flex items-center space-x-2">
+                          <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
+                          <span>Bộ Màu Có Sẵn</span>
+                        </CardTitle>
+                      </CardHeader>
+                      <CardContent className="space-y-3">
+                        {colorPresets.map((preset, index) => (
+                          <div key={index} className="flex items-center justify-between p-3 border rounded-lg hover:bg-muted/50 transition-colors">
+                            <div className="flex items-center space-x-3">
+                              <div className="flex space-x-1">
+                               <div className="w-4 h-4 rounded-full  shadow-sm" style={{ backgroundColor: preset.primary }}></div>
+                               <div className="w-4 h-4 rounded-full  shadow-sm" style={{ backgroundColor: preset.secondary }}></div>
+                               <div className="w-4 h-4 rounded-full shadow-sm" style={{ backgroundColor: preset.accent }}></div> 
+                              </div>
+                              <span className="text-sm font-medium">{preset.name}</span>
                             </div>
-                          </Button>
+                            <Button 
+                              size="sm" 
+                              variant="outline"
+                              onClick={() => applyColorPreset(preset)}
+                              className="text-xs"
+                            >
+                              Áp Dụng
+                            </Button>
+                          </div>
                         ))}
-                      </div>
-                    </div>
-
-                    <Separator />
-
-                    {/* Custom Colors */}
-                    <div className="grid md:grid-cols-2 gap-4">
-                      <div>
-                        <Label htmlFor="primaryColor">Màu chính</Label>
-                        <div className="flex space-x-2 mt-1">
-                          <Input
-                            id="primaryColor"
-                            type="color"
-                            value={changes.primaryColor || theme.primaryColor}
-                            onChange={(e) => handleInputChange('primaryColor', e.target.value)}
-                            className="w-16 h-10 p-1"
-                          />
-                          <Input
-                            value={changes.primaryColor || theme.primaryColor}
-                            onChange={(e) => handleInputChange('primaryColor', e.target.value)}
-                            placeholder="#1e40af"
-                            className="flex-1"
-                          />
-                        </div>
-                      </div>
-                      <div>
-                        <Label htmlFor="secondaryColor">Màu phụ</Label>
-                        <div className="flex space-x-2 mt-1">
-                          <Input
-                            id="secondaryColor"
-                            type="color"
-                            value={changes.secondaryColor || theme.secondaryColor}
-                            onChange={(e) => handleInputChange('secondaryColor', e.target.value)}
-                            className="w-16 h-10 p-1"
-                          />
-                          <Input
-                            value={changes.secondaryColor || theme.secondaryColor}
-                            onChange={(e) => handleInputChange('secondaryColor', e.target.value)}
-                            placeholder="#7c3aed"
-                            className="flex-1"
-                          />
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="grid md:grid-cols-2 gap-4">
-                      <div>
-                        <Label htmlFor="backgroundColor">Màu nền</Label>
-                        <div className="flex space-x-2 mt-1">
-                          <Input
-                            id="backgroundColor"
-                            type="color"
-                            value={changes.backgroundColor || theme.backgroundColor}
-                            onChange={(e) => handleInputChange('backgroundColor', e.target.value)}
-                            className="w-16 h-10 p-1"
-                          />
-                          <Input
-                            value={changes.backgroundColor || theme.backgroundColor}
-                            onChange={(e) => handleInputChange('backgroundColor', e.target.value)}
-                            placeholder="#ffffff"
-                            className="flex-1"
-                          />
-                        </div>
-                      </div>
-                      <div>
-                        <Label htmlFor="textColor">Màu chữ</Label>
-                        <div className="flex space-x-2 mt-1">
-                          <Input
-                            id="textColor"
-                            type="color"
-                            value={changes.textColor || theme.textColor}
-                            onChange={(e) => handleInputChange('textColor', e.target.value)}
-                            className="w-16 h-10 p-1"
-                          />
-                          <Input
-                            value={changes.textColor || theme.textColor}
-                            onChange={(e) => handleInputChange('textColor', e.target.value)}
-                            placeholder="#1f2937"
-                            className="flex-1"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
+                      </CardContent>
+                    </Card>
+                </div>
               </TabsContent>
 
               {/* Content Tab */}
@@ -380,7 +390,7 @@ export function WhiteLabelAdminPage() {
                         <Label htmlFor="anniversaryYear">Năm kỷ niệm</Label>
                         <Input
                           id="anniversaryYear"
-                          value={changes.anniversaryYear || theme.anniversaryYear}
+                          value={currentTheme.anniversaryYear}
                           onChange={(e) => handleInputChange('anniversaryYear', e.target.value)}
                           placeholder="2025"
                         />
@@ -389,7 +399,7 @@ export function WhiteLabelAdminPage() {
                         <Label htmlFor="anniversarySlogan">Slogan kỷ niệm</Label>
                         <Input
                           id="anniversarySlogan"
-                          value={changes.anniversarySlogan || theme.anniversarySlogan}
+                          value={currentTheme.anniversarySlogan}
                           onChange={(e) => handleInputChange('anniversarySlogan', e.target.value)}
                           placeholder="35 năm kiến tạo tương lai số"
                         />
@@ -400,7 +410,7 @@ export function WhiteLabelAdminPage() {
                       <Label htmlFor="mission">Sứ mệnh</Label>
                       <Textarea
                         id="mission"
-                        value={changes.mission || theme.mission}
+                        value={currentTheme.mission}
                         onChange={(e) => handleInputChange('mission', e.target.value)}
                         placeholder="Sứ mệnh của khoa..."
                         rows={4}
@@ -411,7 +421,7 @@ export function WhiteLabelAdminPage() {
                       <Label htmlFor="vision">Tầm nhìn</Label>
                       <Textarea
                         id="vision"
-                        value={changes.vision || theme.vision}
+                        value={currentTheme.vision}
                         onChange={(e) => handleInputChange('vision', e.target.value)}
                         placeholder="Tầm nhìn của khoa..."
                         rows={4}
@@ -422,7 +432,7 @@ export function WhiteLabelAdminPage() {
                       <Label htmlFor="coreValues">Giá trị cốt lõi</Label>
                       <Input
                         id="coreValues"
-                        value={changes.coreValues || theme.coreValues}
+                        value={currentTheme.coreValues}
                         onChange={(e) => handleInputChange('coreValues', e.target.value)}
                         placeholder="Chất lượng - Đổi mới - Hợp tác - Phát triển bền vững"
                       />
@@ -442,7 +452,7 @@ export function WhiteLabelAdminPage() {
                   </CardHeader>
                   <CardContent>
                     <div className="space-y-4">
-                      {(changes.milestones || theme.milestones).map((milestone: any, index: number) => (
+                      {currentTheme.milestones.map((milestone: any, index: number) => (
                         <div key={index} className="border rounded-lg p-4 bg-gray-50">
                           <div className="grid md:grid-cols-4 gap-4">
                             <div>
@@ -450,7 +460,7 @@ export function WhiteLabelAdminPage() {
                               <Input
                                 value={milestone.year}
                                 onChange={(e) => {
-                                  const newMilestones = [...(changes.milestones || theme.milestones)];
+                                  const newMilestones = [...currentTheme.milestones];
                                   newMilestones[index] = { ...milestone, year: e.target.value };
                                   handleInputChange('milestones', newMilestones);
                                 }}
@@ -462,7 +472,7 @@ export function WhiteLabelAdminPage() {
                               <Input
                                 value={milestone.title}
                                 onChange={(e) => {
-                                  const newMilestones = [...(changes.milestones || theme.milestones)];
+                                  const newMilestones = [...currentTheme.milestones];
                                   newMilestones[index] = { ...milestone, title: e.target.value };
                                   handleInputChange('milestones', newMilestones);
                                 }}
@@ -475,7 +485,7 @@ export function WhiteLabelAdminPage() {
                                 className="w-full p-2 border rounded-md"
                                 value={milestone.icon}
                                 onChange={(e) => {
-                                  const newMilestones = [...(changes.milestones || theme.milestones)];
+                                  const newMilestones = [...currentTheme.milestones];
                                   newMilestones[index] = { ...milestone, icon: e.target.value };
                                   handleInputChange('milestones', newMilestones);
                                 }}
@@ -498,7 +508,7 @@ export function WhiteLabelAdminPage() {
                               <Textarea
                                 value={milestone.description}
                                 onChange={(e) => {
-                                  const newMilestones = [...(changes.milestones || theme.milestones)];
+                                  const newMilestones = [...currentTheme.milestones];
                                   newMilestones[index] = { ...milestone, description: e.target.value };
                                   handleInputChange('milestones', newMilestones);
                                 }}
@@ -512,7 +522,7 @@ export function WhiteLabelAdminPage() {
                               variant="outline"
                               size="sm"
                               onClick={() => {
-                                const newMilestones = [...(changes.milestones || theme.milestones)];
+                                const newMilestones = [...currentTheme.milestones];
                                 newMilestones.splice(index, 1);
                                 handleInputChange('milestones', newMilestones);
                               }}
@@ -533,7 +543,7 @@ export function WhiteLabelAdminPage() {
                             description: 'Mô tả sự kiện mới',
                             icon: 'Star'
                           };
-                          const newMilestones = [...(changes.milestones || theme.milestones), newMilestone];
+                          const newMilestones = [...currentTheme.milestones, newMilestone];
                           handleInputChange('milestones', newMilestones);
                         }}
                         className="w-full"
@@ -906,27 +916,30 @@ export function WhiteLabelAdminPage() {
                   'w-1/2 h-40 mx-auto'
                 }`}>
                   <div 
-                    className="p-4 h-full"
+                    className="p-4 h-full relative"
                     style={{
-                      backgroundColor: changes.backgroundColor || theme.backgroundColor,
-                      color: changes.textColor || theme.textColor
+                      backgroundColor: currentColors.background,
                     }}
                   >
                     <div 
                       className="font-bold mb-2"
-                      style={{ color: changes.primaryColor || theme.primaryColor }}
+                      style={{ color: currentColors.primary }}
                     >
-                      {changes.logoText || theme.logoText}
+                      {currentTheme.logoText}
                     </div>
                     <div className="text-sm opacity-70 mb-3">
-                      {changes.universityName || theme.universityName}
+                      {currentTheme.universityName}
                     </div>
                     <div className="text-xs leading-relaxed">
-                      {changes.motto || theme.motto}
+                      {currentTheme.motto}
                     </div>
                     <div 
-                      className="absolute bottom-2 right-2 w-3 h-3 rounded-full"
-                      style={{ backgroundColor: changes.secondaryColor || theme.secondaryColor }}
+                      className="absolute bottom-2 right-2 w-4 h-4 rounded-full"
+                      style={{ backgroundColor: currentColors.accent }}
+                    ></div>
+                     <div 
+                      className="absolute bottom-2 right-8 w-4 h-4 rounded-lg"
+                      style={{ backgroundColor: currentColors.secondary }}
                     ></div>
                   </div>
                 </div>

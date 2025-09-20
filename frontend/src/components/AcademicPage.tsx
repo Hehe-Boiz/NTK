@@ -35,13 +35,15 @@ import {
   Briefcase,
   Phone
 } from 'lucide-react';
-import { ImageWithFallback } from './fallback/ImageWithFallback';
+import { ImageWithFallback } from './figma/ImageWithFallback';
 
 export function AcademicPage() {
   const [activeSection, setActiveSection] = useState('programs');
   const [selectedProgram, setSelectedProgram] = useState('software-engineering');
+  const [selectedGraduateProgram, setSelectedGraduateProgram] = useState('master-artificial-intelligence');
   const [selectedResearchArea, setSelectedResearchArea] = useState('artificial-intelligence');
   const [searchTerm, setSearchTerm] = useState('');
+
 
   const programs = [
     {
@@ -429,6 +431,127 @@ export function AcademicPage() {
       labs: ['AI Research Lab', 'Computer Vision Lab', 'Robotics Lab']
     }
   ];
+  const graduatePrograms = [
+    {
+      id: 'master-artificial-intelligence',
+      name: 'Thạc sĩ Trí tuệ Nhân tạo',
+      level: 'Thạc sĩ',
+      duration: '2 năm',
+      credits: 60,
+      description: 'Chương trình nâng cao, tập trung vào nghiên cứu chuyên sâu, phát triển các mô hình AI đột phá và lãnh đạo các dự án công nghệ thông minh.',
+      icon: Brain,
+      color: 'purple',
+      featured: true,
+      admissionRequirements: [
+        'Tốt nghiệp Cử nhân ngành phù hợp với GPA > 3.2/4.0',
+        'Chứng chỉ Tiếng Anh IELTS 6.5+ hoặc tương đương',
+        'Bài luận thể hiện định hướng nghiên cứu',
+        '02 thư giới thiệu từ các giáo sư hoặc chuyên gia'
+      ],
+      employmentRate: 99,
+      averageSalary: '40-80 triệu',
+      objectives: [
+        'Nghiên cứu và phát triển các thuật toán AI mới',
+        'Công bố các bài báo khoa học tại các hội nghị uy tín',
+        'Xây dựng và triển khai các hệ thống AI phức tạp',
+        'Dẫn dắt các nhóm nghiên cứu và phát triển AI'
+      ],
+      yearlyProgram: {
+        year1: {
+          semester1: [
+            { code: 'AI5001', name: 'Lý thuyết Học máy Nâng cao', credits: 4, type: 'core' },
+            { code: 'AI5002', name: 'Kiến trúc Mạng Nơ-ron Sâu', credits: 4, type: 'core' },
+            { code: 'RS5001', name: 'Phương pháp Nghiên cứu Khoa học', credits: 3, type: 'core' }
+          ],
+          semester2: [
+            { code: 'AI5003', name: 'Học Tăng cường (Reinforcement Learning)', credits: 4, type: 'specialization' },
+            { code: 'AI5004', name: 'Xử lý Ngôn ngữ Tự nhiên Nâng cao', credits: 4, type: 'specialization' },
+            { code: 'AI5005', name: 'Hội thảo Sau đại học về AI', credits: 2, type: 'seminar' }
+          ]
+        },
+        year2: {
+          semester1: [
+            { code: 'AI6001', name: 'Đạo đức và Trách nhiệm trong AI', credits: 3, type: 'specialization' },
+            { code: 'EL6001', name: 'Môn học tự chọn Sau đại học', credits: 3, type: 'elective' },
+            { code: 'TH6001', name: 'Nghiên cứu Luận văn Thạc sĩ 1', credits: 5, type: 'thesis' }
+          ],
+          semester2: [
+            { code: 'TH6002', name: 'Nghiên cứu Luận văn Thạc sĩ 2 và Bảo vệ', credits: 8, type: 'thesis' }
+          ]
+        }
+      },
+      technologies: ['JAX', 'Advanced PyTorch/TensorFlow', 'Hugging Face Transformers', 'Kubeflow', 'MLFlow'],
+      careerPaths: [
+        'AI Research Scientist',
+        'Senior Machine Learning Engineer',
+        'AI Architect',
+        'Giảng viên/Nghiên cứu viên',
+        'AI Consultant'
+      ],
+      companies: ['VinAI Research', 'Zalo AI Lab', 'Google DeepMind', 'OpenAI', 'Các trường Đại học và Viện nghiên cứu'],
+      labs: ['Deep Learning Lab', 'Computational Linguistics Lab', 'Robotics & AI Lab']
+    },
+    {
+      id: 'master-cybersecurity',
+      name: 'Thạc sĩ An toàn Thông tin',
+      level: 'Thạc sĩ',
+      duration: '2 năm',
+      credits: 60,
+      description: 'Đào tạo chuyên gia An toàn thông tin cấp cao với khả năng lãnh đạo, xây dựng chiến lược bảo mật, nghiên cứu các mối đe dọa mới và ứng phó sự cố cấp cao.',
+      icon: Shield,
+      color: 'red',
+      featured: false,
+      admissionRequirements: [
+        'Tốt nghiệp Cử nhân ngành phù hợp với GPA > 3.0/4.0',
+        'Chứng chỉ Tiếng Anh IELTS 6.0+ hoặc tương đương',
+        'Kinh nghiệm làm việc trong ngành là một lợi thế',
+        '02 thư giới thiệu'
+      ],
+      employmentRate: 98,
+      averageSalary: '45-90 triệu',
+      objectives: [
+        'Thiết kế kiến trúc bảo mật cho các hệ thống quy mô lớn',
+        'Nghiên cứu và phân tích các kỹ thuật tấn công APT',
+        'Xây dựng và quản lý các chính sách An toàn thông tin (GRC)',
+        'Chỉ huy đội ứng cứu sự cố an ninh mạng'
+      ],
+      yearlyProgram: {
+        year1: {
+          semester1: [
+            { code: 'CS5001', name: 'Mật mã học Nâng cao và Ứng dụng', credits: 4, type: 'core' },
+            { code: 'CS5002', name: 'Thiết kế Hệ thống Bảo mật', credits: 4, type: 'core' },
+            { code: 'CS5003', name: 'Phân tích và Tình báo Mối đe dọa', credits: 3, type: 'core' }
+          ],
+          semester2: [
+            { code: 'CS5004', name: 'An ninh Mạng Tấn công và Khai thác lỗ hổng', credits: 4, type: 'specialization' },
+            { code: 'CS5005', name: 'Điều tra số và Ứng cứu Sự cố (DFIR)', credits: 4, type: 'specialization' },
+            { code: 'CS5006', name: 'Hội thảo về các Vấn đề An ninh mạng Hiện đại', credits: 2, type: 'seminar' }
+          ]
+        },
+        year2: {
+          semester1: [
+            { code: 'CS6001', name: 'Quản trị, Rủi ro và Tuân thủ (GRC)', credits: 3, type: 'specialization' },
+            { code: 'EL6001', name: 'Môn học tự chọn Sau đại học', credits: 3, type: 'elective' },
+            { code: 'TH6001', name: 'Nghiên cứu Luận văn Thạc sĩ 1', credits: 5, type: 'thesis' }
+          ],
+          semester2: [
+            { code: 'TH6002', name: 'Nghiên cứu Luận văn Thạc sĩ 2 và Bảo vệ', credits: 8, type: 'thesis' }
+          ]
+        }
+      },
+      technologies: ['Advanced Ghidra/IDA Pro', 'Threat Intelligence Platforms (TIPs)', 'Cloud-native Security (Falco, Wazuh)', 'SOAR', 'EDR'],
+      careerPaths: [
+        'Security Architect',
+        'Chief Information Security Officer (CISO)',
+        'Lead Penetration Tester',
+        'Threat Hunter',
+        'DFIR Lead',
+        'Security Researcher'
+      ],
+      companies: ['Mandiant (Google Cloud)', 'CrowdStrike', 'KPMG Cybersecurity', 'PwC', 'Các cơ quan chính phủ', 'Tập đoàn tài chính'],
+      labs: ['Threat Intelligence Lab', 'Malware Reverse Engineering Lab', 'Hardware Security Lab']
+    }
+  ];
 
   const researchAreas = [
     {
@@ -580,6 +703,9 @@ export function AcademicPage() {
     program.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
     program.description.toLowerCase().includes(searchTerm.toLowerCase())
   );
+  const currentGraduateProgram = graduatePrograms.find(p => p.id === selectedGraduateProgram) || graduatePrograms[0];
+  const filteredGraduatePrograms = graduatePrograms.filter(p => p.name.toLowerCase().includes(searchTerm.toLowerCase()));
+
 
   const getSubjectTypeColor = (type: string) => {
     switch (type) {
@@ -657,15 +783,20 @@ export function AcademicPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col lg:flex-row gap-4 items-center justify-between">
             <Tabs value={activeSection} onValueChange={setActiveSection} className="w-full lg:w-auto">
-              <TabsList className="grid w-full grid-cols-2 lg:w-auto">
+              <TabsList className="grid w-full grid-cols-3 lg:w-auto">
                 <TabsTrigger value="programs" className="flex items-center space-x-2">
                   <GraduationCap className="h-4 w-4" />
                   <span>Chương trình Đào tạo</span>
+                </TabsTrigger>
+                <TabsTrigger value="graduatePrograms" className="flex items-center space-x-2">
+                  <GraduationCap className="h-4 w-4" />
+                  <span>Chương trình Đào tạo sau đại học</span>
                 </TabsTrigger>
                 <TabsTrigger value="research" className="flex items-center space-x-2">
                   <Microscope className="h-4 w-4" />
                   <span>Nghiên cứu Khoa học</span>
                 </TabsTrigger>
+                
               </TabsList>
             </Tabs>
             
@@ -1073,6 +1204,140 @@ export function AcademicPage() {
         </>
       )}
 
+
+        {activeSection === 'graduatePrograms' && (
+        <>
+          {/* Graduate Programs Overview */}
+          <section className="py-16">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              <div className="text-center mb-12">
+                <h2 className="text-3xl font-bold text-gray-900 mb-4">
+                  Chương trình Đào tạo Sau đại học
+                </h2>
+                <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+                  Các chương trình Thạc sĩ chuyên sâu, tập trung vào nghiên cứu và phát triển công nghệ đỉnh cao.
+                </p>
+              </div>
+
+              {/* Danh sách các card chương trình */}
+              <div className="grid lg:grid-cols-4 gap-6 mb-12">
+                {filteredGraduatePrograms.map((program) => {
+                  const Icon = program.icon;
+                  const isSelected = program.id === selectedGraduateProgram;
+                  return (
+                    <Card 
+                      key={program.id}
+                      className={`cursor-pointer transition-all duration-300 hover:shadow-xl ${
+                        isSelected ? 'ring-2 ring-purple-500 shadow-lg' : ''
+                      } ${program.featured ? 'border-yellow-300' : ''}`}
+                      onClick={() => setSelectedGraduateProgram(program.id)}
+                    >
+                      <CardHeader>
+                        {program.featured && (
+                          <Badge className="mb-2 bg-yellow-100 text-yellow-800 w-fit">
+                            <Star className="h-3 w-3 mr-1" /> Nổi bật
+                          </Badge>
+                        )}
+                        <div className={`w-12 h-12 bg-${program.color}-100 rounded-lg flex items-center justify-center mb-4`}>
+                          <Icon className={`h-6 w-6 text-${program.color}-600`} />
+                        </div>
+                        <CardTitle className="text-lg">{program.name}</CardTitle>
+                        <CardDescription className="line-clamp-3 h-16">{program.description}</CardDescription>
+                      </CardHeader>
+                      <CardContent>
+                        <Button variant={isSelected ? 'default' : 'outline'} className="w-full mt-4">
+                          {isSelected ? 'Đang xem' : 'Xem chi tiết'}
+                        </Button>
+                      </CardContent>
+                    </Card>
+                  );
+                })}
+              </div>
+            </div>
+          </section>
+
+          {/* Graduate Program Details */}
+          <section className="py-16 bg-gray-50">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              <div className="grid lg:grid-cols-3 gap-8">
+                {/* Cột nội dung chính */}
+                <div className="lg:col-span-2">
+                  <Card>
+                    <CardHeader>
+                      <CardTitle className="text-2xl">{currentGraduateProgram.name}</CardTitle>
+                      <CardDescription className="text-lg mt-2">{currentGraduateProgram.description}</CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                       <Tabs defaultValue="curriculum" className="w-full">
+                        <TabsList className="grid w-full grid-cols-3">
+                          <TabsTrigger value="curriculum">Chương trình học</TabsTrigger>
+                          <TabsTrigger value="overview">Tổng quan</TabsTrigger>
+                          <TabsTrigger value="career">Nghề nghiệp</TabsTrigger>
+                        </TabsList>
+
+                        <TabsContent value="curriculum" className="mt-6 space-y-6">
+                           {Object.entries(currentGraduateProgram.yearlyProgram).map(([year, yearData]) => (
+                            <div key={year}>
+                                <h4 className="text-xl font-semibold mb-4">{year === 'year1' ? 'Năm thứ 1' : 'Năm thứ 2'}</h4>
+                               <div className="grid md:grid-cols-2 gap-6">
+                                {Object.entries(yearData).map(([semester, subjects]) => (
+                                  <Card key={semester}>
+                                    <CardHeader><CardTitle className="text-lg">{semester === 'semester1' ? 'Học kỳ 1' : 'Học kỳ 2'}</CardTitle></CardHeader>
+                                    <CardContent className="space-y-2">
+                                      {subjects.map((subject, index) => (
+                                         <div key={index} className="text-sm p-2 bg-gray-50 rounded">{subject.name} - {subject.credits} TC</div>
+                                      ))}
+                                    </CardContent>
+                                  </Card>
+                                ))}
+                              </div>
+                            </div>
+                          ))}
+                        </TabsContent>
+                        
+                        <TabsContent value="overview" className="mt-6">
+                            <h3 className="text-lg font-semibold mb-4">Mục tiêu đào tạo</h3>
+                            <ul className="list-disc list-inside space-y-2">
+                                {currentGraduateProgram.objectives.map((obj, i) => <li key={i}>{obj}</li>)}
+                            </ul>
+                        </TabsContent>
+
+                        <TabsContent value="career" className="mt-6">
+                             <h3 className="text-lg font-semibold mb-4">Cơ hội nghề nghiệp</h3>
+                             <div className="flex flex-wrap gap-2">
+                                {currentGraduateProgram.careerPaths.map((path, i) => <Badge key={i} variant="secondary">{path}</Badge>)}
+                             </div>
+                        </TabsContent>
+                      </Tabs>
+                    </CardContent>
+                  </Card>
+                </div>
+
+                {/* Cột phụ (sidebar) */}
+                <div className="space-y-6">
+                  <Card>
+                    <CardHeader><CardTitle>Yêu cầu tuyển sinh</CardTitle></CardHeader>
+                    <CardContent>
+                      <ul className="list-disc list-inside space-y-2 text-sm">
+                        {currentGraduateProgram.admissionRequirements.map((req, i) => <li key={i}>{req}</li>)}
+                      </ul>
+                       <Button className="w-full mt-4"><Download className="h-4 w-4 mr-2" /> Tải brochure</Button>
+                    </CardContent>
+                  </Card>
+                  <Card>
+                    <CardHeader><CardTitle>Tư vấn trực tuyến</CardTitle></CardHeader>
+                    <CardContent>
+                        <p className="text-sm text-gray-600 mb-4">Liên hệ để được tư vấn chi tiết về chương trình.</p>
+                        <Button className="w-full" variant="outline"><Phone className="h-4 w-4 mr-2" /> Đăng ký</Button>
+                    </CardContent>
+                  </Card>
+                </div>
+
+              </div>
+            </div>
+          </section>
+        </>
+      )}
       {/* Research Section */}
       {activeSection === 'research' && (
         <section className="py-16">

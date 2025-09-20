@@ -8,7 +8,8 @@ export class WishService {
 
   create(createWishDto: Prisma.WishCreateInput) {
     return this.databaseService.wish.create({
-      data: createWishDto
+      data: createWishDto,
+      include: { user: true },
     });
   }
 

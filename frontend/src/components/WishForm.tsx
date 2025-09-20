@@ -6,7 +6,7 @@ import { Label } from './ui/label';
 import { useAuth } from './AuthContext';
 import { useWishes } from './WishesContext';
 import { Heart, Send, Sparkles, Gift } from 'lucide-react';
-import { toast } from 'sonner@2.0.3';
+import { toast } from 'sonner';
 
 export function WishForm() {
   const [wishContent, setWishContent] = useState('');
@@ -26,14 +26,11 @@ export function WishForm() {
     setIsSubmitting(true);
     
     try {
-      // Simulate sending delay
-      await new Promise(resolve => setTimeout(resolve, 800));
+      // Gọi hàm addWish mới, chỉ cần content
+      await addWish(wishContent.trim());
       
-      addWish(wishContent.trim(), user.fullName, user.id);
       setWishContent('');
-      toast.success('Lời chúc của bạn đã được gửi! Cảm ơn bạn đã chia sẻ 🎉', {
-        description: 'Lời chúc sẽ xuất hiện trên timeline kỷ niệm 35 năm'
-      });
+      toast.success('Lời chúc của bạn đã được gửi và đang chờ duyệt! 🎉');
     } catch (error) {
       toast.error('Có lỗi xảy ra khi gửi lời chúc. Vui lòng thử lại!');
     } finally {

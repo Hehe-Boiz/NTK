@@ -1,13 +1,16 @@
 import { createContext, useContext, useState, ReactNode, useEffect } from 'react';
+import axios from 'axios'
+import { jwtDecode } from 'jwt-decode'
 
-export type UserRole = 'guest' | 'student' | 'admin';
+axios.defaults.baseURL = 'http://localhost:3000';
+export type UserRole = 'guest' | 'USER' | 'ADMIN';
 
 export interface User {
-  id: string;
-  username: string;
+  id: number;
+  name: string;
+  role: UserRole;
   email: string;
   fullName: string;
-  role: UserRole;
 }
 
 interface AuthContextType {
@@ -21,86 +24,85 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-// Mock user database
-const mockUsers = [
-  {
-    id: 'admin1',
-    username: 'admin',
-    password: 'admin123',
-    email: 'admin@fit.edu.vn',
-    fullName: 'Quản trị viên',
-    role: 'admin' as UserRole
-  },
-  {
-    id: 'student1',
-    username: 'student',
-    password: 'student123',
-    email: 'student@student.fit.edu.vn',
-    fullName: 'Nguyễn Văn A',
-    role: 'student' as UserRole
-  },
-  {
-    id: 'student2',
-    username: 'sv001',
-    password: '123456',
-    email: 'sv001@student.fit.edu.vn',
-    fullName: 'Trần Thị B',
-    role: 'student' as UserRole
+const getToken = () => {
+  try {
+    return localStorage.getItem('accessToken');
+  } catch (error) {
+    return null;
   }
-];
+}
+
+const getUserFromToken = (token: string | null): User | null => {
+  if (!token) return null;
+  try {
+    const decoded: { sub: number; email: string; role: UserRole, name: string } = jwtDecode(token);
+    return {
+      id: decoded.sub,
+      name: decoded.name || `User${decoded.sub}`,
+      fullName: decoded.name || `User ${decoded.sub}`,
+      email: decoded.email,
+      role: decoded.role,
+    };
+  } catch (error) {
+    console.error("Token không hợp lệ:", error);
+    return null;
+  }
+};
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<User | null>(() => getUserFromToken(getToken()));
 
   // Load user from localStorage on mount
   useEffect(() => {
-    const savedUser = localStorage.getItem('currentUser');
-    if (savedUser) {
-      try {
-        const userData = JSON.parse(savedUser);
-        setUser(userData);
-      } catch (error) {
-        console.error('Error loading saved user:', error);
-        localStorage.removeItem('currentUser');
+    const interceptor = axios.interceptors.request.use(config => {
+      const token = getToken();
+      if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
       }
-    }
-  }, []);
+      return config;
+    });
+
+    return () => {
+      axios.interceptors.request.eject(interceptor);
+    };
+  }, [user]);
 
   const login = async (username: string, password: string): Promise<boolean> => {
-    // Simulate API call delay
-    await new Promise(resolve => setTimeout(resolve, 500));
+    try {
+      // Gọi API đăng nhập của NestJS
+      const response = await axios.post('/auth/login', {
+        name: username, 
+        password: password,
+      });
 
-    const foundUser = mockUsers.find(
-      u => u.username === username && u.password === password
-    );
+      const { access_token } = response.data;
 
-    if (foundUser) {
-      const userData: User = {
-        id: foundUser.id,
-        username: foundUser.username,
-        email: foundUser.email,
-        fullName: foundUser.fullName,
-        role: foundUser.role
-      };
-      
-      setUser(userData);
-      localStorage.setItem('currentUser', JSON.stringify(userData));
-      return true;
+      if (access_token) {
+        localStorage.setItem('accessToken', access_token);
+        const userData = getUserFromToken(access_token);
+        setUser(userData);
+        return true;
+      }
+      return false;
+    } catch (error) {
+      console.error('Lỗi đăng nhập:', error);
+      // Xóa token cũ nếu có lỗi
+      localStorage.removeItem('accessToken');
+      setUser(null);
+      return false;
     }
-
-    return false;
   };
 
   const logout = () => {
     setUser(null);
-    localStorage.removeItem('currentUser');
+    localStorage.removeItem('accessToken');
   };
 
   const value: AuthContextType = {
     user,
     isLoggedIn: !!user,
-    isAdmin: user?.role === 'admin',
-    isStudent: user?.role === 'student',
+    isAdmin: user?.role === 'ADMIN',
+    isStudent: user?.role === 'USER',
     login,
     logout
   };

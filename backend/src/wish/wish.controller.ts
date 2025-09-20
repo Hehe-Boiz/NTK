@@ -1,17 +1,27 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Request } from '@nestjs/common';
 import { WishService } from './wish.service';
 import { Prisma } from 'generated/prisma';
 import { AuthGuard } from '@nestjs/passport';
-import { UserGuard } from 'src/auth/user.guard';
+import { AdminGuard } from 'src/auth/admin.guard';
 
 @Controller('wish')
-@UseGuards(AuthGuard('jwt'), UserGuard)
 export class WishController {
   constructor(private readonly wishService: WishService) {}
 
   @Post()
-  create(@Body() createWishDto: Prisma.WishCreateInput) {
-    return this.wishService.create(createWishDto);
+  @UseGuards(AuthGuard('jwt'))
+  create(@Body() createWishDto: Prisma.WishCreateInput, @Request() req) {
+    const userName = req.user.name;
+    
+    const data: Prisma.WishCreateInput = {
+      content: createWishDto.content,
+      user: {
+        connect: {
+          name: userName,
+        },
+      },
+    };
+    return this.wishService.create(data);
   }
 
   @Get()
@@ -20,16 +30,19 @@ export class WishController {
   }
 
   @Get(':id')
+  @UseGuards(AuthGuard('jwt'), AdminGuard)
   findOne(@Param('id') id: string) {
     return this.wishService.findOne(+id);
   }
 
   @Patch(':id')
+  @UseGuards(AuthGuard('jwt'), AdminGuard)
   update(@Param('id') id: string, @Body() updateWishDto: Prisma.WishUpdateInput) {
     return this.wishService.update(+id, updateWishDto);
   }
 
   @Delete(':id')
+  @UseGuards(AuthGuard('jwt'), AdminGuard)
   remove(@Param('id') id: string) {
     return this.wishService.remove(+id);
   }

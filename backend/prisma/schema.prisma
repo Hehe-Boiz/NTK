@@ -23,14 +23,22 @@ model Subject {
 model Wish {
   id Int @id @default(autoincrement())
   content String
+  status WishStatus @default(PENDING) // <-- THÊM DÒNG NÀY
 
   user User @relation(fields: [userName], references: [name])
   userName String
 }
 
+enum WishStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
 model User {
   id Int @id @default(autoincrement())
   name String @unique
+  email String @unique
   password String
   role Role
   wish Wish[]

@@ -3,6 +3,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/
 import { Badge } from './ui/badge';
 import { Button } from './ui/button';
 import { Separator } from './ui/separator';
+import { AchievementsSection} from './AchievementsSection'
 import { 
   Users, 
   Award, 
@@ -25,7 +26,7 @@ import {
   ExternalLink,
   Star
 } from 'lucide-react';
-import { ImageWithFallback } from './fallback/ImageWithFallback';
+import { ImageWithFallback } from './figma/ImageWithFallback';
 import { useTheme } from './ThemeProvider';
 import { WishForm } from './WishForm';
 import { WishBubbles } from './WishBubbles';
@@ -150,11 +151,11 @@ export function HomePage({ onNavigate }: HomePageProps) {
         </div>
 
         {/* Content */}
-        <div className="relative z-10 container-university py-20">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
+        <div className="relative z-10 container-super-university py-20">
+          <div className="grid w-900px lg:grid-cols-3 gap-12 items-center">
             
             {/* Left Column - Text Content */}
-            <div className="text-white">
+            <div className="text-white lg:col-span-2">
               {/* Anniversary Badge */}
               <Badge className="bg-white/20 text-white border-white/30 backdrop-blur-sm px-4 py-2 mb-8 inline-flex items-center">
                 <History className="h-4 w-4 mr-2" />
@@ -178,32 +179,6 @@ export function HomePage({ onNavigate }: HomePageProps) {
                   — {theme.anniversarySlogan}
                 </p>
               </div>
-
-              {/* CTA Buttons */}
-              <div className="flex flex-col sm:flex-row gap-4">
-                <Button 
-                  size="lg" 
-                  className="bg-white text-blue-900 hover:bg-blue-50 hover:scale-105 transition-transform px-8 py-4"
-                  onClick={() => onNavigate('academic')}
-                >
-                  <BookOpen className="mr-2 h-5 w-5" />
-                  Chương trình đào tạo
-                </Button>
-                <Button 
-                  size="lg" 
-                  variant="outline" 
-                  className="border-2 border-white text-white hover:bg-white hover:text-blue-900 hover:scale-105 transition-transform px-8 py-4 backdrop-blur-sm"
-                  onClick={() => onNavigate('contact')}
-                >
-                  <Phone className="mr-2 h-4 w-4" />
-                  Liên hệ tư vấn
-                </Button>
-              </div>
-            </div>
-
-            {/* Right Column - Info Cards */}
-            <div className="space-y-6">
-              {/* Quick Stats */}
               <div className="grid grid-cols-2 gap-4">
                 {achievements.slice(0, 4).map((achievement, index) => (
                   <Card key={index} className="bg-white/95 backdrop-blur-sm border-0 university-shadow">
@@ -222,70 +197,40 @@ export function HomePage({ onNavigate }: HomePageProps) {
                 ))}
               </div>
 
-              {/* Featured Info Card */}
-              <Card className="bg-white/95 backdrop-blur-sm border-0 university-shadow">
-                <CardHeader className="pb-4">
-                  <div className="flex items-center">
-                    <div className="w-12 h-12 bg-blue-600 rounded-xl flex items-center justify-center mr-4">
-                      <GraduationCap className="h-6 w-6 text-white" />
-                    </div>
-                    <div>
-                      <CardTitle className="text-lg university-text-primary">
-                        Điểm nổi bật
-                      </CardTitle>
-                      <p className="text-sm university-text-secondary">
-                        Năm học 2024-2025
-                      </p>
-                    </div>
-                  </div>
-                </CardHeader>
-                <CardContent className="pt-0">
-                  <div className="space-y-4">
-                    <div className="flex justify-between items-center">
-                      <span className="text-sm">Tỷ lệ có việc làm</span>
-                      <Badge variant="secondary" className="bg-green-100 text-green-800">
-                        96%
-                      </Badge>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span className="text-sm">Nghiên cứu quốc tế</span>
-                      <Badge variant="secondary" className="bg-blue-100 text-blue-800">
-                        200+ công trình
-                      </Badge>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span className="text-sm">Xếp hạng QS</span>
-                      <Badge variant="secondary" className="bg-purple-100 text-purple-800">
-                        Top 500
-                      </Badge>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
+          
 
-              {/* Contact Quick Access */}
-              <Card className="bg-white/95 backdrop-blur-sm border-0 university-shadow">
-                <CardContent className="p-6">
-                  <h3 className="font-semibold mb-4 flex items-center">
-                    <MapPin className="h-5 w-5 mr-2 text-blue-600" />
-                    Thông tin liên hệ
-                  </h3>
-                  <div className="space-y-3 text-sm">
-                    <div className="flex items-start">
-                      <Phone className="h-4 w-4 mr-2 text-gray-500 mt-0.5 flex-shrink-0" />
-                      <span className="university-text-secondary">
-                        {theme.contactInfo?.phone || '(024) 3869 2022'}
-                      </span>
-                    </div>
-                    <div className="flex items-start">
-                      <Mail className="h-4 w-4 mr-2 text-gray-500 mt-0.5 flex-shrink-0" />
-                      <span className="university-text-secondary">
-                        {theme.contactInfo?.email || 'cntt@university.edu.vn'}
-                      </span>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
+              {/* CTA Buttons */}
+              {/* <div className="flex flex-col sm:flex-row gap-4">
+                <Button 
+                  size="lg" 
+                  className="bg-white text-blue-900 hover:bg-blue-50 hover:scale-105 transition-transform px-8 py-4"
+                  onClick={() => onNavigate('academic')}
+                >
+                  <BookOpen className="mr-2 h-5 w-5" />
+                  Chương trình đào tạo
+                </Button>
+                <Button 
+                  size="lg" 
+                  variant="outline" 
+                  className="border-2 border-white text-white hover:bg-white hover:text-blue-900 hover:scale-105 transition-transform px-8 py-4 backdrop-blur-sm"
+                  onClick={() => onNavigate('contact')}
+                >
+                  <Phone className="mr-2 h-4 w-4" />
+                  Liên hệ tư vấn
+                </Button>
+              </div> */}
+            </div>
+            <div className="relative rounded-md">
+              <div className="relative rounded-md overflow-hidden">
+                  <ImageWithFallback
+                    src="https://images.unsplash.com/photo-1648279430956-a7d4a5d66c3a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjb21wdXRlciUyMHNjaWVuY2UlMjB1bml2ZXJzaXR5JTIwdGVjaG5vbG9neXxlbnwxfHx8fDE3NTgxODc4NDl8MA&ixlib=rb-4.1.0&q=80&w=1080"
+                    alt="Technology and Computer Science"
+                    className="rounded-2xl shadow-2xl "
+                  />
+                {/* Decorative elements */}
+                <div className="absolute -top-6 -right-6 w-24 h-24 bg-gradient-to-br from-blue-400 to-indigo-500 rounded-2xl opacity-20"></div>
+                <div className="absolute -bottom-6 -left-6 w-32 h-32 bg-gradient-to-br from-purple-400 to-pink-500 rounded-2xl opacity-20"></div>
+              </div>
             </div>
           </div>
         </div>
@@ -354,7 +299,7 @@ export function HomePage({ onNavigate }: HomePageProps) {
                 </p>
               </div>
             </div>
-
+            {/* Thông tin liên hệ */}
             <div className="bg-gray-50 rounded-xl p-8">
               <h3 className="text-2xl font-bold university-text-primary mb-6">
                 Thông tin liên hệ
@@ -778,7 +723,9 @@ export function HomePage({ onNavigate }: HomePageProps) {
           </div>
         </div>
       </section>
-
+      <section className="university-border border-t">
+        <AchievementsSection></AchievementsSection>
+      </section>
       {/* Call to Action */}
       <section className="py-20 bg-white border-t university-border">
         <div className="container-university text-center">

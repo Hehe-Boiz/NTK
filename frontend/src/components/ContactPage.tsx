@@ -23,7 +23,7 @@ import {
   Globe,
   UserCheck
 } from 'lucide-react';
-import { toast } from 'sonner@2.0.3';
+import { toast } from 'sonner';
 import { useAuth } from './AuthContext';
 
 export function ContactPage() {

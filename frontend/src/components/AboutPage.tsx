@@ -12,7 +12,7 @@ import {
   Calendar,
   Star
 } from 'lucide-react';
-import { ImageWithFallback } from './fallback/ImageWithFallback';
+import { ImageWithFallback } from './figma/ImageWithFallback';
 
 export function AboutPage() {
   const achievements = [

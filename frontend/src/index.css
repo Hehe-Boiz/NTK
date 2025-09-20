@@ -3541,7 +3541,11 @@ html {
   font-size: var(--font-size);
   scroll-behavior: smooth;
 }
-
+.container-super-university{
+  max-width: 1246px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
 .container-university {
   max-width: 1200px;
   margin: 0 auto;
