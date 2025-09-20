@@ -3,7 +3,7 @@ import { siteConfig } from '../config/site-config';
 import { themeConfig } from '../config/theme-config';
 import { heroData } from '../data/hero-data';
 import { aboutData } from '../data/about-data';
-import { achievementsData } from '../data/achievements-data';
+import { achievementsData } from '../data/achivements-data';
 import { programsData } from '../data/programs-data';
 import { historyData } from '../data/history-data';
 
