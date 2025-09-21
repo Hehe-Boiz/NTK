@@ -5,6 +5,7 @@ import { useTheme } from './ThemeProvider';
 import { useAuth } from './AuthContext';
 import { themeConfig } from '../config/theme-config';
 import { GetDefaultTheme } from './ThemeProvider';
+import logo from '../assets/logo.png'
 interface HeaderProps {
   currentPage: string;
   onNavigate: (page: string) => void;
@@ -31,8 +32,8 @@ export function Header({ currentPage, onNavigate }: HeaderProps) {
           {/* Logo */}
           <div className="flex items-center space-x-4">
             <div className="flex-shrink-0">
-              <div style={{backgroundColor:defTheme.primaryColor}} className="w-12 h-12 rounded-lg flex items-center justify-center mb-2">
-                <span className="text-white font-bold text-lg">K</span>
+              <div className="w-12 h-12 rounded-lg flex items-center justify-center mb-2">
+                <img src={logo} alt="" />
               </div>
             </div>
             <div>

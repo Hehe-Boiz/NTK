@@ -1,13 +1,13 @@
 {
-  "primaryColor": "#1e40af",
-  "secondaryColor": "#a855f7",
-  "backgroundColor": "#ffffff",
-  "textColor": "#1f2937",
-  "logoText": "Khoa Tài chính",
-  "universityName": "Trường Đại học XYZ",
+  "primaryColor": "#60a5fa",
+  "secondaryColor": "#1f2937",
+  "backgroundColor": "#111827",
+  "textColor": "#f9fafb",
+  "logoText": "Khoa CNTT - Nền tảng số",
+  "universityName": "Trường Đại học Kỹ thuật số",
   "facultyName": "Khoa Công nghệ Thông tin",
   "establishedYear": "1990",
-  "motto": "35 năm đồng hành cùng sự phát triển của ngành Công nghệ Thông tin Việt Nam",
+  "motto": "Dẫn đầu trong kỷ nguyên số.",
   "contactInfo": {
     "phone": "(028) 1234 5678",
     "email": "cntt@university.edu.vn",
@@ -24,61 +24,14 @@
       "title": "Thành lập Khoa CNTT",
       "description": "Khoa Công nghệ Thông tin được thành lập với sứ mệnh đào tạo nhân lực chất lượng cao",
       "icon": "Building",
-      "color": "#1e40af"
-    },
-    {
-      "year": "1995",
-      "title": "Chương trình Cử nhân",
-      "description": "Triển khai chương trình đào tạo Cử nhân Công nghệ Thông tin đạt chuẩn quốc gia",
-      "icon": "GraduationCap",
-      "color": "#1e40af"
-    },
-    {
-      "year": "2000",
-      "title": "Hợp tác quốc tế",
-      "description": "Thiết lập quan hệ đối tác với các trường đại học hàng đầu trên thế giới",
-      "icon": "Globe",
-      "color": "#1e40af"
-    },
-    {
-      "year": "2005",
-      "title": "Chương trình Thạc sĩ",
-      "description": "Mở rộng hệ thống đào tạo với chương trình Thạc sĩ và nghiên cứu khoa học",
-      "icon": "Award",
-      "color": "#1e40af"
-    },
-    {
-      "year": "2010",
-      "title": "Đổi mới giáo dục",
-      "description": "Triển khai phương pháp giảng dạy hiện đại và học tập tích cực",
-      "icon": "Lightbulb",
-      "color": "#1e40af"
-    },
-    {
-      "year": "2015",
-      "title": "Chuyển đổi số",
-      "description": "Tiên phong trong ứng dụng công nghệ số vào giáo dục và quản lý",
-      "icon": "TrendingUp",
-      "color": "#1e40af"
-    },
-    {
-      "year": "2020",
-      "title": "Nghiên cứu AI",
-      "description": "Thành lập trung tâm nghiên cứu Trí tuệ Nhân tạo và Machine Learning",
-      "icon": "Target",
-      "color": "#1e40af"
+      "color": "from-gray-500 to-gray-700"
     },
     {
       "year": "2025",
       "title": "Kỷ niệm 35 năm",
       "description": "Đạt mốc 15,000+ cử nhân tốt nghiệp và định hướng phát triển bền vững",
       "icon": "Trophy",
-      "color": "#1e40af"
+      "color": "from-blue-400 to-blue-600"
     }
-  ],
-  "primary": "#60a5fa",
-  "secondary": "#1f2937",
-  "accent": "#374151",
-  "background": "#111827",
-  "text": "#f9fafb"
+  ]
 }
