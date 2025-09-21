@@ -1,9 +1,9 @@
 {
   "primaryColor": "#1e40af",
-  "secondaryColor": "#a855f7",
+  "secondaryColor": "#7c3aed",
   "backgroundColor": "#ffffff",
   "textColor": "#1f2937",
-  "logoText": "Khoa Tài chính",
+  "logoText": "Khoa Công nghệ Thông tin",
   "universityName": "Trường Đại học XYZ",
   "facultyName": "Khoa Công nghệ Thông tin",
   "establishedYear": "1990",
@@ -20,60 +20,60 @@
   "coreValues": "Chất lượng - Đổi mới - Hợp tác - Phát triển bền vững",
   "milestones": [
     {
-      "year": "1990",
+      "year": "1989",
       "title": "Thành lập Khoa CNTT",
-      "description": "Khoa Công nghệ Thông tin được thành lập với sứ mệnh đào tạo nhân lực chất lượng cao",
+      "description": "Khoa Công nghệ thông tin được thành lập với 5 giảng viên và 50 sinh viên đầu tiên.",
       "icon": "Building",
-      "color": "#1e40af"
+      "color": "from-blue-500 to-blue-700"
     },
     {
       "year": "1995",
-      "title": "Chương trình Cử nhân",
-      "description": "Triển khai chương trình đào tạo Cử nhân Công nghệ Thông tin đạt chuẩn quốc gia",
+      "title": "Mở rộng chương trình đào tạo",
+      "description": "Bổ sung thêm các chuyên ngành Kỹ thuật phần mềm và Hệ thống thông tin.",
       "icon": "GraduationCap",
-      "color": "#1e40af"
+      "color": "from-cyan-400 to-cyan-600"
     },
     {
       "year": "2000",
-      "title": "Hợp tác quốc tế",
-      "description": "Thiết lập quan hệ đối tác với các trường đại học hàng đầu trên thế giới",
+      "title": "Chuẩn hóa chất lượng",
+      "description": "Được công nhận đạt chuẩn chất lượng đào tạo đại học theo tiêu chuẩn quốc gia.",
       "icon": "Globe",
-      "color": "#1e40af"
+      "color": "from-amber-500 to-amber-500"
     },
     {
       "year": "2005",
-      "title": "Chương trình Thạc sĩ",
-      "description": "Mở rộng hệ thống đào tạo với chương trình Thạc sĩ và nghiên cứu khoa học",
+      "title": "Hợp tác quốc tế",
+      "description": "Ký kết các thỏa thuận hợp tác với các trường đại học hàng đầu thế giới.",
       "icon": "Award",
-      "color": "#1e40af"
+      "color": "from-purple-500 to-indigo-600"
     },
     {
       "year": "2010",
-      "title": "Đổi mới giáo dục",
-      "description": "Triển khai phương pháp giảng dạy hiện đại và học tập tích cực",
+      "title": "Phòng lab hiện đại",
+      "description": "Đầu tư xây dựng hệ thống phòng thí nghiệm với trang thiết bị hiện đại.",
       "icon": "Lightbulb",
-      "color": "#1e40af"
+      "color": "from-green-500 to-emerald-600"
     },
     {
       "year": "2015",
-      "title": "Chuyển đổi số",
-      "description": "Tiên phong trong ứng dụng công nghệ số vào giáo dục và quản lý",
+      "title": "Chương trình thạc sĩ",
+      "description": "Mở chương trình đào tạo thạc sĩ và tiến sĩ chuyên ngành CNTT.",
       "icon": "TrendingUp",
-      "color": "#1e40af"
+      "color": "from-rose-500 to-pink-600"
     },
     {
       "year": "2020",
-      "title": "Nghiên cứu AI",
-      "description": "Thành lập trung tâm nghiên cứu Trí tuệ Nhân tạo và Machine Learning",
+      "title": "Chuyển đổi số",
+      "description": "Triển khai toàn diện chương trình chuyển đổi số trong giảng dạy và quản lý.",
       "icon": "Target",
-      "color": "#1e40af"
+      "color": "from-teal-500 to-teal-600"
     },
     {
-      "year": "2025",
+      "year": "2024",
       "title": "Kỷ niệm 35 năm",
-      "description": "Đạt mốc 15,000+ cử nhân tốt nghiệp và định hướng phát triển bền vững",
+      "description": "Tự hào kỷ niệm 35 năm thành lập với nhiều thành tựu đáng tự hào.",
       "icon": "Trophy",
-      "color": "#1e40af"
+      "color": "from-yellow-500 to-orange-500"
     }
   ]
 }

@@ -416,61 +416,120 @@ export function WhiteLabelAdminPage() {
 
               {/* === MỚI: TAB CONTENT === */}
               <TabsContent value="content" className="space-y-6">
-                 <Card>
+                                <Card>
                   <CardHeader>
-                    <CardTitle className="flex items-center"><History className="h-5 w-5 mr-2" />Lịch sử & Cột mốc</CardTitle>
-                    <CardDescription>Chỉnh sửa các mốc quan trọng trong lịch sử 35 năm phát triển.</CardDescription>
+                    <CardTitle className="flex items-center">
+                      <History className="h-5 w-5 mr-2" />
+                      Cây Lịch sử 35 năm
+                    </CardTitle>
+                    <CardDescription>
+                      Chỉnh sửa các mốc quan trọng trong lịch sử 35 năm phát triển
+                    </CardDescription>
                   </CardHeader>
                   <CardContent>
                     <div className="space-y-4">
-                      {(currentTheme.milestones || []).map((milestone: any, index: number) => (
-                        <div key={index} className="border rounded-lg p-4 bg-gray-50/50 space-y-3">
-                          <div className="grid md:grid-cols-5 gap-4">
-                            <div className="md:col-span-1">
-                                <Label>Năm</Label>
-                                <Input value={milestone.year} placeholder="2000" onChange={(e) => {
-                                  const newMilestones = [...currentTheme.milestones];
+                      {(changes.milestones || theme.milestones).map((milestone: any, index: number) => (
+                        <div key={index} className="border rounded-lg p-4 bg-gray-50">
+                          <div className="grid md:grid-cols-4 gap-4">
+                            <div>
+                              <Label>Năm</Label>
+                              <Input
+                                value={milestone.year}
+                                onChange={(e) => {
+                                  const newMilestones = [...(changes.milestones || theme.milestones)];
                                   newMilestones[index] = { ...milestone, year: e.target.value };
                                   handleInputChange('milestones', newMilestones);
-                                }}/>
+                                }}
+                                placeholder="2000"
+                              />
                             </div>
-                             <div className="md:col-span-4">
-                                <Label>Tiêu đề</Label>
-                                <Input value={milestone.title} placeholder="Sự kiện quan trọng" onChange={(e) => {
-                                  const newMilestones = [...currentTheme.milestones];
+                            <div>
+                              <Label>Tiêu đề</Label>
+                              <Input
+                                value={milestone.title}
+                                onChange={(e) => {
+                                  const newMilestones = [...(changes.milestones || theme.milestones)];
                                   newMilestones[index] = { ...milestone, title: e.target.value };
                                   handleInputChange('milestones', newMilestones);
-                                }}/>
+                                }}
+                                placeholder="Sự kiện quan trọng"
+                              />
                             </div>
-                            <div className="md:col-span-5">
-                                <Label>Mô tả</Label>
-                                <Textarea value={milestone.description} rows={2} placeholder="Mô tả chi tiết về sự kiện..." onChange={(e) => {
-                                  const newMilestones = [...currentTheme.milestones];
+                            <div>
+                              <Label>Icon</Label>
+                              <select
+                                className="w-full p-2 border rounded-md"
+                                value={milestone.icon}
+                                onChange={(e) => {
+                                  const newMilestones = [...(changes.milestones || theme.milestones)];
+                                  newMilestones[index] = { ...milestone, icon: e.target.value };
+                                  handleInputChange('milestones', newMilestones);
+                                }}
+                              >
+                                <option value="Building">🏢 Building</option>
+                                <option value="GraduationCap">🎓 GraduationCap</option>
+                                <option value="Globe">🌍 Globe</option>
+                                <option value="Award">🏆 Award</option>
+                                <option value="Lightbulb">💡 Lightbulb</option>
+                                <option value="TrendingUp">📈 TrendingUp</option>
+                                <option value="Target">🎯 Target</option>
+                                <option value="Trophy">🏆 Trophy</option>
+                                <option value="Users">👥 Users</option>
+                                <option value="BookOpen">📖 BookOpen</option>
+                                <option value="Star">⭐ Star</option>
+                              </select>
+                            </div>
+                            <div className="md:col-span-4">
+                              <Label>Mô tả</Label>
+                              <Textarea
+                                value={milestone.description}
+                                onChange={(e) => {
+                                  const newMilestones = [...(changes.milestones || theme.milestones)];
                                   newMilestones[index] = { ...milestone, description: e.target.value };
                                   handleInputChange('milestones', newMilestones);
-                                }}/>
+                                }}
+                                placeholder="Mô tả chi tiết về sự kiện..."
+                                rows={2}
+                              />
                             </div>
                           </div>
-                          <div className="flex justify-end">
-                            <Button variant="ghost" size="sm" className="text-red-500 hover:bg-red-50 hover:text-red-600" onClick={() => {
-                                const newMilestones = [...currentTheme.milestones];
+                          <div className="flex justify-end mt-4">
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              onClick={() => {
+                                const newMilestones = [...(changes.milestones || theme.milestones)];
                                 newMilestones.splice(index, 1);
                                 handleInputChange('milestones', newMilestones);
-                              }}>
-                              <Minus className="h-4 w-4 mr-2" /> Xóa mốc này
+                              }}
+                            >
+                              <Minus className="h-4 w-4 mr-2" />
+                              Xóa mốc này
                             </Button>
                           </div>
                         </div>
                       ))}
-                      <Button variant="outline" className="w-full" onClick={() => {
-                          const newMilestone = { year: new Date().getFullYear().toString(), title: 'Sự kiện mới', description: 'Mô tả sự kiện mới' };
-                          handleInputChange('milestones', [...(currentTheme.milestones || []), newMilestone]);
-                        }}>
-                        <Plus className="h-4 w-4 mr-2" /> Thêm mốc mới
+                      
+                      <Button
+                        variant="outline"
+                        onClick={() => {
+                          const newMilestone = {
+                            year: new Date().getFullYear().toString(),
+                            title: 'Sự kiện mới',
+                            description: 'Mô tả sự kiện mới',
+                            icon: 'Star'
+                          };
+                          const newMilestones = [...(changes.milestones || theme.milestones), newMilestone];
+                          handleInputChange('milestones', newMilestones);
+                        }}
+                        className="w-full"
+                      >
+                        <Plus className="h-4 w-4 mr-2" />
+                        Thêm mốc mới
                       </Button>
                     </div>
                   </CardContent>
-                 </Card>
+                </Card>
               </TabsContent>
 
               {/* === TAB WISHES (Giữ nguyên component đã tách) === */}

@@ -5,7 +5,6 @@ import { AuthGuard } from '@nestjs/passport';
 import { AdminGuard } from 'src/auth/admin.guard';
 
 @Controller('themes')
-@UseGuards(AuthGuard('jwt'), AdminGuard)
 export class ThemesController {
   constructor(private readonly themesService: ThemesService) {}
 
