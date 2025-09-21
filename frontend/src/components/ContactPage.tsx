@@ -96,9 +96,9 @@ export function ContactPage() {
       icon: Mail,
       details: [
         'cntt@university.edu.vn',
-        'daotao.cntt@university.edu.vn',
-        'nghiencuu.cntt@university.edu.vn',
-        'tuyensinh.cntt@university.edu.vn'
+        'daotao@university.edu.vn',
+        'nghiencuu@university.edu.vn',
+        'tuyensinh@university.edu.vn'
       ],
       color: 'purple'
     },
@@ -133,24 +133,6 @@ export function ContactPage() {
       email: 'daotao.cntt@university.edu.vn',
       office: 'Phòng 302, Tòa nhà A',
       responsibilities: ['Chương trình đào tạo', 'Tuyển sinh', 'Quản lý sinh viên']
-    },
-    {
-      name: 'Phòng Nghiên cứu',
-      head: 'PGS.TS. Lê Văn C',
-      position: 'Trưởng phòng',
-      phone: '(028) 1234 5680',
-      email: 'nghiencuu.cntt@university.edu.vn',
-      office: 'Phòng 401, Tòa nhà B',
-      responsibilities: ['Dự án nghiên cứu', 'Hợp tác quốc tế', 'Xuất bản khoa học']
-    },
-    {
-      name: 'Phòng Hợp tác Doanh nghiệp',
-      head: 'ThS. Phạm Thị D',
-      position: 'Trưởng phòng',
-      phone: '(028) 1234 5681',
-      email: 'hoptac.cntt@university.edu.vn',
-      office: 'Phòng 303, Tòa nhà A',
-      responsibilities: ['Thực tập sinh', 'Việc làm', 'Dự án doanh nghiệp']
     }
   ];
 
@@ -453,30 +435,6 @@ export function ContactPage() {
                     <span className="text-green-600 font-medium">24/7</span>
                   </div>
                 </div>
-              </CardContent>
-            </Card>
-
-            {/* Social Media */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center">
-                  <Globe className="h-5 w-5 mr-2" />
-                  Mạng xã hội
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-3">
-                <Button variant="outline" className="w-full justify-start">
-                  Facebook Page
-                </Button>
-                <Button variant="outline" className="w-full justify-start">
-                  YouTube Channel
-                </Button>
-                <Button variant="outline" className="w-full justify-start">
-                  LinkedIn
-                </Button>
-                <Button variant="outline" className="w-full justify-start">
-                  Zalo Official
-                </Button>
               </CardContent>
             </Card>
           </div>

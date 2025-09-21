@@ -123,22 +123,6 @@ export const historyData = {
       },
       type: "transformation" as const
     },
-    {
-      year: "2024",
-      title: "Hàng Đầu Khu Vực",
-      description: "Khoa chính thức được công nhận là một trong những khoa CNTT hàng đầu khu vực với hơn 4000 sinh viên và 200+ đối tác doanh nghiệp.",
-      achievements: [
-        "Top 5 khoa CNTT hàng đầu",
-        "4000+ sinh viên",
-        "200+ đối tác doanh nghiệp",
-        "Chứng nhận AUN-QA"
-      ],
-      image: {
-        src: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx1bml2ZXJzaXR5JTIwc3VjY2VzcyUyMGFjaGlldmVtZW50fGVufDF8fHx8MTc1ODE4Nzg1NXww&ixlib=rb-4.1.0&q=80&w=1080",
-        alt: "University Success"
-      },
-      type: "achievement" as const
-    }
   ],
 
   // Key Statistics Over Time

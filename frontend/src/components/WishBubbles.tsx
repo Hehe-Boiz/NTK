@@ -83,6 +83,7 @@ export function WishBubbles() {
   return (
     <div className="absolute inset-0 w-full h-full pointer-events-none overflow-visible">
       {/* Toggle Button - positioned relative to timeline */}
+      
       <div className="absolute top-4 right-4 z-50 pointer-events-auto">
         <Button
           onClick={toggleWishesDisplay}
@@ -102,6 +103,7 @@ export function WishBubbles() {
             </>
           )}
         </Button>
+        
       </div>
 
       {/* Floating Wishes Icons Container */}
@@ -184,7 +186,7 @@ export function WishBubbles() {
                         }}
                       />
                     </button>
-                  </PopoverTrigger>.w-3
+                  </PopoverTrigger>
                   <PopoverContent 
                     className="w-80 p-4"
                     side="top"
@@ -226,13 +228,7 @@ export function WishBubbles() {
         </AnimatePresence>
       </div>
 
-      {/* Wishes Counter (when hidden) */}
-      {!showWishes && getApprovedWishes().length > 0 && (
-        <div className="absolute top-12 right-4 bg-university-navy text-white px-2 py-1 rounded-md shadow-lg text-xs pointer-events-auto">
-          <Heart className="h-3 w-3 inline mr-1" />
-          {getApprovedWishes().length} lời chúc
-        </div>
-      )}
+      
     </div>
   );
 }

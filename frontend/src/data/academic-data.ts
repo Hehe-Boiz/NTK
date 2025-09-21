@@ -230,7 +230,7 @@ export  const programs = [
       description: 'Đào tạo chuyên gia bảo mật với kiến thức toàn diện về an ninh mạng và bảo vệ thông tin.',
       icon: Shield,
       color: 'red',
-      featured: false,
+      featured: true,
       admissionScore: '25.5',
       employmentRate: 97,
       averageSalary: '20-40 triệu',
@@ -616,7 +616,7 @@ export  const researchAreas = [
       projects: 12,
       publications: 48,
       funding: '2.1 tỷ VND',
-      featured: false,
+      featured: true,
       keyResearch: [
         'Smart City Data Analytics',
         'Healthcare Big Data',

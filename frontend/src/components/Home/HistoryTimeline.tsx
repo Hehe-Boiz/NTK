@@ -1,15 +1,15 @@
+// src/components/Home/HistoryTimeline.tsx
 
 import { Card, CardContent } from "../ui/card_bak";
 import { Badge } from "../ui/badge";
 import { motion } from "motion/react";
 import { WishBubbles } from '../WishBubbles';
-import {Building, Award, Lightbulb, TrendingUp, Target, Users, BookOpen, Calendar, Trophy, Globe, GraduationCap, Monitor, Brain, Smartphone, Star } from "lucide-react";
-import { GetDefaultTheme } from "../ThemeProvider";
-
+import { Building, Award, Lightbulb, TrendingUp, Target, Users, BookOpen, Calendar, Trophy, Globe, GraduationCap, Star } from "lucide-react";
+import { useTheme } from "../ThemeProvider"; // Sửa: Import useTheme
 
 export function HistoryTimeline() {
-  const defaultTheme = GetDefaultTheme()
-  const milestones = defaultTheme.milestones
+  const { theme } = useTheme(); // Sửa: Dùng useTheme() để lấy dữ liệu động từ context
+  const milestones = theme.milestones; // Sửa: Lấy milestones từ theme động
   const iconMap = {
     Building: Building,
     GraduationCap: GraduationCap,

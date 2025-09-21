@@ -213,7 +213,7 @@ export function AcademicPage() {
                             <span className="text-green-600 font-medium">{program.employmentRate}%</span>
                           </div>
                           <div className="flex justify-between">
-                            <span className="text-gray-600">Mức lương:</span>
+                            <span className="text-gray-600">Học phí:</span>
                             <span className="text-blue-600 font-medium">{program.averageSalary}</span>
                           </div>
                         </div>
