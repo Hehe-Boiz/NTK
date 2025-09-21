@@ -3,7 +3,8 @@ import { Button } from './ui/button';
 import { Menu, X, Settings, LogIn, LogOut, User } from 'lucide-react';
 import { useTheme } from './ThemeProvider';
 import { useAuth } from './AuthContext';
-
+import { themeConfig } from '../config/theme-config';
+import { GetDefaultTheme } from './ThemeProvider';
 interface HeaderProps {
   currentPage: string;
   onNavigate: (page: string) => void;
@@ -21,7 +22,8 @@ export function Header({ currentPage, onNavigate }: HeaderProps) {
     ...(isAdmin ? [{ id: 'white-label-admin', label: 'Quản trị', icon: Settings, adminOnly: true }] : []),
     { id: 'contact', label: 'Liên hệ' },
   ];
-
+  const themeConf = themeConfig
+  const defTheme = GetDefaultTheme()
   return (
     <header className="bg-white university-shadow sticky top-0 z-50 border-b university-border pl-20 pr-20">
       <div className="container-super-university">
@@ -29,7 +31,7 @@ export function Header({ currentPage, onNavigate }: HeaderProps) {
           {/* Logo */}
           <div className="flex items-center space-x-4">
             <div className="flex-shrink-0">
-              <div className="w-12 h-12 bg-gradient-to-br from-blue-900 to-blue-700 rounded-lg flex items-center justify-center mb-2">
+              <div style={{backgroundColor:defTheme.primaryColor}} className="w-12 h-12 rounded-lg flex items-center justify-center mb-2">
                 <span className="text-white font-bold text-lg">K</span>
               </div>
             </div>
