@@ -1,6 +1,6 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Request } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Request, Query } from '@nestjs/common';
 import { WishService } from './wish.service';
-import { Prisma } from 'generated/prisma';
+import { Prisma, WishStatus } from 'generated/prisma';
 import { AuthGuard } from '@nestjs/passport';
 import { AdminGuard } from 'src/auth/admin.guard';
 
@@ -25,7 +25,7 @@ export class WishController {
   }
 
   @Get()
-  findAll() {
+  findAll(@Query('status') status?: WishStatus) {
     return this.wishService.findAll();
   }
 

@@ -13,9 +13,15 @@ export class WishService {
     });
   }
 
-  findAll() {
-    return this.databaseService.wish.findMany();
+  findAll(status?: 'PENDING' | 'APPROVED' | 'REJECTED') {
+    const where: Prisma.WishWhereInput = status ? { status } : {};
+    
+    return this.databaseService.wish.findMany({
+      where,
+      include: { user: true }
+    });
   }
+
 
   findOne(id: number) {
     return this.databaseService.wish.findUnique({
