@@ -2,6 +2,7 @@
 let
     backend = with pkgs; [ 
         nest-cli
+
         prisma
         prisma-engines
     ];
@@ -14,5 +15,5 @@ in
 pkgs.mkShell {
     packages = with pkgs; [
         nodejs_20
-    ] ++ frontend;
+    ] ++ backend ++ frontend;
 }
