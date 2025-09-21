@@ -161,7 +161,7 @@ export function AchievementsSection() {
                 className="text-center group"
               >
                 <div className="bg-secondary/10 rounded-2xl p-6 group-hover:bg-secondary/20 transition-colors">
-                  <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center text-primary mx-auto mb-4 group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
+                  <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center text-primary mx-auto mb-4 group-hover:bg-blue group-hover:text-primary-foreground transition-colors">
                     {stat.icon}
                   </div>
                   <motion.p 
@@ -213,7 +213,7 @@ export function AchievementsSection() {
               <Card className="h-full border transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
                 <CardContent className="p-6 text-center space-y-4">
                   <div className="relative">
-                    <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center text-primary mx-auto group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-300">
+                    <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center text-primary mx-auto group-hover:bg-blue group-hover:text-primary-foreground transition-all duration-300">
                       {achievement.icon}
                     </div>
                     {achievement.featured && (

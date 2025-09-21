@@ -4,7 +4,22 @@ import { Badge } from './ui/badge';
 import { Button } from './ui/button';
 import { Separator } from './ui/separator';
 import { AchievementsSection} from './Home/AchievementsSection'
-import locallLabImage from '../public/images/ouimage.jpg'
+import locallLabImage from '../assets/ouimage.jpg'
+import ttImage1 from '../assets/tt1.jpg'
+import ttImage2 from '../assets/tt2.jpg'
+import ttImage3 from '../assets/tt3.jpg'
+
+import gvImg1 from '../assets/gv1.jpg'
+import gvImg2 from '../assets/gv2.jpg'
+import gvImg3 from '../assets/gv3.jpg'
+
+import cp1 from '../assets/cp.jpg'
+import cp2 from '../assets/qs.jpg'
+import cp3 from '../assets/sv.jpg'
+import cp4 from '../assets/tn.jpg'
+import cp5 from '../assets/ct.jpg'
+import cp6 from '../assets/rdr.jpg'
+import cp7 from '../assets/lb.jpg'
 import { 
   Users, 
   Award, 
@@ -59,6 +74,8 @@ export function HomePage({ onNavigate }: HomePageProps) {
   const { theme } = useTheme();
 
   const heroData = useHeroData();
+  const ttImages = [ttImage1, ttImage2, ttImage3];
+  const gvIMages = [gvImg1, gvImg2, gvImg3];
 
   return (
     <div className="min-h-screen bg-white">
@@ -240,11 +257,14 @@ export function HomePage({ onNavigate }: HomePageProps) {
             <div className="grid lg:grid-cols-3 gap-8">
               {leadership.map((leader, index) => (
                 <Card key={index} className="university-shadow hover:university-shadow-lg transition-all">
-                  <CardHeader className="text-center pb-4">
-                    <div className="w-24 h-24 mx-auto mb-6 bg-gradient-to-br from-blue-600 to-blue-800 rounded-full flex items-center justify-center">
-                      <span className="text-white text-2xl font-bold">
-                        {leader.name.split(' ').pop()?.charAt(0)}
-                      </span>
+                  <CardHeader className="pb-4">
+                    <div className="text-center justify-center align-center">
+                      <ImageWithFallback
+                        src={gvIMages[index]}
+                        alt="Archiments image"
+                        className="rounded-full shadow-2xl  w-64 h-64 mb-8 relative"
+                      >
+                      </ImageWithFallback>
                     </div>
                     <CardTitle className="text-xl">{leader.name}</CardTitle>
                     <Badge variant="outline" className="w-fit mx-auto mt-2">
@@ -259,18 +279,6 @@ export function HomePage({ onNavigate }: HomePageProps) {
                     <div>
                       <h5 className="font-semibold mb-2 text-lg">Học vấn</h5>
                       <p className="university-text-secondary">{leader.education}</p>
-                    </div>
-                    <Separator />
-                    <div>
-                      <h5 className="font-semibold mb-3 text-lg">Thành tựu nổi bật</h5>
-                      <ul className="university-text-secondary space-y-2">
-                        {leader.achievements.map((achievement, i) => (
-                          <li key={i} className="flex items-start">
-                            <span className="text-blue-600 mr-3 mt-1">•</span>
-                            <span>{achievement}</span>
-                          </li>
-                        ))}
-                      </ul>
                     </div>
                   </CardContent>
                 </Card>
@@ -376,27 +384,17 @@ export function HomePage({ onNavigate }: HomePageProps) {
             {testimonials.map((testimonial, index) => (
               <Card key={index} className="bg-white university-shadow hover:university-shadow-lg transition-all">
                 <CardContent className="pt-8">
-                  <div className="mb-8">
-                    <div className="flex items-center mb-4">
-                      <div className="w-16 h-16 bg-gradient-to-br from-blue-600 to-blue-800 rounded-full flex items-center justify-center mr-4">
-                        <span className="text-white font-bold text-lg">
-                          {testimonial.name.split(' ').map(n => n[0]).join('')}
-                        </span>
-                      </div>
-                      <div>
-                        <div className="font-semibold text-lg">{testimonial.name}</div>
-                        <div className="text-sm university-text-secondary">{testimonial.year}</div>
-                      </div>
-                    </div>
+                  <div className='text-center'>
+                    <ImageWithFallback
+                      src={ttImages[index]}
+                      alt="Archiments image"
+                      className="rounded-2xl shadow-2xl  w-full h-64 mb-8 relative"
+                    
+                    ></ImageWithFallback>
                   </div>
-                  
-                  <blockquote className="university-text-secondary mb-8 leading-relaxed italic text-lg">
-                    "{testimonial.content}"
-                  </blockquote>
-                  
                   <div className="border-t university-border pt-6">
-                    <div className="font-semibold">{testimonial.role}</div>
-                    <div className="text-sm university-text-secondary">{testimonial.company}</div>
+                    <div className="font-semibold">{testimonial.content}</div>
+                    <div className="text-sm university-text-secondary">{testimonial.date}</div>
                   </div>
                 </CardContent>
               </Card>
@@ -426,13 +424,13 @@ export function HomePage({ onNavigate }: HomePageProps) {
             <Card className="overflow-hidden university-shadow-lg">
               <div className="relative">
                 <ImageWithFallback
-                  src="https://images.unsplash.com/photo-1610967999370-080d066b4543?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx1bml2ZXJzaXR5JTIwbW9kZXJuJTIwYnVpbGRpbmclMjBhcmNoaXRlY3R1cmV8ZW58MXx8fHwxNzU4MTkyNDUzfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
+                  src={cp1}
                   alt="Modern University Building"
                   className="w-full h-96 md:h-[500px] object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
                 <div className="absolute bottom-8 left-8 text-white">
-                  <h3 className="text-3xl font-bold mb-2">Tòa nhà Khoa CNTT</h3>
+                  <h3 className="text-3xl font-bold mb-2">Campus</h3>
                   <p className="text-lg text-white/90">Cơ sở vật chất hiện đại với hệ thống lab tối tân</p>
                 </div>
               </div>
@@ -446,14 +444,14 @@ export function HomePage({ onNavigate }: HomePageProps) {
               <Card className="overflow-hidden h-64 university-shadow hover:university-shadow-lg transition-all group">
                 <div className="relative h-full">
                   <ImageWithFallback
-                    src="https://images.unsplash.com/photo-1731834453355-df041245e7d7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx1bml2ZXJzaXR5JTIwbGFib3JhdG9yeSUyMGNvbXB1dGVyJTIwc2NpZW5jZXxlbnwxfHx8fDE3NTgxOTI0NDZ8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
+                    src={cp2}
                     alt="Computer Laboratory"
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                   />
                   <div className="absolute inset-0 bg-black/30 group-hover:bg-black/40 transition-colors"></div>
                   <div className="absolute bottom-4 left-4 text-white">
-                    <h4 className="text-lg font-semibold">Phòng Lab Máy tính</h4>
-                    <p className="text-sm text-white/90">100+ máy trạm hiệu năng cao</p>
+                    <h4 className="text-lg font-semibold">Quân sự</h4>
+                    <p className="text-sm text-white/90">Hoạt động quân sự</p>
                   </div>
                 </div>
               </Card>
@@ -462,7 +460,7 @@ export function HomePage({ onNavigate }: HomePageProps) {
             <Card className="overflow-hidden h-64 university-shadow hover:university-shadow-lg transition-all group">
               <div className="relative h-full">
                 <ImageWithFallback
-                  src="https://images.unsplash.com/photo-1606761568499-6d2451b23c66?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx1bml2ZXJzaXR5JTIwY2FtcHVzJTIwc3R1ZGVudHMlMjBsZWFybmluZ3xlbnwxfHx8fDE3NTgxOTI0NDJ8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
+                  src={cp3}
                   alt="Students Learning"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                 />
@@ -477,7 +475,7 @@ export function HomePage({ onNavigate }: HomePageProps) {
             <Card className="overflow-hidden h-64 university-shadow hover:university-shadow-lg transition-all group">
               <div className="relative h-full">
                 <ImageWithFallback
-                  src="https://images.unsplash.com/photo-1620663823969-631e014e5e97?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx1bml2ZXJzaXR5JTIwc3R1ZGVudHMlMjBncmFkdWF0aW9uJTIwY2VyZW1vbnl8ZW58MXx8fHwxNzU4MTkyNDUwfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
+                  src={cp4}
                   alt="Graduation Ceremony"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                 />
@@ -493,13 +491,13 @@ export function HomePage({ onNavigate }: HomePageProps) {
             <Card className="overflow-hidden h-64 university-shadow hover:university-shadow-lg transition-all group">
               <div className="relative h-full">
                 <ImageWithFallback
-                  src="https://images.unsplash.com/photo-1600903308878-bf5e554ab841?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx1bml2ZXJzaXR5JTIwY2FtcHVzJTIwYnVpbGRpbmclMjBtb2Rlcm4lMjBhcmNoaXRlY3R1cmV8ZW58MXx8fHwxNzU4MTcxMjAwfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
+                  src={cp6}
                   alt="Campus Building"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                 />
                 <div className="absolute inset-0 bg-black/30 group-hover:bg-black/40 transition-colors"></div>
                 <div className="absolute bottom-4 left-4 text-white">
-                  <h4 className="text-lg font-semibold">Campus chính</h4>
+                  <h4 className="text-lg font-semibold">Thư viện</h4>
                   <p className="text-sm text-white/90">Kiến trúc hiện đại</p>
                 </div>
               </div>
@@ -509,13 +507,13 @@ export function HomePage({ onNavigate }: HomePageProps) {
               <Card className="overflow-hidden h-64 university-shadow hover:university-shadow-lg transition-all group">
                 <div className="relative h-full">
                   <ImageWithFallback
-                    src="https://images.unsplash.com/photo-1610967999370-080d066b4543?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx1bml2ZXJzaXR5JTIwbW9kZXJuJTIwYnVpbGRpbmclMjBhcmNoaXRlY3R1cmV8ZW58MXx8fHwxNzU4MTkyNDUzfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
+                    src={cp5}
                     alt="Innovation Center"
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                   />
                   <div className="absolute inset-0 bg-black/30 group-hover:bg-black/40 transition-colors"></div>
                   <div className="absolute bottom-4 left-4 text-white">
-                    <h4 className="text-lg font-semibold">Trung tâm Đổi mới Sáng tạo</h4>
+                    <h4 className="text-lg font-semibold">Cuộc thi giải pháp phần mềm</h4>
                     <p className="text-sm text-white/90">Hub khởi nghiệp và nghiên cứu</p>
                   </div>
                 </div>
@@ -525,7 +523,7 @@ export function HomePage({ onNavigate }: HomePageProps) {
             <Card className="overflow-hidden h-64 university-shadow hover:university-shadow-lg transition-all group">
               <div className="relative h-full">
                 <ImageWithFallback
-                  src="https://images.unsplash.com/photo-1731834453355-df041245e7d7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx1bml2ZXJzaXR5JTIwbGFib3JhdG9yeSUyMGNvbXB1dGVyJTIwc2NpZW5jZXxlbnwxfHx8fDE3NTgxOTI0NDZ8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
+                  src={cp7}
                   alt="AI Research Lab"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                 />

@@ -67,7 +67,7 @@ export function LoginPage({ onNavigate }: LoginPageProps) {
                 </Alert>
               )}
 
-              <div className="space-y-2">
+              <div className="space-y-2 ">
                 <Label htmlFor="username">Tên đăng nhập</Label>
                 <div className="relative">
                   <User className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
@@ -101,7 +101,7 @@ export function LoginPage({ onNavigate }: LoginPageProps) {
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-3 h-4 w-4 text-muted-foreground hover:text-foreground"
+                    className="absolute  right-3 top-3 h-4 w-4 text-muted-foreground hover:text-foreground"
                     disabled={isLoading}
                   >
                     {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
@@ -110,7 +110,7 @@ export function LoginPage({ onNavigate }: LoginPageProps) {
               </div>
             </CardContent>
 
-            <CardFooter className="flex flex-col space-y-4">
+            <CardFooter className="flex mt-6 flex-col space-y-4">
               <Button
                 type="submit"
                 className="w-full btn-university-primary"
@@ -131,39 +131,6 @@ export function LoginPage({ onNavigate }: LoginPageProps) {
               </div>
             </CardFooter>
           </form>
-        </Card>
-
-        {/* Demo Accounts */}
-        <Card className="university-shadow border-0 bg-muted/50">
-          <CardHeader className="pb-3">
-            <CardTitle className="text-sm flex items-center gap-2">
-              <Shield className="h-4 w-4" />
-              Tài khoản demo
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-3 text-sm">
-            <div className="p-3 bg-background rounded-lg border">
-              <div className="flex items-center gap-2 mb-2">
-                <Shield className="h-4 w-4 text-university-accent" />
-                <span className="font-medium">Quản trị viên</span>
-              </div>
-              <div className="text-muted-foreground space-y-1">
-                <div>Tên đăng nhập: <span className="font-mono">admin</span></div>
-                <div>Mật khẩu: <span className="font-mono">admin123</span></div>
-              </div>
-            </div>
-            
-            <div className="p-3 bg-background rounded-lg border">
-              <div className="flex items-center gap-2 mb-2">
-                <BookOpen className="h-4 w-4 text-university-blue" />
-                <span className="font-medium">Sinh viên</span>
-              </div>
-              <div className="text-muted-foreground space-y-1">
-                <div>Tên đăng nhập: <span className="font-mono">student</span></div>
-                <div>Mật khẩu: <span className="font-mono">student123</span></div>
-              </div>
-            </div>
-          </CardContent>
         </Card>
       </div>
     </div>

@@ -1164,8 +1164,14 @@
   .w-42 {
     width: calc(var(--spacing) * 42);
   }
+  .w-64 {
+    width: calc(var(--spacing) * 64);
+  }
   .w-80 {
     width: calc(var(--spacing) * 80);
+  }
+  .align-center{
+    justify-self: center;
   }
   .w-fit {
     width: fit-content;
@@ -1899,6 +1905,15 @@
 
   .bg-secondary {
     background-color: var(--secondary);
+  }
+ .bg-secondary\/10 {
+    background-color: var(--secondary);
+  }
+
+  @supports (color: color-mix(in lab, red, red)) {
+    .bg-secondary\/10 {
+      background-color: color-mix(in oklab, var(--secondary) 10%, transparent);
+    }
   }
 
   .bg-university-accent {
@@ -2864,7 +2879,9 @@
     --tw-blur: blur(8px);
     filter: var(--tw-blur, ) var(--tw-brightness, ) var(--tw-contrast, ) var(--tw-grayscale, ) var(--tw-hue-rotate, ) var(--tw-invert, ) var(--tw-saturate, ) var(--tw-sepia, ) var(--tw-drop-shadow, );
   }
-
+  .fill-current {
+    fill: currentColor;
+  }
   .filter {
     filter: var(--tw-blur, ) var(--tw-brightness, ) var(--tw-contrast, ) var(--tw-grayscale, ) var(--tw-hue-rotate, ) var(--tw-invert, ) var(--tw-saturate, ) var(--tw-sepia, ) var(--tw-drop-shadow, );
   }
@@ -2954,6 +2971,41 @@
  @media (hover: hover) {
     .group-hover\:text-transparent:is(:where(.group):hover *) {
       color: #0000;
+    }
+  }
+  @media (hover: hover) {
+    .group-hover\:text-primary:is(:where(.group):hover *) {
+      color: var(--primary);
+    }
+  }
+
+  @media (hover: hover) {
+    .group-hover\:text-primary-foreground:is(:where(.group):hover *) {
+      color: var(--primary-foreground);
+    }
+  }
+  @media (hover: hover) {
+    .group-hover\:bg-primary:is(:where(.group):hover *) {
+      background-color: var(--primary);
+    }
+  }
+ @media (hover: hover) {
+    .group-hover\:bg-blue:is(:where(.group):hover *) {
+      background-color: var(--color-blue-900);
+    }
+  }
+
+
+
+  @media (hover: hover) {
+    .group-hover\:bg-secondary\/20:is(:where(.group):hover *) {
+      background-color: var(--secondary);
+    }
+
+    @supports (color: color-mix(in lab, red, red)) {
+      .group-hover\:bg-secondary\/20:is(:where(.group):hover *) {
+        background-color: color-mix(in oklab, var(--secondary) 20%, transparent);
+      }
     }
   }
   @media (hover: hover) {
@@ -3164,6 +3216,12 @@
     }
   }
 
+@media (hover: hover) {
+    .hover\:-translate-y-1:hover {
+      --tw-translate-y: calc(var(--spacing) * -1);
+      translate: var(--tw-translate-x) var(--tw-translate-y);
+    }
+  }
   @media (hover: hover) {
     .hover\:text-accent-foreground:hover {
       color: var(--accent-foreground);
