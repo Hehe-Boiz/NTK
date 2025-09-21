@@ -163,6 +163,7 @@ export function WhiteLabelAdminPage() {
 
   const currentTheme = { ...theme, ...changes };
   const currentColors = { ...theme.colors, ...(changes.colors || {}) };
+  
 
   return (
     <div className="min-h-screen bg-gray-50">
