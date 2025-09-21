@@ -1,7 +1,5 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 
-import { Calendar, Trophy, Globe, GraduationCap, Monitor, Brain, Smartphone, Star } from "lucide-react";
-
 interface Milestone {
   year: string;
   title: string;
