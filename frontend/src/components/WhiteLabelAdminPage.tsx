@@ -507,6 +507,7 @@ export function WhiteLabelAdminPage() {
                             </div>
                             <div>
                               <ColorInput 
+                                
                                 label=""
                                 value={milestone.color}
                                 onChange={(color) =>{const newMilestones = [...currentTheme.milestones];
@@ -546,15 +547,23 @@ export function WhiteLabelAdminPage() {
                           </div>
                         </div>
                       ))}
-                      
                       <Button
                         variant="outline"
                         onClick={() => {
+
+                          // Lấy danh sách màu hiện có
+                          const existingColors = theme.milestones.map(m => m.color).filter(Boolean);
+                          
+                          // Chọn màu ngẫu nhiên, nếu không có màu nào thì dùng màu mặc định
+                          const randomColor = existingColors.length > 0
+                            ? existingColors[Math.floor(Math.random() * existingColors.length)]
+                            : '#8b5cf6'; // Màu mặc định                              
                           const newMilestone = {
                             year: new Date().getFullYear().toString(),
                             title: 'Sự kiện mới',
                             description: 'Mô tả sự kiện mới',
-                            icon: 'Star'
+                            icon: 'Star',
+                            color: randomColor // Thêm màu mặc định
                           };
                           const newMilestones = [...currentTheme.milestones, newMilestone];
                           handleInputChange('milestones', newMilestones);
