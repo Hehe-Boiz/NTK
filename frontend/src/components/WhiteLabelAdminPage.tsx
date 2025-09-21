@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card_bak';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card'; // Đã sửa từ card_bak sang card
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Label } from './ui/label';
@@ -38,7 +38,7 @@ const ColorInput = ({ label, value, onChange }: { label: string; value: string; 
 );
 
 // ============================================================================
-// COMPONENT MỚI: WishCard - Hiển thị một lời chúc
+// COMPONENT: WishCard (Giữ nguyên)
 // ============================================================================
 const WishCard = ({ wish }: { wish: Wish }) => {
   const { approveWish, rejectWish, deleteWish } = useWishes();
@@ -66,9 +66,9 @@ const WishCard = ({ wish }: { wish: Wish }) => {
   };
 
   const cardBgClass = {
-    PENDING: 'bg-yellow-50',
-    APPROVED: 'bg-green-50',
-    REJECTED: 'bg-red-50',
+    PENDING: 'bg-yellow-50 border-yellow-200',
+    APPROVED: 'bg-green-50 border-green-200',
+    REJECTED: 'bg-red-50 border-red-200',
   }[wish.status];
 
   const badgeClass = {
@@ -91,7 +91,7 @@ const WishCard = ({ wish }: { wish: Wish }) => {
 
   return (
     <Card className={`flex items-start space-x-4 p-4 ${cardBgClass}`}>
-      <div className="w-2 h-full rounded-full" style={{ backgroundColor: wish.color }}></div>
+      <div className="w-2 h-full rounded-full" style={{ backgroundColor: wish.color || '#cccccc' }}></div>
       <div className="flex-1 space-y-3">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-3 text-sm">
@@ -109,7 +109,7 @@ const WishCard = ({ wish }: { wish: Wish }) => {
               </span>
             </div>
           </div>
-          <Badge variant="secondary" className={badgeClass}>
+          <Badge variant="secondary" className={`text-xs ${badgeClass}`}>
             {StatusIcon}
             {statusText[wish.status]}
           </Badge>
@@ -148,7 +148,7 @@ const WishCard = ({ wish }: { wish: Wish }) => {
 };
 
 // ============================================================================
-// COMPONENT MỚI: WishesManagementTab - Toàn bộ logic cho tab duyệt lời chúc
+// COMPONENT: WishesManagementTab (Giữ nguyên)
 // ============================================================================
 const WishesManagementTab = () => {
   const { wishes, getPendingWishes, getApprovedWishes, getRejectedWishes, approveWish, rejectWish } = useWishes();
@@ -189,17 +189,17 @@ const WishesManagementTab = () => {
             <Badge variant="secondary" className="bg-red-100 text-red-800">Từ chối: {getRejectedWishes().length}</Badge>
           </div>
         </CardTitle>
-        <CardDescription>Duyệt và quản lý các lời chúc từ cộng đồng.</CardDescription>
+        <CardDescription>Duyệt và quản lý các lời chúc từ sinh viên, cựu sinh viên và đối tác.</CardDescription>
       </CardHeader>
       <CardContent>
         <div className="flex space-x-2 mb-6">
           {(['pending', 'approved', 'rejected', 'all'] as const).map(filter => {
             const count = { pending: getPendingWishes().length, approved: getApprovedWishes().length, rejected: getRejectedWishes().length, all: wishes.length }[filter];
             const label = { pending: 'Chờ duyệt', approved: 'Đã duyệt', rejected: 'Từ chối', all: 'Tất cả' }[filter];
-            const Icon = { pending: Clock, approved: Check, rejected: X, all: null }[filter];
+            const Icon = { pending: Clock, approved: Check, rejected: X, all: Info }[filter];
             return (
               <Button key={filter} variant={wishesFilter === filter ? 'default' : 'outline'} size="sm" onClick={() => setWishesFilter(filter)}>
-                {Icon && <Icon className="h-3 w-3 mr-1" />}
+                <Icon className="h-3 w-3 mr-1" />
                 {label} ({count})
               </Button>
             );
@@ -239,7 +239,7 @@ const WishesManagementTab = () => {
 
 
 // ============================================================================
-// COMPONENT CHÍNH: WhiteLabelAdminPage - Đã được dọn dẹp
+// COMPONENT CHÍNH: WhiteLabelAdminPage - ĐÃ CẬP NHẬT
 // ============================================================================
 export function WhiteLabelAdminPage() {
   const { theme, updateTheme, resetTheme, isCustomized } = useTheme();
@@ -281,9 +281,34 @@ export function WhiteLabelAdminPage() {
     linkElement.click();
     toast.success('Cấu hình đã được xuất thành công!');
   };
+  
+  // *** MỚI: Thêm các bộ màu có sẵn ***
+  const colorPresets = [
+    { name: 'Blue Corporate', primary: '#2563eb', secondary: '#f1f5f9', accent: '#e2e8f0', background: '#ffffff', text: '#111827' },
+    { name: 'Green Healthcare', primary: '#059669', secondary: '#f0fdf4', accent: '#dcfce7', background: '#ffffff', text: '#111827' },
+    { name: 'Purple Education', primary: '#7c3aed', secondary: '#faf5ff', accent: '#e9d5ff', background: '#ffffff', text: '#111827' },
+    { name: 'Orange Creative', primary: '#ea580c', secondary: '#fff7ed', accent: '#fed7aa', background: '#ffffff', text: '#111827' },
+    { name: 'Dark Mode', primary: '#60a5fa', secondary: '#1f2937', accent: '#374151', background: '#111827', text: '#f9fafb' },
+  ];
 
-  const currentTheme = { ...theme, ...changes };
+  // *** MỚI: Hàm áp dụng bộ màu ***
+  const applyColorPreset = (preset: typeof colorPresets[0]) => {
+    const { name, ...colorValues } = preset;
+    setChanges({
+      ...changes,
+      colors: {
+        ...(changes.colors || (theme as any).colors),
+        ...colorValues
+      }
+    });
+    toast.success(`🎨 Đã áp dụng theme ${preset.name}`);
+  };
+
   const hasChanges = Object.keys(changes).length > 0;
+  // Cập nhật cách lấy theme và màu sắc để hỗ trợ cấu trúc lồng nhau
+  const currentTheme = { ...theme, ...changes };
+  const currentColors = { ...(theme as any).colors, ...(changes.colors || {}) };
+
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -309,7 +334,7 @@ export function WhiteLabelAdminPage() {
         <div className="grid lg:grid-cols-3 gap-8">
           {/* Configuration Panel */}
           <div className="lg:col-span-2 space-y-6">
-            <Tabs defaultValue="wishes" className="w-full">
+            <Tabs defaultValue="branding" className="w-full">
               <TabsList className="grid w-full grid-cols-5">
                 <TabsTrigger value="branding">Thương hiệu</TabsTrigger>
                 <TabsTrigger value="design">Thiết kế</TabsTrigger>
@@ -319,7 +344,7 @@ export function WhiteLabelAdminPage() {
                     <Heart className="h-3 w-3" />
                     <span>Duyệt lời chúc</span>
                     {getPendingWishes().length > 0 && (
-                      <span className="bg-red-500 text-white text-xs rounded-full px-1 min-w-[16px] h-4 flex items-center justify-center">
+                      <span className="bg-red-500 text-white text-xs rounded-full px-1.5 min-w-[20px] h-5 flex items-center justify-center">
                         {getPendingWishes().length}
                       </span>
                     )}
@@ -328,49 +353,202 @@ export function WhiteLabelAdminPage() {
                 <TabsTrigger value="advanced">Nâng cao</TabsTrigger>
               </TabsList>
               
-              {/* CÁC COMPONENT TAB ĐƯỢC RENDER Ở ĐÂY */}
-              <TabsContent value="branding"> {/* Nội dung tab Branding */} </TabsContent>
-              <TabsContent value="design"> {/* Nội dung tab Design */} </TabsContent>
-              <TabsContent value="content"> {/* Nội dung tab Content */} </TabsContent>
+              {/* === MỚI: TAB BRANDING === */}
+              <TabsContent value="branding" className="space-y-6">
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="flex items-center"><Globe className="h-5 w-5 mr-2" />Thông tin Thương hiệu</CardTitle>
+                    <CardDescription>Cấu hình thông tin cơ bản về trường và khoa.</CardDescription>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <div className="grid md:grid-cols-2 gap-4">
+                      <div>
+                        <Label htmlFor="logoText">Tên khoa</Label>
+                        <Input id="logoText" value={currentTheme.logoText} onChange={(e) => handleInputChange('logoText', e.target.value)} placeholder="Khoa Công nghệ Thông tin" />
+                      </div>
+                      <div>
+                        <Label htmlFor="universityName">Tên trường</Label>
+                        <Input id="universityName" value={currentTheme.universityName} onChange={(e) => handleInputChange('universityName', e.target.value)} placeholder="Trường Đại học XYZ" />
+                      </div>
+                    </div>
+                    <div>
+                      <Label htmlFor="motto">Khẩu hiệu</Label>
+                      <Textarea id="motto" value={currentTheme.motto} onChange={(e) => handleInputChange('motto', e.target.value)} placeholder="35 năm đồng hành cùng sự phát triển..." rows={3} />
+                    </div>
+                  </CardContent>
+                </Card>
+              </TabsContent>
+
+              {/* === MỚI: TAB DESIGN === */}
+              <TabsContent value="design" className="space-y-6">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                  <Card>
+                    <CardHeader><CardTitle className="flex items-center"><Palette className="h-5 w-5 mr-2"/>Bảng màu Tùy chỉnh</CardTitle></CardHeader>
+                    <CardContent className="space-y-4">
+                      <ColorInput label="Màu Chính (Primary)" value={currentColors.primary} onChange={(c) => handleNestedInputChange('colors', 'primary', c)} />
+                      <ColorInput label="Màu Phụ (Secondary)" value={currentColors.secondary} onChange={(c) => handleNestedInputChange('colors', 'secondary', c)} />
+                      <ColorInput label="Màu Nhấn (Accent)" value={currentColors.accent} onChange={(c) => handleNestedInputChange('colors', 'accent', c)} />
+                      <ColorInput label="Màu Nền (Background)" value={currentColors.background} onChange={(c) => handleNestedInputChange('colors', 'background', c)} />
+                      <ColorInput label="Màu Chữ (Text)" value={currentColors.text} onChange={(c) => handleNestedInputChange('colors', 'text', c)} />
+                    </CardContent>
+                  </Card>
+                  <Card>
+                    <CardHeader><CardTitle className="flex items-center"><Palette className="h-5 w-5 mr-2"/>Bộ màu có sẵn</CardTitle></CardHeader>
+                    <CardContent className="space-y-3">
+                      {colorPresets.map((preset) => (
+                        <div key={preset.name} className="flex items-center justify-between p-3 border rounded-lg hover:bg-muted/50 transition-colors">
+                          <div className="flex items-center space-x-3">
+                            <div className="flex -space-x-2">
+                               <div className="w-5 h-5 rounded-full border-2 border-white" style={{ backgroundColor: preset.primary }}></div>
+                               <div className="w-5 h-5 rounded-full border-2 border-white" style={{ backgroundColor: preset.secondary }}></div>
+                               <div className="w-5 h-5 rounded-full border-2 border-white" style={{ backgroundColor: preset.accent }}></div>
+                               <div className="w-5 h-5 rounded-full border-2 border-white" style={{ backgroundColor: preset.text }}></div>
+                            </div>
+                            <span className="text-sm font-medium">{preset.name}</span>
+                          </div>
+                          <Button size="sm" variant="outline" onClick={() => applyColorPreset(preset)}>Áp dụng</Button>
+                        </div>
+                      ))}
+                    </CardContent>
+                  </Card>
+                </div>
+              </TabsContent>
+
+              {/* === MỚI: TAB CONTENT === */}
+              <TabsContent value="content" className="space-y-6">
+                 <Card>
+                  <CardHeader>
+                    <CardTitle className="flex items-center"><History className="h-5 w-5 mr-2" />Lịch sử & Cột mốc</CardTitle>
+                    <CardDescription>Chỉnh sửa các mốc quan trọng trong lịch sử 35 năm phát triển.</CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-4">
+                      {(currentTheme.milestones || []).map((milestone: any, index: number) => (
+                        <div key={index} className="border rounded-lg p-4 bg-gray-50/50 space-y-3">
+                          <div className="grid md:grid-cols-5 gap-4">
+                            <div className="md:col-span-1">
+                                <Label>Năm</Label>
+                                <Input value={milestone.year} placeholder="2000" onChange={(e) => {
+                                  const newMilestones = [...currentTheme.milestones];
+                                  newMilestones[index] = { ...milestone, year: e.target.value };
+                                  handleInputChange('milestones', newMilestones);
+                                }}/>
+                            </div>
+                             <div className="md:col-span-4">
+                                <Label>Tiêu đề</Label>
+                                <Input value={milestone.title} placeholder="Sự kiện quan trọng" onChange={(e) => {
+                                  const newMilestones = [...currentTheme.milestones];
+                                  newMilestones[index] = { ...milestone, title: e.target.value };
+                                  handleInputChange('milestones', newMilestones);
+                                }}/>
+                            </div>
+                            <div className="md:col-span-5">
+                                <Label>Mô tả</Label>
+                                <Textarea value={milestone.description} rows={2} placeholder="Mô tả chi tiết về sự kiện..." onChange={(e) => {
+                                  const newMilestones = [...currentTheme.milestones];
+                                  newMilestones[index] = { ...milestone, description: e.target.value };
+                                  handleInputChange('milestones', newMilestones);
+                                }}/>
+                            </div>
+                          </div>
+                          <div className="flex justify-end">
+                            <Button variant="ghost" size="sm" className="text-red-500 hover:bg-red-50 hover:text-red-600" onClick={() => {
+                                const newMilestones = [...currentTheme.milestones];
+                                newMilestones.splice(index, 1);
+                                handleInputChange('milestones', newMilestones);
+                              }}>
+                              <Minus className="h-4 w-4 mr-2" /> Xóa mốc này
+                            </Button>
+                          </div>
+                        </div>
+                      ))}
+                      <Button variant="outline" className="w-full" onClick={() => {
+                          const newMilestone = { year: new Date().getFullYear().toString(), title: 'Sự kiện mới', description: 'Mô tả sự kiện mới' };
+                          handleInputChange('milestones', [...(currentTheme.milestones || []), newMilestone]);
+                        }}>
+                        <Plus className="h-4 w-4 mr-2" /> Thêm mốc mới
+                      </Button>
+                    </div>
+                  </CardContent>
+                 </Card>
+              </TabsContent>
+
+              {/* === TAB WISHES (Giữ nguyên component đã tách) === */}
               <TabsContent value="wishes" className="space-y-6"><WishesManagementTab /></TabsContent>
-              <TabsContent value="advanced"> {/* Nội dung tab Advanced */} </TabsContent>
+
+              {/* === MỚI: TAB ADVANCED === */}
+              <TabsContent value="advanced" className="space-y-6">
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="flex items-center"><Shield className="h-5 w-5 mr-2" />Cài đặt Nâng cao</CardTitle>
+                    <CardDescription>Các tùy chọn nâng cao dành cho quản trị viên.</CardDescription>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <div className="flex items-center justify-between p-3 border rounded-lg">
+                      <div>
+                        <Label>Chế độ kỷ niệm</Label>
+                        <p className="text-sm text-gray-600">Bật các hiệu ứng và banner đặc biệt cho dịp lễ.</p>
+                      </div>
+                      <Switch defaultChecked />
+                    </div>
+                     <div className="flex items-center justify-between p-3 border rounded-lg">
+                      <div>
+                        <Label>Tối ưu hóa SEO</Label>
+                        <p className="text-sm text-gray-600">Tự động tối ưu hóa thẻ meta và các yếu tố SEO khác.</p>
+                      </div>
+                      <Switch defaultChecked />
+                    </div>
+                     <div className="flex items-center justify-between p-3 border rounded-lg">
+                      <div>
+                        <Label>Tích hợp Analytics</Label>
+                        <p className="text-sm text-gray-600">Kích hoạt theo dõi sự kiện với Google Analytics.</p>
+                      </div>
+                      <Switch />
+                    </div>
+                  </CardContent>
+                </Card>
+              </TabsContent>
 
             </Tabs>
           </div>
 
-          {/* Preview Panel */}
+          {/* Preview Panel (Đã cập nhật) */}
           <div className="lg:col-span-1">
             <Card className="sticky top-24">
               <CardHeader>
                 <CardTitle className="flex items-center justify-between">
                   <span className="flex items-center"><Eye className="h-5 w-5 mr-2" />Xem trước</span>
                   <div className="flex items-center space-x-1">
-                    <Button variant={activePreview === 'desktop' ? 'default' : 'ghost'} size="sm" onClick={() => setActivePreview('desktop')}><Monitor className="h-4 w-4" /></Button>
-                    <Button variant={activePreview === 'tablet' ? 'default' : 'ghost'} size="sm" onClick={() => setActivePreview('tablet')}><Tablet className="h-4 w-4" /></Button>
-                    <Button variant={activePreview === 'mobile' ? 'default' : 'ghost'} size="sm" onClick={() => setActivePreview('mobile')}><Smartphone className="h-4 w-4" /></Button>
+                    <Button variant={activePreview === 'desktop' ? 'default' : 'ghost'} size="icon" className="w-8 h-8" onClick={() => setActivePreview('desktop')}><Monitor className="h-4 w-4" /></Button>
+                    <Button variant={activePreview === 'tablet' ? 'default' : 'ghost'} size="icon" className="w-8 h-8" onClick={() => setActivePreview('tablet')}><Tablet className="h-4 w-4" /></Button>
+                    <Button variant={activePreview === 'mobile' ? 'default' : 'ghost'} size="icon" className="w-8 h-8" onClick={() => setActivePreview('mobile')}><Smartphone className="h-4 w-4" /></Button>
                   </div>
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <div className={`border rounded-lg overflow-hidden bg-white transition-all duration-300 ${
-                  activePreview === 'desktop' ? 'w-full h-64' :
-                  activePreview === 'tablet' ? 'w-3/4 h-48 mx-auto' :
-                  'w-1/2 h-40 mx-auto'
+                <div className={`mx-auto border-8 border-gray-800 rounded-lg overflow-hidden bg-white transition-all duration-300 shadow-lg ${
+                  activePreview === 'desktop' ? 'w-full h-80' :
+                  activePreview === 'tablet' ? 'w-3/4 h-96' :
+                  'w-[240px] h-[480px]'
                 }`}>
-                   <div className="p-4 h-full relative" style={{ backgroundColor: currentTheme.backgroundColor }}>
-                    <div className="font-bold mb-2" style={{ color: currentTheme.primaryColor }}>{currentTheme.logoText}</div>
-                    <div className="text-sm opacity-70 mb-3">{currentTheme.universityName}</div>
-                    <div className="text-xs leading-relaxed">{currentTheme.motto}</div>
-                    <div className="absolute bottom-2 right-2 w-4 h-4 rounded-full" style={{ backgroundColor: currentTheme.secondaryColor }}></div>
-                    <div className="absolute bottom-2 right-8 w-4 h-4 rounded-lg" style={{ backgroundColor: currentTheme.textColor }}></div>
+                   <div className="p-4 h-full relative" style={{ backgroundColor: currentColors.background, color: currentColors.text }}>
+                    <div className="font-bold text-lg mb-2" style={{ color: currentColors.primary }}>{currentTheme.logoText}</div>
+                    <div className="text-sm opacity-70 mb-4">{currentTheme.universityName}</div>
+                    <p className="text-xs leading-relaxed italic">"{currentTheme.motto}"</p>
+                    <div className="absolute bottom-4 right-4 flex items-center space-x-2">
+                        <div className="w-4 h-4 rounded-full" style={{ backgroundColor: currentColors.primary }}></div>
+                        <div className="w-4 h-4 rounded-full" style={{ backgroundColor: currentColors.secondary }}></div>
+                        <div className="w-4 h-4 rounded-full" style={{ backgroundColor: currentColors.accent }}></div>
+                    </div>
                   </div>
                 </div>
                 <div className="mt-6 p-4 bg-blue-50 rounded-lg">
-                  <h4 className="font-semibold mb-2 text-blue-900">💡 Hướng dẫn</h4>
-                  <ul className="text-sm text-blue-700 space-y-1">
-                    <li>• Thay đổi các thông số trong các tab để tùy chỉnh website.</li>
-                    <li>• Sử dụng tab "Duyệt lời chúc" để quản lý lời chúc của người dùng.</li>
-                    <li>• Nhớ nhấn "Lưu thay đổi" sau khi hoàn tất chỉnh sửa.</li>
+                  <h4 className="font-semibold mb-2 text-blue-900 flex items-center"><Info className="h-4 w-4 mr-2"/>Hướng dẫn</h4>
+                  <ul className="text-sm text-blue-700 space-y-1 list-disc list-inside">
+                    <li>Thay đổi thông tin, màu sắc để phù hợp với thương hiệu.</li>
+                    <li>Cập nhật các cột mốc quan trọng trong tab "Nội dung".</li>
+                    <li>Sử dụng tab "Duyệt lời chúc" để quản lý lời chúc.</li>
+                    <li>Nhấn **Lưu thay đổi** sau khi hoàn tất chỉnh sửa.</li>
                   </ul>
                 </div>
               </CardContent>
