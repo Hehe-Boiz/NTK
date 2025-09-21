@@ -1164,7 +1164,9 @@
   .w-42 {
     width: calc(var(--spacing) * 42);
   }
-
+  .w-80 {
+    width: calc(var(--spacing) * 80);
+  }
   .w-fit {
     width: fit-content;
   }
@@ -3048,6 +3050,14 @@
       --tw-scale-x: 105%;
       --tw-scale-y: 105%;
       --tw-scale-z: 105%;
+      scale: var(--tw-scale-x) var(--tw-scale-y);
+    }
+  }
+  @media (hover: hover) {
+    .hover\:scale-125:hover {
+      --tw-scale-x: 125%;
+      --tw-scale-y: 125%;
+      --tw-scale-z: 125%;
       scale: var(--tw-scale-x) var(--tw-scale-y);
     }
   }

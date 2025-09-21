@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useWishes } from './WishesContext';
 import { Button } from './ui/button';
-import { Eye, EyeOff, Heart, Calendar, User } from 'lucide-react';
+import { Popover, PopoverContent, PopoverTrigger } from './ui/popover';
+import { Eye, EyeOff, Heart, Calendar, User, MessageCircle, Star, Sparkles } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 
 interface FloatingWish {
@@ -10,34 +11,42 @@ interface FloatingWish {
   author: string;
   color: string;
   position: { x: number; y: number };
+  driftDirection: number;
+  driftStrength: number;
   animationDelay: number;
   duration: number;
+  icon: 'Heart' | 'Star' | 'MessageCircle' | 'Sparkles';
 }
 
 export function WishBubbles() {
   const { wishes, showWishes, toggleWishesDisplay, getApprovedWishes } = useWishes();
-  const [selectedWish, setSelectedWish] = useState<string | null>(null);
   const [floatingWishes, setFloatingWishes] = useState<FloatingWish[]>([]);
-
-  // Auto-hide selected wish after 5 seconds
-  useEffect(() => {
-    if (selectedWish) {
-      const timer = setTimeout(() => {
-        setSelectedWish(null);
-      }, 5000);
-      return () => clearTimeout(timer);
-    }
-  }, [selectedWish]);
+  
+  const iconComponents = {
+    Heart,
+    Star, 
+    MessageCircle,
+    Sparkles
+  };
 
   // Generate floating wishes with random positions and timings
   useEffect(() => {
     const approvedWishes = getApprovedWishes();
+    console.log('Approved wishes:', approvedWishes.length); // Debug log
+    
     if (approvedWishes.length > 0) {
+      const icons: Array<'Heart' | 'Star' | 'MessageCircle' | 'Sparkles'> = ['Heart', 'Star', 'MessageCircle', 'Sparkles'];
+      
       const floating = approvedWishes.slice(0, 8).map((wish, index) => {
-        // Create a more distributed positioning system
-        const baseX = (index % 4) * 25; // Divide screen into 4 sections: 0, 25, 50, 75
-        const randomOffset = (Math.random() - 0.5) * 20; // Random offset ±10
-        const finalX = Math.max(5, Math.min(95, baseX + randomOffset)); // Keep within 5-95%
+        // Create positioning around timeline center (50%) - spread like tree roots both directions
+        const positions = [25, 30, 35, 40, 50, 60, 65, 70, 75]; // Base positions spreading left and right from center
+        const baseX = positions[index % positions.length]; // Cycle through spread positions
+        const randomOffset = (Math.random() - 0.5) * 12; // Random offset ±6 for natural spread
+        const finalX = Math.max(25, Math.min(75, baseX + randomOffset)); // Keep within safe bounds
+        
+        // Create random drift direction for each bubble
+        const driftDirection = Math.random() > 0.5 ? 1 : -1; // Random left or right drift
+        const driftStrength = 8 + Math.random() * 10; // Drift between 8-18%
         
         return {
           id: wish.id,
@@ -45,16 +54,23 @@ export function WishBubbles() {
           author: wish.author,
           color: wish.color,
           position: {
-            x: finalX, // More evenly distributed X positions
-            y: 100 // Start from bottom
+            x: finalX,
+            y: 100
           },
-          animationDelay: index * 3 + Math.random() * 4, // Staggered delays 0-7 seconds
-          duration: 16 + Math.random() * 6 // Duration between 16-22 seconds
+          driftDirection,
+          driftStrength,
+          animationDelay: index * 1.5 + Math.random() * 2, // Faster staggered start
+          duration: 12 + Math.random() * 3, // Much faster: 12-15 seconds
+          icon: icons[index % icons.length] // Cycle through icons
         };
       });
+      console.log('Generated floating wishes:', floating.length, floating.map(w => ({ id: w.id.slice(-2), x: w.position.x.toFixed(1), drift: w.driftDirection }))); // Debug log
       setFloatingWishes(floating);
+    } else {
+      console.log('No approved wishes found'); // Debug log
+      setFloatingWishes([]);
     }
-  }, [wishes, showWishes]);
+  }, [getApprovedWishes, showWishes]);
 
   const formatDate = (date: Date) => {
     return new Intl.DateTimeFormat('vi-VN', {
@@ -65,172 +81,132 @@ export function WishBubbles() {
   };
 
   return (
-    <div className="absolute inset-0 w-full h-full pointer-events-none overflow-hidden">
-      {/* Toggle Button */}
+    <div className="absolute inset-0 w-full h-full pointer-events-none overflow-visible">
+      {/* Toggle Button - positioned relative to timeline */}
       <div className="absolute top-4 right-4 z-50 pointer-events-auto">
         <Button
           onClick={toggleWishesDisplay}
           variant="outline"
           size="sm"
-          className="bg-white/90 backdrop-blur-sm border-gray-300 hover:bg-white shadow-lg"
+          className="bg-white/95 backdrop-blur-sm border-gray-300 hover:bg-white shadow-lg text-xs"
         >
           {showWishes ? (
             <>
-              <EyeOff className="h-4 w-4 mr-2" />
+              <EyeOff className="h-3 w-3 mr-1" />
               Ẩn lời chúc
             </>
           ) : (
             <>
-              <Eye className="h-4 w-4 mr-2" />
-              Hiện lời chúc ({getApprovedWishes().length})
+              <Eye className="h-3 w-3 mr-1" />
+              Lời chúc ({getApprovedWishes().length})
             </>
           )}
         </Button>
       </div>
 
-      {/* Floating Wishes Container - spans full width */}
+      {/* Floating Wishes Icons Container */}
       <div className="absolute inset-0 w-full h-full">
         <AnimatePresence>
-          {showWishes && floatingWishes.map((wishData, index) => (
-            <motion.div
-              key={`${wishData.id}-floating`}
-              initial={{ 
-                opacity: 0,
-                y: "110vh", // Start from below viewport
-                x: `${wishData.position.x}vw`, // Use viewport width units
-                scale: 0.8,
-                rotate: 0
-              }}
-              animate={{ 
-                opacity: [0, 1, 1, 1, 0],
-                y: [
-                  "110vh", // Start from bottom
-                  "-20vh", // Float up and out of view
-                ],
-                x: [
-                  `${wishData.position.x}vw`,
-                  `${wishData.position.x + (Math.random() - 0.5) * 15}vw` // Gentle drift
-                ],
-                scale: [0.8, 1, 1, 0.9],
-                rotate: [0, (Math.random() - 0.5) * 8, (Math.random() - 0.5) * 8] // Subtle rotation
-              }}
-              exit={{ opacity: 0 }}
-              transition={{
-                duration: wishData.duration,
-                delay: wishData.animationDelay,
-                repeat: Infinity,
-                repeatDelay: Math.random() * 8, // Random delay between repeats
-                ease: "linear",
-                opacity: {
-                  times: [0, 0.1, 0.8, 0.95, 1], // More gradual fade in/out
-                  duration: wishData.duration
-                },
-                x: {
-                  duration: wishData.duration,
-                  ease: "easeInOut"
-                },
-                rotate: {
-                  duration: wishData.duration * 0.8,
-                  ease: "easeInOut"
-                }
-              }}
-              className="absolute pointer-events-auto cursor-pointer"
-              style={{
-                zIndex: 40 + index % 5, // Vary z-index for natural layering
-                left: 0,
-                top: 0,
-                transform: 'translate(-50%, -50%)' // Center the card on the position
-              }}
-              onClick={() => setSelectedWish(wishData.id)}
-            >
-              {/* Floating Wish Card */}
-              <div 
-                className="relative group"
+          {showWishes && floatingWishes.length > 0 && floatingWishes.map((wishData, index) => {
+            const IconComponent = iconComponents[wishData.icon];
+            
+            if (!IconComponent) {
+              console.log('Missing icon component for:', wishData.icon);
+              return null;
+            }
+            
+            return (
+              <motion.div
+                key={`${wishData.id}-floating-${index}`}
+                initial={{ 
+                  opacity: 0,
+                  y: "110vh", // Start from below viewport
+                  x: `${wishData.position.x}vw`,
+                  scale: 0.3,
+                  rotate: 0
+                }}
+                animate={{ 
+                  opacity: [0, 0.4, 0.8, 1, 0.8, 0], // Quick fade in, then fade out at top
+                  y: [
+                    "120vh", // Start from below viewport
+                    "80vh", // Fast ascent
+                    "40vh", // Mid journey
+                    "5vh", // Reach near top
+                    "5vh" // Stay at top briefly before disappearing
+                  ],
+                  x: [
+                    `${wishData.position.x}vw`,
+                    `${wishData.position.x + wishData.driftDirection * 3}vw`,
+                    `${wishData.position.x + wishData.driftDirection * wishData.driftStrength}vw`,
+                    `${wishData.position.x + wishData.driftDirection * (wishData.driftStrength * 0.8)}vw`,
+                    `${wishData.position.x + wishData.driftDirection * (wishData.driftStrength * 0.6)}vw`
+                  ],
+                  scale: [0.3, 0.6, 0.9, 1, 0.9],
+                  rotate: [0, wishData.driftDirection * 8, wishData.driftDirection * 15, wishData.driftDirection * 12, wishData.driftDirection * 8]
+                }}
+                exit={{ opacity: 0 }}
+                transition={{
+                  duration: 12, // Much faster - 12 seconds instead of 22-28
+                  delay: wishData.animationDelay,
+                  repeat: Infinity,
+                  repeatDelay: 3 + Math.random() * 4, // Shorter delay between cycles
+                  ease: "easeOut", // Faster acceleration upward
+                  times: [0, 0.3, 0.6, 0.9, 1] // Timing for each keyframe
+                }}
+                className="absolute"
                 style={{
-                  filter: selectedWish === wishData.id ? 'brightness(1.1)' : 'none'
+                  zIndex: 35,
+                  left: 0,
+                  top: 0,
+                  transform: 'translate(-50%, -50%)'
                 }}
               >
-                {/* Wish Content Card */}
-                <div
-                  className="bg-white/98 backdrop-blur-md rounded-lg shadow-xl border-2 border-white/80 p-4 max-w-sm transition-all duration-300 hover:scale-105 hover:shadow-2xl"
-                  style={{ 
-                    borderLeftColor: wishData.color,
-                    borderLeftWidth: '5px',
-                    boxShadow: `0 8px 32px rgba(0,0,0,0.12), 0 0 0 1px ${wishData.color}20`
-                  }}
-                >
-                  {/* Wish Text */}
-                  <div className="mb-3">
-                    <p className="text-sm text-gray-900 leading-relaxed line-clamp-3 font-medium">
-                      "{wishData.content}"
-                    </p>
-                  </div>
-                  
-                  {/* Author */}
-                  <div className="flex items-center space-x-2 text-xs text-gray-700">
-                    <div
-                      className="w-5 h-5 rounded-full flex items-center justify-center shadow-sm"
-                      style={{ backgroundColor: wishData.color }}
+                {/* Floating Icon with Popover */}
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <button
+                      className="relative group p-2 rounded-full transition-all duration-300 hover:scale-125 cursor-pointer pointer-events-auto"
+                      style={{ 
+                        backgroundColor: wishData.color,
+                        boxShadow: `0 4px 15px ${wishData.color}40`
+                      }}
                     >
-                      <Heart className="h-3 w-3 text-white" />
-                    </div>
-                    <span className="font-semibold truncate">{wishData.author}</span>
-                  </div>
-                </div>
-
-                {/* Glow effect */}
-                <div
-                  className="absolute inset-0 rounded-lg opacity-30 animate-pulse"
-                  style={{ 
-                    backgroundColor: wishData.color,
-                    filter: 'blur(12px)',
-                    zIndex: -1,
-                    transform: 'scale(1.1)'
-                  }}
-                />
-                
-                {/* Subtle inner glow */}
-                <div
-                  className="absolute inset-0 rounded-lg opacity-10"
-                  style={{ 
-                    backgroundColor: wishData.color,
-                    zIndex: -1
-                  }}
-                />
-              </div>
-
-              {/* Expanded Wish Display */}
-              <AnimatePresence>
-                {selectedWish === wishData.id && (
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.8, y: 10 }}
-                    animate={{ opacity: 1, scale: 1, y: 0 }}
-                    exit={{ opacity: 0, scale: 0.8, y: 10 }}
-                    className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-full bg-white rounded-lg shadow-xl border p-4 max-w-sm z-60 mb-4"
-                    onClick={(e) => e.stopPropagation()}
+                      <IconComponent className="h-4 w-4 text-white" />
+                      
+                      {/* Glow effect */}
+                      <div
+                        className="absolute inset-0 rounded-full opacity-40 animate-pulse"
+                        style={{ 
+                          backgroundColor: wishData.color,
+                          filter: 'blur(6px)',
+                          zIndex: -1,
+                          transform: 'scale(1.5)'
+                        }}
+                      />
+                    </button>
+                  </PopoverTrigger>.w-3
+                  <PopoverContent 
+                    className="w-80 p-4"
+                    side="top"
+                    align="center"
                   >
-                    {/* Arrow pointing down to wish */}
-                    <div
-                      className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-4 h-4 rotate-45 border-r border-b border-gray-200"
-                      style={{ backgroundColor: 'white' }}
-                    />
-                    
-                    {/* Full Wish Content */}
                     <div className="space-y-3">
+                      {/* Header with icon */}
                       <div className="flex items-start space-x-3">
                         <div
-                          className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0"
+                          className="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0"
                           style={{ backgroundColor: wishData.color }}
                         >
-                          <Heart className="h-4 w-4 text-white" />
+                          <IconComponent className="h-5 w-5 text-white" />
                         </div>
                         <div className="flex-1">
-                          <p className="text-gray-800 text-sm leading-relaxed">
-                            {wishData.content}
+                          <p className="text-gray-800 text-sm leading-relaxed font-medium">
+                            "{wishData.content}"
                           </p>
                         </div>
                       </div>
 
+                      {/* Author and date info */}
                       <div className="border-t pt-3 space-y-2">
                         <div className="flex items-center space-x-2 text-xs text-gray-500">
                           <User className="h-3 w-3" />
@@ -241,29 +217,19 @@ export function WishBubbles() {
                           <span>{formatDate(wishes.find(w => w.id === wishData.id)?.timestamp || new Date())}</span>
                         </div>
                       </div>
-
-                      {/* Close button */}
-                      <Button
-                        onClick={() => setSelectedWish(null)}
-                        variant="outline"
-                        size="sm"
-                        className="w-full text-xs"
-                      >
-                        Đóng
-                      </Button>
                     </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </motion.div>
-          ))}
+                  </PopoverContent>
+                </Popover>
+              </motion.div>
+            );
+          })}
         </AnimatePresence>
       </div>
 
       {/* Wishes Counter (when hidden) */}
       {!showWishes && getApprovedWishes().length > 0 && (
-        <div className="absolute top-16 right-4 bg-university-navy text-white px-3 py-2 rounded-lg shadow-lg text-sm pointer-events-auto">
-          <Heart className="h-4 w-4 inline mr-1" />
+        <div className="absolute top-12 right-4 bg-university-navy text-white px-2 py-1 rounded-md shadow-lg text-xs pointer-events-auto">
+          <Heart className="h-3 w-3 inline mr-1" />
           {getApprovedWishes().length} lời chúc
         </div>
       )}
