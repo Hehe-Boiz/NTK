@@ -1,12 +1,14 @@
 import { Card, CardContent } from "../ui/card";
 import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
-import { motion } from "motion/react";
+import { motion, useInView } from "motion/react";
 import { Trophy, Award, Star, Medal, Crown, Target, TrendingUp, Users, CheckCircle, ArrowUpRight, Sparkles } from "lucide-react";
 import { ImageWithFallback } from "../figma/ImageWithFallback";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 export function AchievementsSection() {
+    const ref = useRef(null);
+    const isInView = useInView(ref, { once: true });
   const [counters, setCounters] = useState({
     graduates: 0,
     employment: 0,
@@ -18,40 +20,42 @@ export function AchievementsSection() {
 
   // Counter animation effect
   useEffect(() => {
-    const targets = {
-      graduates: 15000,
-      employment: 98,
-      teachers: 120,
-      partners: 200,
-      projects: 50,
-      experience: 35
-    };
+      if (isInView) {
+          const targets = {
+              graduates: 15000,
+              employment: 98,
+              teachers: 120,
+              partners: 200,
+              projects: 50,
+              experience: 35
+          };
 
-    const duration = 2500;
-    const steps = 80;
-    const stepTime = duration / steps;
+          const duration = 2500;
+          const steps = 80;
+          const stepTime = duration / steps;
 
-    let currentStep = 0;
-    const timer = setInterval(() => {
-      currentStep++;
-      const progress = currentStep / steps;
-      
-      setCounters({
-        graduates: Math.round(targets.graduates * progress),
-        employment: Math.round(targets.employment * progress),
-        teachers: Math.round(targets.teachers * progress),
-        partners: Math.round(targets.partners * progress),
-        projects: Math.round(targets.projects * progress),
-        experience: Math.round(targets.experience * progress)
-      });
+          let currentStep = 0;
+          const timer = setInterval(() => {
+              currentStep++;
+              const progress = currentStep / steps;
 
-      if (currentStep >= steps) {
-        clearInterval(timer);
+              setCounters({
+                  graduates: Math.round(targets.graduates * progress),
+                  employment: Math.round(targets.employment * progress),
+                  teachers: Math.round(targets.teachers * progress),
+                  partners: Math.round(targets.partners * progress),
+                  projects: Math.round(targets.projects * progress),
+                  experience: Math.round(targets.experience * progress)
+              });
+
+              if (currentStep >= steps) {
+                  clearInterval(timer);
+              }
+          }, stepTime);
+
+          return () => clearInterval(timer);
       }
-    }, stepTime);
-
-    return () => clearInterval(timer);
-  }, []);
+  }, [isInView]);
 
   const achievements = [
     {
@@ -86,34 +90,34 @@ export function AchievementsSection() {
   ];
 
   const stats = [
-    { 
-      number: counters.graduates.toLocaleString() + "+", 
-      label: "Sinh viên tốt nghiệp", 
+    {
+      number: counters.graduates.toLocaleString() + "+",
+      label: "Sinh viên tốt nghiệp",
       icon: <Users className="h-6 w-6" />
     },
-    { 
-      number: counters.employment + "%", 
-      label: "Tỷ lệ có việc làm", 
+    {
+      number: counters.employment + "%",
+      label: "Tỷ lệ có việc làm",
       icon: <TrendingUp className="h-6 w-6" />
     },
-    { 
-      number: counters.teachers + "+", 
-      label: "Giảng viên", 
+    {
+      number: counters.teachers + "+",
+      label: "Giảng viên",
       icon: <Target className="h-6 w-6" />
     },
-    { 
-      number: counters.partners + "+", 
-      label: "Doanh nghiệp đối tác", 
+    {
+      number: counters.partners + "+",
+      label: "Doanh nghiệp đối tác",
       icon: <CheckCircle className="h-6 w-6" />
     },
-    { 
-      number: counters.projects + "+", 
-      label: "Dự án nghiên cứu", 
+    {
+      number: counters.projects + "+",
+      label: "Dự án nghiên cứu",
       icon: <Award className="h-6 w-6" />
     },
-    { 
-      number: counters.experience, 
-      label: "Năm kinh nghiệm", 
+    {
+      number: counters.experience,
+      label: "Năm kinh nghiệm",
       icon: <Medal className="h-6 w-6" />
     }
   ];
@@ -131,11 +135,12 @@ export function AchievementsSection() {
     <section id="thanh-tuu" className="py-16 lg:py-24 bg-secondary/5">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        
+
 
         {/* Main Achievements Grid */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+            ref={ref}
+            initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
@@ -164,15 +169,11 @@ export function AchievementsSection() {
                   <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center text-primary mx-auto mb-4 group-hover:bg-blue group-hover:text-primary-foreground transition-colors">
                     {stat.icon}
                   </div>
-                  <motion.p 
+                  <p
                     className="text-3xl lg:text-4xl text-foreground mb-2"
-                    key={stat.number}
-                    initial={{ scale: 0 }}
-                    animate={{ scale: 1 }}
-                    transition={{ duration: 0.5 }}
                   >
                     {stat.number}
-                  </motion.p>
+                  </p>
                   <p className="text-muted-foreground text-sm">{stat.label}</p>
                 </div>
               </motion.div>
@@ -190,13 +191,13 @@ export function AchievementsSection() {
             <Trophy className="h-4 w-4" />
             <span className="">35 Năm Đồng Hành & Phát Triển</span>
           </div>
-          
+
           <h2 id="thanh-tuu" className="text-4xl font-bold university-text-primary mb-6">
             Thành Tựu Nổi Bật
           </h2>
-          
+
           <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-            Những cột mốc đáng tự hào trong hành trình 35 năm xây dựng và phát triển 
+            Những cột mốc đáng tự hào trong hành trình 35 năm xây dựng và phát triển
             khoa CNTT hàng đầu cả nước
           </p>
         </motion.div>
@@ -222,7 +223,7 @@ export function AchievementsSection() {
                       </div>
                     )}
                   </div>
-                  
+
                   <div className="space-y-2">
                     <div className="flex items-center justify-center space-x-2">
                       <Badge variant="secondary" className="text-xs">
@@ -232,11 +233,11 @@ export function AchievementsSection() {
                         {achievement.year}
                       </Badge>
                     </div>
-                    
+
                     <h3 className="text-lg text-foreground leading-tight">
                       {achievement.title}
                     </h3>
-                    
+
                     <p className="text-muted-foreground text-sm leading-relaxed">
                       {achievement.description}
                     </p>
@@ -248,7 +249,7 @@ export function AchievementsSection() {
         </div>
 
         {/* Statistics Section */}
-        
+
       </div>
     </section>
   );

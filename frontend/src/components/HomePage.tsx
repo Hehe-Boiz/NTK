@@ -78,7 +78,7 @@ export function HomePage({ onNavigate }: HomePageProps) {
   const gvIMages = [gvImg1, gvImg2, gvImg3];
 
   return (
-    <div className="min-h-screen bg-white">
+    <div  className="min-h-screen bg-white">
       {/* Hero Section */}
       <section className="relative min-h-[90vh] flex items-center overflow-hidden bg-gray-50">
         {/* Background Image */}
@@ -262,7 +262,7 @@ export function HomePage({ onNavigate }: HomePageProps) {
                       <ImageWithFallback
                         src={gvIMages[index]}
                         alt="Archiments image"
-                        className="rounded-full shadow-2xl  w-64 h-64 mb-8 relative"
+                        className="rounded-full shadow-2xl  w-64 h-64 mb-8 relative object-cover"
                       >
                       </ImageWithFallback>
                     </div>
@@ -388,7 +388,7 @@ export function HomePage({ onNavigate }: HomePageProps) {
                     <ImageWithFallback
                       src={ttImages[index]}
                       alt="Archiments image"
-                      className="rounded-2xl shadow-2xl  w-full h-64 mb-8 relative"
+                      className="rounded-2xl shadow-2xl  w-full h-64 mb-8 relative object-cover"
                     
                     ></ImageWithFallback>
                   </div>

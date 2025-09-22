@@ -28,7 +28,8 @@ export function HistoryTimeline() {
        <div className="absolute inset-0 z-30 pointer-events-none">
                 <WishBubbles />
               </div>
-      
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(120,119,198,0.3),transparent)] opacity-70"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(72,187,120,0.2),transparent)] opacity-50"></div>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <motion.div 
           initial={{ opacity: 0, y: 30 }}
@@ -36,7 +37,7 @@ export function HistoryTimeline() {
           transition={{ duration: 0.6 }}
           className="text-center space-y-4 mb-20"
         >
-          <h2 className="text-4xl lg:text-6xl text-white pt-8 from-white via-blue-100 to-cyan-200 bg-clip-text text-transparent mb-6">
+          <h2 className="text-4xl lg:text-6xl text-white pt-8 from-white via-blue-100 font-bold to-cyan-200 bg-clip-text text-transparent mb-6">
             Hành trình 35 năm phát triển
           </h2>
           <p className="text-xl text-slate-300 max-w-3xl mx-auto leading-relaxed">
@@ -59,7 +60,7 @@ export function HistoryTimeline() {
                 return (
                   <motion.div 
                     key={index}
-                    initial={{ opacity: 0, x: index % 2 === 0 ? -100 : 100 }}
+                    initial={{ opacity: 1, x: index % 2 === 0 ? -100 : 100 }}
                     whileInView={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.8}}
                     className={`relative grid lg:grid-cols-2 lg:gap-16  items-center`}
@@ -68,7 +69,7 @@ export function HistoryTimeline() {
                     <motion.div 
                       initial={{ scale: 0 }}
                       whileInView={{ scale: 1 }}
-                      transition={{ duration: 0.5 }}
+                      transition={{ duration: 0.5}}
                       className="absolute left-1/2 transform -translate-x-1/2 hidden lg:block z-20"
                     >
                       <div className={`relative w-16 h-16 bg-gradient-to-r ${milestone.color} rounded-full flex items-center justify-center shadow-2xl`}>
@@ -84,8 +85,8 @@ export function HistoryTimeline() {
                       transition={{ type: "spring", stiffness: 100 }}
                     >
                       <Card className={`
-                        bg-white/10  border border-white/20 shadow-xl hover:shadow-2xl 
-                         duration-500 overflow-hidden group
+                        bg-white/10 backdrop-blur-md border border-white/20 shadow-xl hover:shadow-2xl 
+                         transition-all duration-500 overflow-hidden group
                       `}>
                         <div className={`h-1 bg-gradient-to-r ${milestone.color}`}></div>
                         <CardContent className="">
@@ -101,11 +102,11 @@ export function HistoryTimeline() {
                             </div>
                           </div>
                           
-                          <h3 className={`text-xl mb-4 text-white group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:${milestone.color} group-hover:bg-clip-text  duration-300`}>
+                          <h3 className={`text-2xl mb-4 text-white  group-hover:${milestone.color} group-hover:bg-clip-text transition-all duration-300`}>
                             {milestone.title}
                           </h3>
                           
-                          <p className="text-slate-300 text-sm leading-relaxed group-hover:text-slate-200  duration-300">
+                          <p className="text-slate-300 text-sm group-hover:text-slate-200 leading-relaxed transition-all duration-300">
                             {milestone.description}
                           </p>
 

@@ -1,4 +1,5 @@
 import { MapPin, Phone, Mail, Facebook, Youtube, Linkedin } from 'lucide-react';
+import {GetDefaultTheme} from "./ThemeProvider";
 
 export function Footer() {
   return (
@@ -12,9 +13,9 @@ export function Footer() {
               <div className="flex items-start space-x-3">
                 <MapPin className="h-5 w-5 mt-1 flex-shrink-0" />
                 <div>
-                  <p>Khoa Công nghệ Thông tin</p>
-                  <p>Trường Đại học XYZ</p>
-                  <p>123 Đường ABC, Quận 1, TP.HCM</p>
+                  <p>{GetDefaultTheme().logoText}</p>
+                  <p>{GetDefaultTheme().universityName}</p>
+                  <p>{GetDefaultTheme().contactInfo.address}</p>
                 </div>
               </div>
               <div className="flex items-center space-x-3">
@@ -65,7 +66,7 @@ export function Footer() {
         </div>
         
         <div className="border-t border-gray-700 mt-8 pt-8 text-center text-sm text-gray-400">
-          <p>&copy; 2025 Khoa Công nghệ Thông tin - Trường Đại học XYZ. Tất cả quyền được bảo lưu.</p>
+          <p>&copy; 2025 Khoa Công nghệ Thông tin - {GetDefaultTheme().universityName}. Tất cả quyền được bảo lưu.</p>
         </div>
       </div>
     </footer>

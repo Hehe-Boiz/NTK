@@ -46,14 +46,14 @@ const defaultTheme: ThemeConfig = {
   backgroundColor: '#ffffff',
   textColor: '#1f2937',
   logoText: 'Khoa Công nghệ Thông tin',
-  universityName: 'Trường Đại học XYZ',
+  universityName: 'Trường Đại học Mở Thành phố Hồ Chí Minh',
   facultyName: 'Khoa Công nghệ Thông tin',
   establishedYear: '1990',
   motto: '35 năm đồng hành cùng sự phát triển của ngành Công nghệ Thông tin Việt Nam',
   contactInfo: {
     phone: '(028) 1234 5678',
     email: 'cntt@university.edu.vn',
-    address: '123 Đường ABC, Quận 1, TP.HCM'
+    address: 'Đường Võ Văn Tần, Quận 3, TP.HCM'
   },
   // 35th Anniversary Content
   anniversaryYear: '2025',
@@ -112,7 +112,7 @@ const defaultTheme: ThemeConfig = {
       color: "from-teal-500 to-teal-600",
     },
     {
-      year: "2024",
+      year: "2025",
       title: "Kỷ niệm 35 năm",
       description: "Tự hào kỷ niệm 35 năm thành lập với nhiều thành tựu đáng tự hào.",
       icon: 'Trophy',

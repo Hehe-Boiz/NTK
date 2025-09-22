@@ -135,6 +135,7 @@
     --color-gray-800: oklch(.278 .033 256.848);
     --color-gray-900: oklch(.21 .034 264.665);
     /* SLATE */
+      --color-slate-200: oklch(.929 .013 255.508);
     --color-slate-300: oklch(0.81 0.01 258.34);
     --color-slate-400: oklch(0.707 0.022 261.325);
     --color-slate-900: oklch(0.21 0.034 264.665);
@@ -3492,7 +3493,13 @@
   .data-\[state\=active\]\:bg-card[data-state="active"] {
     background-color: var(--card);
   }
+    .bg-\[radial-gradient\(circle_at_30\%_20\%\,rgba\(120\,119\,198\,0\.3\)\,transparent\)\] {
+        background-image: radial-gradient(circle at 30% 20%, #7877c64d, #0000);
+    }
 
+    .bg-\[radial-gradient\(circle_at_70\%_80\%\,rgba\(72\,187\,120\,0\.2\)\,transparent\)\] {
+        background-image: radial-gradient(circle at 70% 80%, #48bb7833, #0000);
+    }
   .data-\[state\=checked\]\:translate-x-\[calc\(100\%-2px\)\][data-state="checked"] {
     --tw-translate-x: calc(100% - 2px);
     translate: var(--tw-translate-x) var(--tw-translate-y);
