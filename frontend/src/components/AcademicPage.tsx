@@ -36,7 +36,7 @@ import {
   Phone
 } from 'lucide-react';
 import { programs, graduatePrograms} from '../data/academic-data';
-import { ImageWithFallback } from './figma/ImageWithFallback';
+import { ImageWithFallback } from './ui/ImageWithFallback';
 
 export function AcademicPage() {
   const [activeSection, setActiveSection] = useState('programs');

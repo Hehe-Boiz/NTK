@@ -22,7 +22,7 @@ import {
   Calendar,
   MapPin
 } from 'lucide-react';
-import { ImageWithFallback } from './figma/ImageWithFallback';
+import { ImageWithFallback } from './ui/ImageWithFallback';
 
 export function ProgramsPage() {
   const [selectedProgram, setSelectedProgram] = useState('software-engineering');

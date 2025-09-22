@@ -42,7 +42,7 @@ import {
   ExternalLink,
   Star
 } from 'lucide-react';
-import { ImageWithFallback } from './figma/ImageWithFallback';
+import { ImageWithFallback } from './ui/ImageWithFallback';
 import { useTheme } from './ThemeProvider';
 import { WishForm } from './WishForm';
 import { WishBubbles } from './WishBubbles';

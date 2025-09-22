@@ -26,7 +26,7 @@ import {
   Building,
   Phone
 } from 'lucide-react';
-import { ImageWithFallback } from './figma/ImageWithFallback';
+import { ImageWithFallback } from './ui/ImageWithFallback';
 import { categories, featuredNews, regularNews } from '../data/news-data';
 
 

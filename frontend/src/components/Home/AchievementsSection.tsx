@@ -3,7 +3,7 @@ import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
 import { motion, useInView } from "motion/react";
 import { Trophy, Award, Star, Medal, Crown, Target, TrendingUp, Users, CheckCircle, ArrowUpRight, Sparkles } from "lucide-react";
-import { ImageWithFallback } from "../figma/ImageWithFallback";
+import { ImageWithFallback } from "../ui/ImageWithFallback";
 import { useState, useEffect, useRef } from "react";
 
 export function AchievementsSection() {
