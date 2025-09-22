@@ -1,4 +1,5 @@
-# NTK
+# Website Khoa Công Nghệ Thông Tin (NTK)
+Dự án này là một trang web cho Khoa Công nghệ thông tin, được xây dựng với kiến trúc monorepo bao gồm một backend NestJS và một frontend React.
 
 ## Cấu trúc dự án
 
@@ -8,8 +9,8 @@ Dự án NTK có cấu trúc monorepo, được chia thành hai phần chính: *
 
 ```
 NTK/
-├── backend/
-├── frontend/
+├── backend/ # Mã nguồn NestJS API
+├── frontend/ # Mã nguồn React cho giao diện người dùng
 ├── .gitignore
 ├── LICENSE
 ├── package.json
@@ -60,39 +61,57 @@ frontend/
 └── index.html
 ```
 
+## Công nghệ sử dụng
+
+### Backend
+
+* **Framework**: [NestJS](https://nestjs.com/)
+* **Ngôn ngữ**: TypeScript
+* **Cơ sở dữ liệu**: Prisma
+
+### Frontend
+
+* **Thư viện**: [React](https://reactjs.org/)
+* **Styling**: [TailwindCSS](https://tailwindcss.com/)
+* **Build Tool**: [Vite](https://vitejs.dev/)
+
 -----
 
-## Hướng dẫn đóng góp
+### 1. Cài đặt Backend
 
-Để đảm bảo lịch sử commit rõ ràng và dễ theo dõi, chúng tôi tuân thủ quy tắc sau:
+a. **Di chuyển vào thư mục backend:**
+```bash
+cd backend
+```
 
-### 1\. **Cấu trúc Commit**
+b. **Cài đặt các dependency:**
+```bash
+npm install
+```
 
-Mỗi commit phải tuân theo cú pháp: `type: Công_việc/Tên_nhánh_hiện_tại`.
+c. **Chạy development server:**
+```bash
+# Chế độ theo dõi (watch mode)
+npm run start:dev
+```
 
-  * **`type`**: Loại thay đổi bạn đã thực hiện.
+Backend sẽ chạy tại `http://localhost:3000`.
 
-      * `feat`: Thêm tính năng mới.
-      * `fix`: Sửa lỗi.
-      * `docs`: Cập nhật tài liệu.
-      * `style`: Thay đổi định dạng (spaces, semicolons, v.v.).
-      * `refactor`: Sắp xếp lại mã nguồn mà không thay đổi chức năng.
-      * `test`: Thêm/sửa đổi test.
-      * `chore`: Các thay đổi không liên quan đến mã nguồn (config, scripts, v.v.).
+### 2. Cài đặt Frontend
 
-  * **`Tên_nhánh_hiện_tại`**: Tên của nhánh bạn đang làm việc.
+a. **Di chuyển vào thư mục frontend:**
+```bash
+cd frontend
+```
 
-      * **Ví dụ**: Nếu bạn đang làm trên nhánh `feature`, commit sẽ là `feat: Tạo README.md feature`.
+b. **Cài đặt các dependency:**
+```bash
+npm i
+```
 
-**Ví dụ về commit:**
+c. **Chạy development server:**
+```bash
+npm run dev
+```
 
-  * `feat: feature/login` (thêm tính năng đăng nhập)
-  * `fix: bug/wrong-path` (sửa lỗi đường dẫn sai)
-  * `docs: update-readme` (cập nhật file README.md)
-
-### 2\. **Luồng làm việc**
-
-1.  Tạo một **nhánh mới** từ nhánh `main`. Tên nhánh nên mô tả ngắn gọn công việc bạn làm (ví dụ: `feature/user-profile`, `bug/database-connection`).
-2.  Thực hiện các thay đổi của bạn và **commit** theo cú pháp trên.
-3.  **Push** nhánh của bạn lên remote repository.
-4.  Tạo một **Pull Request** (PR) để team review.
+Frontend sẽ có sẵn tại `http://localhost:5173` (hoặc một cổng khác nếu cổng 5173 đã được sử dụng).
