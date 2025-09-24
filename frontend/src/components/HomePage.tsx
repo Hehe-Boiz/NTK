@@ -92,7 +92,7 @@ export function HomePage({ onNavigate }: HomePageProps) {
         </div>
 
         {/* Content */}
-        <div className="container-super-university py-20">
+        <div className="container-university py-20">
           <div className="grid w-900px lg:grid-cols-2 gap-32 items-center">
             {/* Left Column - Text Content */}
             <div className="text-white z-1">
