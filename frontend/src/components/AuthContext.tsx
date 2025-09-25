@@ -2,7 +2,7 @@ import { createContext, useContext, useState, ReactNode, useEffect } from 'react
 import axios from 'axios'
 import { jwtDecode } from 'jwt-decode'
 
-axios.defaults.baseURL = 'http://localhost:3000';
+axios.defaults.baseURL = import.meta.env.VITE_API_URL;
 export type UserRole = 'GUEST' | 'USER' | 'ADMIN';
 
 export interface User {
